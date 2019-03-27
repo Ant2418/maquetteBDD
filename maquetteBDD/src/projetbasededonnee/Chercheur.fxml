@@ -103,7 +103,7 @@
                               </BorderPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="ajoutExpPage" prefHeight="600.0" prefWidth="950.0" visible="false">
+                        <AnchorPane fx:id="ajoutExpPage" prefHeight="600.0" prefWidth="950.0">
                            <children>
                               <BorderPane prefHeight="600.0" prefWidth="950.0">
                                  <top>
@@ -135,28 +135,28 @@
                                        <children>
                                           <ComboBox fx:id="PlaqueCombo" prefWidth="150.0" promptText="Type de plaque" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <Label text="Type de plaque *   " GridPane.rowIndex="1" />
-                                          <Label text="Durée de l'expérience * (heure)   " GridPane.rowIndex="2" />
-                                          <TextField fx:id="dureeTextfield" prefHeight="25.0" prefWidth="188.0" promptText="HH : MM" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <Label text="Suivi dans le temps *   " GridPane.rowIndex="3" />
-                                          <RadioButton fx:id="NonSuiviButton" mnemonicParsing="false" text="Non" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                                          <Label text="Durée de l'expérience * (min)   " GridPane.rowIndex="2" />
+                                          <TextField fx:id="dureeTextfield" prefHeight="25.0" prefWidth="188.0" promptText="MM" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label fx:id="suiviLabel" text="Suivi dans le temps *   " GridPane.rowIndex="3" />
+                                          <RadioButton fx:id="NonSuiviButton" mnemonicParsing="false" onAction="#NonSuiviButtonEvent" text="Non" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                                              <GridPane.margin>
                                                 <Insets left="50.0" />
                                              </GridPane.margin></RadioButton>
-                                          <RadioButton fx:id="OuiSuiviButton" mnemonicParsing="false" text="Oui" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                                          <Label fx:id="FreqLabel" text="Fréquence   " GridPane.rowIndex="4" />
-                                          <TextField fx:id="frequTextField" promptText="Fréquence" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                          <Label text="Nombre de puits par réplicat *   " />
+                                          <RadioButton fx:id="OuiSuiviButton" mnemonicParsing="false" onAction="#OuiSuiviButtonEvent" text="Oui" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                          <Label fx:id="FreqLabel" text="Fréquence*   " visible="false" GridPane.rowIndex="4" />
+                                          <TextField fx:id="frequTextField" promptText="Fréquence" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <Label fx:id="nbPuitReplicatLabel" text="Nombre de puits par réplicat *   " />
                                           <TextField fx:id="puitReplicatTextField" promptText="Nombre de puits" GridPane.columnIndex="1" />
-                                          <Label text="Type d'expérience *   " GridPane.columnIndex="2" />
-                                          <Label text="Type d'analyse *   " GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <Label text="Biais 1 *   " GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <Label text="Biais 2 *   " GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                          <Label text="Biais 3   " GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <Label fx:id="typeExpLabel" text="Type d'expérience *   " GridPane.columnIndex="2" />
+                                          <Label fx:id="typeAnaLabel" text="Type d'analyse *   " GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <Label fx:id="alpha1Label" text="Biais 1 *   " GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <Label fx:id="alpha2Label" text="Biais 2 *   " GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <Label fx:id="Alpha3Label" text="Biais 3*   " visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                           <ComboBox fx:id="TypeExpCombo" prefWidth="150.0" promptText="Type d'expérience" GridPane.columnIndex="3" />
                                           <ComboBox fx:id="TypeAnalyseCombo" prefWidth="150.0" promptText="Type d'analyse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                           <TextField fx:id="Alpha1TextField" promptText="Alpha 1" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                           <TextField fx:id="Alpha2TextField" promptText="Alpha 2" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                          <TextField fx:id="Alpha3TextField" promptText="Alpha 3" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                          <TextField fx:id="Alpha3TextField" promptText="Alpha 3" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                        </children>
                                        <padding>
                                           <Insets bottom="100.0" left="125.0" right="125.0" top="100.0" />
@@ -175,7 +175,7 @@
                                  </bottom>
                               </BorderPane>
                            </children></AnchorPane>
-                        <AnchorPane fx:id="AddUpletPage" prefHeight="600.0" prefWidth="950.0">
+                        <AnchorPane fx:id="AddUpletPage" prefHeight="600.0" prefWidth="950.0" visible="false">
                            <children>
                               <BorderPane prefHeight="600.0" prefWidth="950.0">
                                  <top>

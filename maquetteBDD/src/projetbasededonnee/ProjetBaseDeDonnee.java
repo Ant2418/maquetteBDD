@@ -40,6 +40,7 @@ public class ProjetBaseDeDonnee extends Application {
     }
 
     /**
+     * Permet de créer le fichier jar
      * @param args the command line arguments
      */
     public static void main(String[] args) {

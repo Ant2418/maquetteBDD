@@ -8,17 +8,20 @@ package projetbasededonnee;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -55,13 +58,13 @@ public class AcceuilChercheurController implements Initializable {
     @FXML    private Label typePlaqueLabel;
     @FXML    private Label dureeLabel;
     @FXML    private Label suiviLabel;
-    @FXML    private Label frequenceLabel;
+    @FXML    private Label FreqLabel;
     @FXML    private Label nbPuitReplicatLabel;
     @FXML    private Label typeExpLabel;
     @FXML    private Label typeAnaLabel;
     @FXML    private Label alpha1Label;
     @FXML    private Label alpha2Label;
-    @FXML    private Label alpha3Label;
+    @FXML    private Label Alpha3Label;
     @FXML    private Label debutExpLabel;
     @FXML    private TableView<?> tableNUplet;
     @FXML    private TableColumn<?, ?> replicatCol;
@@ -71,6 +74,17 @@ public class AcceuilChercheurController implements Initializable {
     @FXML    private TableColumn<?, ?> qteCellCol;
     @FXML    private TableColumn<?, ?> plaqueCol;
     @FXML    private TableColumn<?, ?> photometreCol;
+    @FXML    private TextField frequTextField; 
+    @FXML    private TextField Alpha3TextField; 
+    @FXML    private TextField Alpha1TextField; 
+    @FXML    private TextField Alpha2TextField;
+    @FXML    private TextField dureeTextfield;
+    @FXML    private TextField puitReplicatTextField;
+    @FXML    private RadioButton OuiSuiviButton;
+    @FXML    private RadioButton NonSuiviButton;
+    @FXML    private ComboBox PlaqueCombo;
+    @FXML    private ComboBox TypeExpCombo;
+    @FXML    private ComboBox TypeAnalyseCombo; 
     
     private Connection con;
     private ConnexionController maCo;
@@ -90,7 +104,7 @@ public class AcceuilChercheurController implements Initializable {
         AddUpletPage.setVisible(false);
     }      
 
-    
+  
     /**
      * Affichage de la page de connexion (connexion.fxml)
      * @param event
@@ -131,9 +145,40 @@ public class AcceuilChercheurController implements Initializable {
     public void AddExpEvent(MouseEvent event) throws IOException {
         homePageChercheur.setVisible(false);
         ajoutExpPage.setVisible(true); 
-        AddUpletPage.setVisible(false);
+        AddUpletPage.setVisible(false);     
     }
     
+    /**
+     * Event quand l'utilisateur clique sur oui dans si l'expérience est suivi dans le temps
+     * @param event 
+     */
+    public void OuiSuiviButtonEvent(ActionEvent event){
+        frequTextField.setVisible(true);
+        FreqLabel.setVisible(true);
+        Alpha3Label.setVisible(true);
+        Alpha3TextField.setVisible(true);
+        NonSuiviButton.setSelected(false);
+    }
+    
+    /**
+     * Event quand l'utilisateur clique sur non pour savoir si l'expérience est suivi dans le temps
+     * @param event 
+     */
+    public void NonSuiviButtonEvent(ActionEvent event){
+        frequTextField.setVisible(false);
+        FreqLabel.setVisible(false);
+        Alpha3Label.setVisible(false);
+        Alpha3TextField.setVisible(false);
+        OuiSuiviButton.setSelected(false);
+    }
+    
+
+    
+    /**
+     * Event si l'utilisateur clique sur ajouter un uplet
+     * @param event
+     * @throws IOException 
+     */
     public void AddUpletEvent(MouseEvent event) throws IOException{
         homePageChercheur.setVisible(false);
         ajoutExpPage.setVisible(false);

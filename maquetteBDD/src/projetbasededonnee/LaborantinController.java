@@ -236,10 +236,6 @@ public class LaborantinController implements Initializable {
         visuExpPage.setVisible(false);
         validationPage.setVisible(true);
     }
-        
-    public void setMain(ProjetBaseDeDonnee mainPBD)
-    {
-        main = mainPBD;
-    }
+       
     
 }
