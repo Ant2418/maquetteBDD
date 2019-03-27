@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.AcceuilChercheurController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.AcceuilChercheurController">
    <children>
       <SplitPane dividerPositions="0.05" prefHeight="600.0" prefWidth="1000.0">
          <items>
@@ -63,7 +63,7 @@
                <center>
                   <AnchorPane prefHeight="600.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="homePageChercheur" prefHeight="600.0" prefWidth="950.0">
+                        <AnchorPane fx:id="homePageChercheur" prefHeight="600.0" prefWidth="950.0" visible="false">
                            <children>
                               <BorderPane prefHeight="600.0" prefWidth="950.0">
                                  <center>
@@ -164,7 +164,7 @@
                                     </GridPane>
                                  </center>
                                  <bottom>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER_RIGHT">
+                                    <ImageView fitHeight="60.0" fitWidth="60.0" onMouseClicked="#AddUpletEvent" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER_RIGHT">
                                        <image>
                                           <Image url="@checked.png" />
                                        </image>
@@ -175,7 +175,7 @@
                                  </bottom>
                               </BorderPane>
                            </children></AnchorPane>
-                        <AnchorPane fx:id="AddUpletPage" prefHeight="600.0" prefWidth="950.0" visible="false">
+                        <AnchorPane fx:id="AddUpletPage" prefHeight="600.0" prefWidth="950.0">
                            <children>
                               <BorderPane prefHeight="600.0" prefWidth="950.0">
                                  <top>
@@ -248,13 +248,11 @@
                                           </GridPane>
                                           <TableView fx:id="tableNUplet" prefHeight="99.0" prefWidth="630.0" GridPane.rowIndex="2">
                                              <columns>
-                                                <TableColumn fx:id="replicatCol" prefWidth="75.0" text="Réplicat" />
-                                                <TableColumn fx:id="agentBioCol" prefWidth="83.0" text="   Agent&#10;biologique" />
-                                                <TableColumn fx:id="qteAgentBioCol" prefWidth="124.33334350585938" text="        Quantité&#10;d'agent biologique" />
-                                                <TableColumn fx:id="typeCellCol" prefWidth="100.66668701171875" text="Type de cellule" />
-                                                <TableColumn fx:id="qteCellCol" prefWidth="78.66668701171875" text="Quantité&#10;de cellule" />
-                                                <TableColumn fx:id="plaqueCol" prefWidth="77.3333740234375" text="Plaque" />
-                                                <TableColumn fx:id="photometreCol" prefWidth="86.33331298828125" text="Photomètre" />
+                                                <TableColumn fx:id="replicatCol" prefWidth="111.0" text="Réplicat" />
+                                                <TableColumn fx:id="agentBioCol" prefWidth="141.0" text="   Agent&#10;biologique" />
+                                                <TableColumn fx:id="qteAgentBioCol" prefWidth="118.0" text="        Quantité&#10;d'agent biologique" />
+                                                <TableColumn fx:id="typeCellCol" prefWidth="126.0" text="Type de cellule" />
+                                                <TableColumn fx:id="qteCellCol" prefWidth="133.0" text="Quantité&#10;de cellule" />
                                              </columns>
                                              <GridPane.margin>
                                                 <Insets bottom="10.0" left="160.0" right="160.0" top="10.0" />
@@ -307,7 +305,7 @@
                                  <bottom>
                                     <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <ImageView fx:id="resuserIV" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="resuserIV" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#AddUpletEvent" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@plus.png" />
                                              </image>
@@ -315,7 +313,7 @@
                                                 <Insets right="20.0" />
                                              </HBox.margin>
                                           </ImageView>
-                                          <ImageView fx:id="validerIV11" fitHeight="60.0" fitWidth="60.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="validerIV11" fitHeight="60.0" fitWidth="60.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#homeEvent" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@checked.png" />
                                              </image>

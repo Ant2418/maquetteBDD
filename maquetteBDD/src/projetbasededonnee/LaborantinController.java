@@ -171,8 +171,8 @@ public class LaborantinController implements Initializable {
         Parent ajoutParent = FXMLLoader.load(getClass().getResource("connexion.fxml"));
         Scene ajoutSceneConn = new Scene(ajoutParent);
         
-        ConnexionController CCO= loader.getController();
-        CCO.setMain(main);
+//        ConnexionController CCO= loader.getController();
+//        CCO.setMain(main);
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(ajoutSceneConn);
@@ -232,10 +232,10 @@ public class LaborantinController implements Initializable {
         visuExpPage.setVisible(false);
         validationPage.setVisible(true);
     }
-    
+        
     public void setMain(ProjetBaseDeDonnee mainPBD)
     {
-        this.main = mainPBD;
+        main = mainPBD;
     }
     
 }

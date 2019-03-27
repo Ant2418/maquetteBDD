@@ -102,8 +102,8 @@ public class AcceuilChercheurController implements Initializable {
         Parent ajoutParent = FXMLLoader.load(getClass().getResource("connexion.fxml"));
         Scene ajoutSceneConn = new Scene(ajoutParent);
         
-        ConnexionController CCO= loader.getController();
-        CCO.setMain(main);
+//        ConnexionController CCO= loader.getController();
+//        CCO.setMain(main);
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(ajoutSceneConn);
@@ -133,6 +133,17 @@ public class AcceuilChercheurController implements Initializable {
         AddUpletPage.setVisible(false);
     }
     
+    public void AddUpletEvent(MouseEvent event) throws IOException{
+        homePageChercheur.setVisible(false);
+        ajoutExpPage.setVisible(false);
+        AddUpletPage.setVisible(true);
+    }
+    
+    
+    /**
+     * Setter pour modifier le main
+     * @param mainPBD 
+     */
     public void setMain(ProjetBaseDeDonnee mainPBD)
     {
         this.main = mainPBD;
