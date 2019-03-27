@@ -158,6 +158,9 @@ public class LaborantinController implements Initializable {
         visuExpPage.setVisible(false);
         validationPage.setVisible(false);
 //        lancerExpButton.setDisable(true);
+    
+    
+
     }      
 
     /**
