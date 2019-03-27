@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package maquetteBDD;
+package projetbasededonnee;
 
 import java.io.IOException;
 import java.net.URL;
@@ -170,8 +170,9 @@ public class LaborantinController implements Initializable {
      */
     @FXML
     public void deconnexionEvent(MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        Parent ajoutParent = FXMLLoader.load(getClass().getResource("connexion.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("connexion.fxml"));
+        Parent ajoutParent = (Parent) loader.load();
+
         Scene ajoutSceneConn = new Scene(ajoutParent);
         
 //        ConnexionController CCO= loader.getController();

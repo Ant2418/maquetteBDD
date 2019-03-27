@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package maquetteBDD;
+package projetbasededonnee;
 
 import java.io.IOException;
 import javafx.application.Application;
@@ -27,22 +27,13 @@ public class ProjetBaseDeDonnee extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        Parent root = loader.load(getClass().getResource("connexion.fxml"));
-        Scene scene = new Scene(root);
-        
-        // permet de faire la connection et de la stocker dans l'appli
-//        Connexion maCo = new Connexion();
-//        con = maCo.getConnection();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("connexion.fxml"));
+        Parent root = (Parent) loader.load();
         
         // Permet d'associer ton controleur à page à charger pour faire le lien
-        ConnexionController coCo = loader.getController();
-//        coCo.setMain(this);
-        
-        
-        //CREER UN OBJECT PERSONNE 
-//        pers= new Personne(null, null, null, null);
-        
+//        ConnexionController coCo = loader.getController();
+        Scene scene = new Scene(root);
+
         primaryStage.setScene(scene);
         primaryStage.show();
 

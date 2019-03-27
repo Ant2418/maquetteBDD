@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package maquetteBDD;
+package projetbasededonnee;
 
 import java.sql.*;
 import java.io.IOException;
@@ -41,10 +41,10 @@ public class ConnexionController implements Initializable {
     private String nom; 
     private String email;
     private Connection con;
-    private ProjetBaseDeDonnee main;
+
 
     /**
-     * Initializes the controller class.
+     * Initializes the contrProjetBaseDeDonneeoller class.
      * @param url
      * @param rb
      */
@@ -61,31 +61,13 @@ public class ConnexionController implements Initializable {
      */
     public void connexionButton(ActionEvent event) throws  IOException, SQLException
     {
-
-//            //FAIRE UN LABEL POUR AFFICHER UN MESSAGE D'ERREUR 
-//        if (emailTF.getText().isEmpty() == false && mdpPF.getText().isEmpty() == false) {
-//        try {
-//            stmt = con.createStatement();
-//            rs = stmt.executeQuery("SELECT fonction, PRENOM, NOM, EMAIL FROM PERSONNE WHERE email ='" + emailTF.getText() + "' AND mot_de_passe = '" + mdpPF.getText() + "'");
-//            while (rs.next()) {
-//                String res=rs.getString(1); 
-//                prenom= rs.getString(2);
-//                nom=rs.getString(2);
-//                email=rs.getString(3);
-//                
-//                //ajout le nom, prénom, email et fonction à la personne connecté
-//                main.getPersonne().setPrenom(prenom);
-//                main.getPersonne().setNom(nom);
-//                main.getPersonne().setEmail(email);
-//                main.getPersonne().setFonction(res);
-                
-//                if ("chercheur".equals(res)) {
                 if ("chercheur".equals(emailTF.getText())){
-                    FXMLLoader loader = new FXMLLoader();
-                    Parent ajoutParent = loader.load(getClass().getResource("Chercheur.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Chercheur.fxml"));
+                    Parent ajoutParent = (Parent) loader.load();
+
                     Scene ajoutScene = new Scene(ajoutParent);
                     
-                    AcceuilChercheurController ACCo = loader.getController();
+//                    AcceuilChercheurController ACCo = loader.getController();
 //                    ACCo.setMain(main);
  
                     
@@ -97,11 +79,12 @@ public class ConnexionController implements Initializable {
                 }
 //                else if ("laborantin".equals(res)){
                 else if ("laborantin".equals(emailTF.getText())){
-                    FXMLLoader loader = new FXMLLoader();
-                    Parent ajoutParent = loader.load(getClass().getResource("Laborantin.fxml"));
-                    Scene ajoutScene = new Scene(ajoutParent);
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Laborantin.fxml"));
+                    Parent ajoutParent = (Parent) loader.load();
+                   
                     
-                    LaborantinController LCO = loader.getController();
+//                    LaborantinController LCO = loader.getController();
+                    Scene ajoutScene = new Scene(ajoutParent);
 //                    LCO.setMain(main);
                     
                     //This line gets the Stage information
@@ -132,9 +115,9 @@ public class ConnexionController implements Initializable {
      * 
      * @param MainBDD 
      */
-    public void setMain(ProjetBaseDeDonnee main) {
-        this.main = main;
-    }
+//    public void setMain(ProjetBaseDeDonnee main) {
+//        this.main = main;
+//    }
     
     
 }
