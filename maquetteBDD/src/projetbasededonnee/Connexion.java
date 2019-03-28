@@ -18,6 +18,9 @@ public class Connexion {
      
     private Connection con; 
     
+    /**
+     * Constructeur de la classe Connexion
+     */
     public Connexion(){
     try {
             //step1 load the driver class  
@@ -38,7 +41,7 @@ public class Connexion {
         }
     }
     /**
-     * 
+     * Getter de la connection
      * @return 
      */
     public Connection getConnection(){

@@ -17,7 +17,7 @@ public class Personne {
     private String fonction; 
     
     /**
-     * 
+     * Constrcteur de la classe personne
      * @param prenom
      * @param nom
      * @param email 
@@ -30,7 +30,7 @@ public class Personne {
     }
     
     /**
-     * 
+     * Setter pour modifier le prénom
      * @param prenomP 
      */
     public void setPrenom(String prenomP){
@@ -38,7 +38,7 @@ public class Personne {
     }
     
     /**
-     * 
+     * Setter pour modifier le nom
      * @param nomP 
      */
     public void setNom(String nomP){
@@ -46,7 +46,7 @@ public class Personne {
     }
     
     /**
-     * 
+     * Setter pour modifier l'email
      * @param EmailP 
      */
     public void setEmail(String EmailP){
@@ -54,7 +54,7 @@ public class Personne {
     }
     
     /**
-     * 
+     * Setter pour modifier la fonction
      * @param fonctionP 
      */
     public void setFonction(String fonctionP){
