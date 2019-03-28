@@ -27,6 +27,11 @@ public class PopupPositionPuitController implements Initializable {
     @FXML    private TableColumn<?, ?> positionLigneCol;
     @FXML    private TableColumn<?, ?> positionColonneCol;
 
+    private Connexion laCo;
+
+    public void setLaCo(Connexion laCo) {
+        this.laCo = laCo;
+    }
     /**
      * Initializes the controller class.
      * @param url
