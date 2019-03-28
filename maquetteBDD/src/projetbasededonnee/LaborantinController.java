@@ -31,8 +31,8 @@ import projetbasededonnee.Data.Experience;
 
 /**
  * FXML Controller class de Laborantin.fxml
- *
- * @author Antoine and Ludivine
+ * Cette partie permet de gerer les differents affichage de la partie laborantin
+ * @author Antoine et Ludivine
  */
 public class LaborantinController implements Initializable {
 
@@ -60,6 +60,8 @@ public class LaborantinController implements Initializable {
     @FXML    private TableColumn<Experience, String> checkCol;
     
     // Page des expériences du laborantin 
+    // la page est diviser en plusieurs tab en fonction des status 
+    // qui sont 'A Renouveler'(AR), 'En Attente' (EA) etc...
     @FXML    private AnchorPane expLabPage;
     @FXML    private VBox titleAcceuil2;
     @FXML    private Tab tableARenouveller;
@@ -105,6 +107,7 @@ public class LaborantinController implements Initializable {
     // Page pour lancer une expérience
     @FXML    private AnchorPane visuExpPage;
     @FXML    private ImageView validerIV;
+    @FXML    private Label nomExpLabel;
     @FXML    private Label typePlaqueLabel;
     @FXML    private Label dureeLabel;
     @FXML    private Label suiviLabel;

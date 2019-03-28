@@ -27,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import projetbasededonnee.Data.Experience;
 
 /**
  * FXML Controller class de Chercheur.fxml
@@ -146,6 +147,11 @@ public class AcceuilChercheurController implements Initializable {
         homePageChercheur.setVisible(false);
         ajoutExpPage.setVisible(true); 
         AddUpletPage.setVisible(false);     
+        
+        // initialisation des listes deroulante (comboBox)
+        PlaqueCombo.getItems().addAll("96 puits", "384 puits");
+        TypeExpCombo.getItems().addAll("Immunologique", "Toxicité");
+        TypeAnalyseCombo.getItems().addAll("Colorimétrique", "Opacimétrique"); 
     }
     
     /**

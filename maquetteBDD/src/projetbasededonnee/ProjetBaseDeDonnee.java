@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Antoine
+ * @author Antoine and Ludivine
  */
 public class ProjetBaseDeDonnee extends Application {
     

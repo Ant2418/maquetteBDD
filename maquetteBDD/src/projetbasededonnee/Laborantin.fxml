@@ -260,16 +260,16 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Type de plaque : " />
-                                                <Label text="Durée de l'expérience : " GridPane.rowIndex="1" />
-                                                <Label text="Suivi dans le temps : " GridPane.rowIndex="2" />
-                                                <Label text="Fréquence : " GridPane.rowIndex="3" />
-                                                <Label text="nombre de puits / réplicat : " GridPane.rowIndex="4" />
-                                                <Label fx:id="typePlaqueLabel" text="Label" GridPane.columnIndex="1" />
-                                                <Label fx:id="dureeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label fx:id="suiviLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label fx:id="frequenceLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <Label fx:id="nbPuitReplicatLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label text="Type de plaque : " GridPane.rowIndex="1" />
+                                                <Label text="Durée de l'expérience : " GridPane.rowIndex="2" />
+                                                <Label text="Suivi dans le temps : " GridPane.rowIndex="3" />
+                                                <Label text="Fréquence : " GridPane.rowIndex="4" />
+                                                <Label text="nombre de puits / réplicat : " GridPane.rowIndex="5" />
+                                                <Label fx:id="typePlaqueLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label fx:id="dureeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label fx:id="suiviLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label fx:id="frequenceLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label fx:id="nbPuitReplicatLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                 <Label text="Type d'expérience : " GridPane.columnIndex="2" />
                                                 <Label text="Type d'analyse : " GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                 <Label text="Bais 1 : " GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -280,8 +280,10 @@
                                                 <Label fx:id="alpha1Label" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                                 <Label fx:id="alpha2Label" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                                 <Label fx:id="alpha3Label" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                                <Label text="Début de l'expérience : " GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                                <Label text="Date de transmission : " GridPane.columnIndex="2" GridPane.rowIndex="5" />
                                                 <Label fx:id="debutExpLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                                <Label layoutX="237.0" layoutY="60.0" text="Nom de l'expérience : " />
+                                                <Label fx:id="nomLabel" text="Label" GridPane.columnIndex="1" />
                                              </children>
                                              <opaqueInsets>
                                                 <Insets />

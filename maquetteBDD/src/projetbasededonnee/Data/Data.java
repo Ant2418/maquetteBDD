@@ -20,9 +20,16 @@ public class Data {
      */   
     public static ObservableList<projetbasededonnee.Data.Experience> expListe =
         FXCollections.observableArrayList(
+            new projetbasededonnee.Data.Experience("1", "Dosage BSA", "En attente", "SMITH Ludivine ", "Toxicité", "Colorimétrique", "10", "3", "3", "9"),
+            new projetbasededonnee.Data.Experience("2", "Dosage PAL", "En attente", "DURANT Bernard ", "Toxicité", "Colorimétrique", "20", "3", "5", "15"),
+            new projetbasededonnee.Data.Experience("3", "Dosage Hmg", "A renouveler", "JEAN Lucas ", "Toxicité", "Colorimétrique", "15", "3", "2", "6")
+        );
+    
+    public static ObservableList<projetbasededonnee.Data.Experience> expCherListe =
+        FXCollections.observableArrayList(
             new projetbasededonnee.Data.Experience("1", "Dosage BSA", "En attente", " - ", "Toxicité", "Colorimétrique", "10", "3", "3", "9"),
-            new projetbasededonnee.Data.Experience("2", "Dosage PAL", "En Cours", " - ", "Toxicité", "Colorimétrique", "20", "3", "5", "15"),
-            new projetbasededonnee.Data.Experience("3", "Dosage Hmg", "Terminé", " - ", "Toxicité", "Colorimétrique", "15", "3", "2", "6")
+            new projetbasededonnee.Data.Experience("2", "Dosage PAL", "En attente", " - ", "Toxicité", "Colorimétrique", "20", "3", "5", "15"),
+            new projetbasededonnee.Data.Experience("3", "Dosage Hmg", "Terminé", "DUPONT Anaïs", "Toxicité", "Colorimétrique", "15", "3", "2", "6")
         );
     
     /**
@@ -43,8 +50,8 @@ public class Data {
     public static ObservableList<projetbasededonnee.Data.Experience> replicatListe =
         FXCollections.observableArrayList(
             new projetbasededonnee.Data.Experience("1", "Befiradol", "100", "mamalienne", "200", "1", "1"),
-            new projetbasededonnee.Data.Experience("2", "Befiradol", "120", "mamalienne", "200", "1", "1"),
-            new projetbasededonnee.Data.Experience("3", "Befiradol", "140", "mamalienne", "200", "2", "1")
+            new projetbasededonnee.Data.Experience("2", "Befiradol", "120", "mamalienne", "200", "", ""),
+            new projetbasededonnee.Data.Experience("3", "Befiradol", "140", "mamalienne", "200", "", "")
         );
     
     public static ObservableList<projetbasededonnee.Data.Experience> puitListe1 =
