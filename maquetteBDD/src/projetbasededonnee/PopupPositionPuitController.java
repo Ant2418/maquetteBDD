@@ -19,20 +19,13 @@ import javafx.scene.control.TableView;
  */
 public class PopupPositionPuitController implements Initializable {
 
-    @FXML
-    private TableView<?> tableVisuPosPuits;
-    @FXML
-    private TableColumn<?, ?> numPuitCol1;
-    @FXML
-    private TableColumn<?, ?> numReplicatCol;
-    @FXML
-    private TableColumn<?, ?> numPuitCol;
-    @FXML
-    private TableColumn<?, ?> positionCol;
-    @FXML
-    private TableColumn<?, ?> positionLigneCol;
-    @FXML
-    private TableColumn<?, ?> positionColonneCol;
+    @FXML    private TableView<?> tableVisuPosPuits;
+    @FXML    private TableColumn<?, ?> numPlaqueCol;
+    @FXML    private TableColumn<?, ?> numReplicatCol;
+    @FXML    private TableColumn<?, ?> numPuitCol;
+    @FXML    private TableColumn<?, ?> positionCol;
+    @FXML    private TableColumn<?, ?> positionLigneCol;
+    @FXML    private TableColumn<?, ?> positionColonneCol;
 
     /**
      * Initializes the controller class.

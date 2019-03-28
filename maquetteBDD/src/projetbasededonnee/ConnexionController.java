@@ -64,10 +64,11 @@ public class ConnexionController implements Initializable {
      */
     public void connexionButton(ActionEvent event) throws  IOException, SQLException
     {
+        ErreurLabel.setVisible(false);
+        ErreurLabel.setText("Veuillez remplir tous les champs");
         if (emailTF.getText().isEmpty() == false || mdpPF.getText().isEmpty() == false) { 
             //A mettre && quand on devra faire avec mail et mot de passe
-            ErreurLabel.setVisible(false);
-            ErreurLabel.setText("Veuillez remplir tous les champs");
+         
             if ("chercheur".equals(emailTF.getText())){
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("Chercheur.fxml"));
                 Parent ajoutParent = (Parent) loader.load();
@@ -76,8 +77,7 @@ public class ConnexionController implements Initializable {
                     
 //                    AcceuilChercheurController ACCo = loader.getController();
 //                    ACCo.setMain(main);
- 
-                    
+
                     //This line gets the Stage information
                 Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
@@ -88,8 +88,7 @@ public class ConnexionController implements Initializable {
             else if ("laborantin".equals(emailTF.getText())){
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("Laborantin.fxml"));
                 Parent ajoutParent = (Parent) loader.load();
-                   
-                    
+
 //                    LaborantinController LCO = loader.getController();
                 Scene ajoutScene = new Scene(ajoutParent);
 //                    LCO.setMain(main);
