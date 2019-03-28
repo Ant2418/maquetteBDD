@@ -164,7 +164,7 @@ public class LaborantinController implements Initializable {
         expLabPage.setVisible(false); 
         visuExpPage.setVisible(false);
         validationPage.setVisible(false);
-//        lancerExpButton.setDisable(true);
+        
         
         //Initialisation des colonnes pour le taleau tableAccueil du laborantin
         numExpCol.setCellValueFactory(new PropertyValueFactory<>("numExp"));
@@ -232,6 +232,8 @@ public class LaborantinController implements Initializable {
         visuExpPage.setVisible(false);
         validationPage.setVisible(false);
         
+        lancerExpButton.setDisable(true);
+        
         //initialisation tableau 'A Renouveller'
         numExpLabARCol.setCellValueFactory(new PropertyValueFactory<>("numExpLabAR"));
         nomExpLabARCol.setCellValueFactory(new PropertyValueFactory<>("nomExpLabAR"));        
@@ -246,6 +248,8 @@ public class LaborantinController implements Initializable {
         
         // ajout des data au tableau
         tableLabAR.setItems(projetbasededonnee.Data.Data.expLabListeAR);
+        
+        
     } 
     
     /**
@@ -289,6 +293,28 @@ public class LaborantinController implements Initializable {
         visuExpPage.setVisible(false);
         validationPage.setVisible(true);
     }
-       
+    
+    /**
+     * Methode qui deverouille le bouton lorsqu'une ligne est selectionee
+     */
+    public void ligneSelectionne(){
+        this.lancerExpButton.setDisable(false);
+    }
+    
+    public void visuPositionPuitOnClicked(MouseEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PopupPositionPuit.fxml"));
+        Parent ajoutParent = (Parent) loader.load();
+        
+        PopupPositionPuitController popup = loader.getController();
+        
+        Scene maScene = new Scene(ajoutParent);
+        
+        Stage newStage = new Stage();
+//        newStage.initOwner(primaryStage);
+        Stage window = newStage;
+        window.setScene(maScene);
+        window.show();
+
+    }
     
 }

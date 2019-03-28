@@ -138,7 +138,7 @@
                                           <content>
                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                    <children>
-                                                      <TableView fx:id="tableLabAR" layoutX="36.0" layoutY="26.0" prefHeight="380.0" prefWidth="830.0">
+                                                      <TableView fx:id="tableLabAR" layoutX="36.0" layoutY="26.0" onMouseClicked="#ligneSelectionne" prefHeight="380.0" prefWidth="830.0">
                                                          <columns>
                                                             <TableColumn fx:id="numExpLabARCol" prefWidth="25.0" text="N°" />
                                                             <TableColumn fx:id="nomExpLabARCol" prefWidth="156.0" text="Nom" />
@@ -290,7 +290,7 @@
                                                 <Insets bottom="10.0" left="160.0" right="160.0" top="10.0" />
                                              </padding>
                                           </GridPane>
-                                          <TableView fx:id="tableNUplet" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                          <TableView fx:id="tableNUplet" onMousePressed="#visuPositionPuitOnClicked" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                             <columns>
                                               <TableColumn fx:id="replicatCol" prefWidth="75.0" text="Réplicat" />
                                               <TableColumn fx:id="agentBioCol" prefWidth="83.0" text="   Agent&#10;biologique" />
