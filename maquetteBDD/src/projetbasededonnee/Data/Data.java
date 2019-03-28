@@ -50,8 +50,8 @@ public class Data {
     public static ObservableList<projetbasededonnee.Data.Experience> replicatListe =
         FXCollections.observableArrayList(
             new projetbasededonnee.Data.Experience("1", "Befiradol", "100", "mamalienne", "200", "1", "1"),
-            new projetbasededonnee.Data.Experience("2", "Befiradol", "120", "mamalienne", "200", "1", "1"),
-            new projetbasededonnee.Data.Experience("3", "Befiradol", "140", "mamalienne", "200", "2", "1")
+            new projetbasededonnee.Data.Experience("2", "Befiradol", "120", "mamalienne", "200", "", ""),
+            new projetbasededonnee.Data.Experience("3", "Befiradol", "140", "mamalienne", "200", "", "")
         );
     
     public static ObservableList<projetbasededonnee.Data.Experience> puitListe1 =
