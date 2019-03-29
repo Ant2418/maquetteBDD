@@ -6,8 +6,9 @@
 package projetbasededonnee;
 
 /**
- *
- * @author Ludivine
+ * Classe qui permet de gérer une personne
+ * @version 28/03/2019
+ * @author Ludivine et Antoine
  */
 public class Personne {
     
@@ -15,6 +16,22 @@ public class Personne {
     private String nom; 
     private String email; 
     private String fonction; 
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getFonction() {
+        return fonction;
+    }
     
     /**
      * Constrcteur de la classe personne

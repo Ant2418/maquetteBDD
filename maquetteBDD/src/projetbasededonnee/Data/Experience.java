@@ -8,8 +8,9 @@ package projetbasededonnee.Data;
 import javafx.scene.control.CheckBox;
 
 /**
- *
- * @author Antoine
+ * Classe qui permet de créer des expériences pour le peuplage des tableaux
+ * @version 28/03/2019
+ * @author Antoine et Ludivine
  */
 public class Experience {
     // Pour la table d'acceuil des laborantins
@@ -154,31 +155,58 @@ public class Experience {
      * =========================================================================
      */
     
-    
+    /**
+     * Getter pour la checkbox
+     * @return checkbox
+     */
     public CheckBox getCheckbox() {
         return checkbox;
     }
 
+    /**
+     * Setter pour la checkbox
+     * @param checkbox 
+     */
     public void setCheckbox(CheckBox checkbox) {
         this.checkbox = checkbox;
     }
     
-      public String getNumExp() {
+    /**
+     * Getter pour le numero de l'expérience
+     * @return numExp
+     */
+    public String getNumExp() {
         return numExp;
     }
 
+    /**
+     * Setter pour le numéro de l'expérience
+     * @param numExp 
+     */
     public void setNumExp(String numExp) {
         this.numExp = numExp;
     }
 
+    /**
+     * Setter pour le nom de l'expérience
+     * @return nomExp
+     */
     public String getNomExp() {
         return nomExp;
     }
 
+    /**
+     * Setter pour le nom de l'expérience
+     * @param nomExp 
+     */
     public void setNomExp(String nomExp) {
         this.nomExp = nomExp;
     }
 
+    /**
+     * getter pour l'état de l'expérience
+     * @return etat
+     */
     public String getEtat() {
         return etat;
     }

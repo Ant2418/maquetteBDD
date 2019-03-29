@@ -11,8 +11,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 /**
- *
- * @author Ludivine
+ * Classe qui permet de générer la connexion
+ * @version 28/03/2019
+ * @author Ludivine et Antoine
  */
 public class Connexion {
      
@@ -42,11 +43,10 @@ public class Connexion {
     }
     /**
      * Getter de la connection
-     * @return 
+     * @return con
      */
-    public Connection getConnection(){
-        return con;
-        
+    public Connection getCon(){
+        return con;  
     }
    
 }

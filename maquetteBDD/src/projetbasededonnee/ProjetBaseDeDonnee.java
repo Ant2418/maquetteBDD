@@ -13,7 +13,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ * Classe principale du projet BDD IHM, gestion d'un laboratoire. Un chercheur ou
+ * un laborantin peut se connecter.
+ * @verison 28/03/2019
  * @author Antoine and Ludivine
  */
 public class ProjetBaseDeDonnee extends Application {
@@ -22,18 +24,28 @@ public class ProjetBaseDeDonnee extends Application {
 //    private String prenom;
 //    private String email; 
 //    private String fonction; 
-//    private Connection con; 
-//    private Personne pers; 
+
+      private Personne pers;
+      private Connexion maCo; 
     
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("connexion.fxml"));
         Parent root = (Parent) loader.load();
-        
         // Permet d'associer ton controleur à page à charger pour faire le lien
-//        ConnexionController coCo = loader.getController();
-        Scene scene = new Scene(root);
+        ConnexionController coCo = loader.getController();
 
+        // permet de faire la connection et de la stocker dans l'appli
+        maCo = new Connexion();
+      
+        Scene scene = new Scene(root);
+        
+        coCo.setConnexion(maCo); 
+        
+        //CREER UN OBJECT PERSONNE 
+        pers= new Personne("0", "0", "0", "0");
+        coCo.setPersonne(pers); 
+        
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -46,9 +58,14 @@ public class ProjetBaseDeDonnee extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+        public Personne getPersonne(){
+        return pers; 
+    }
     
-//    public Personne getPersonne(){
-//        return pers; 
-//    }
+    public Connexion getConnect(){
+        return maCo; 
+    }
+
+    
 
 }

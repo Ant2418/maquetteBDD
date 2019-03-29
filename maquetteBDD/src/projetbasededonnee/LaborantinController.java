@@ -7,6 +7,7 @@ package projetbasededonnee;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,6 +33,7 @@ import projetbasededonnee.Data.Experience;
 /**
  * FXML Controller class de Laborantin.fxml
  * Cette partie permet de gerer les differents affichage de la partie laborantin
+ * @version 28/03/2019
  * @author Antoine et Ludivine
  */
 public class LaborantinController implements Initializable {
@@ -154,7 +156,8 @@ public class LaborantinController implements Initializable {
     
     @FXML    private Button lancerExpButton;
     
-    private ProjetBaseDeDonnee main;
+    private Connexion connex; 
+    private Personne personne; 
     
     /**
      * Initializes the controller class.
@@ -194,14 +197,18 @@ public class LaborantinController implements Initializable {
      * @throws IOException 
      */
     @FXML
-    public void deconnexionEvent(MouseEvent event) throws IOException {
+    public void deconnexionEvent(MouseEvent event) throws IOException, SQLException {
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("connexion.fxml"));
-        Parent ajoutParent = (Parent) loader.load();
-
+        Parent ajoutParent = (Parent) loader.load();;
+                
+        ConnexionController CCO= loader.getController();
+        
         Scene ajoutSceneConn = new Scene(ajoutParent);
         
-//        ConnexionController CCO= loader.getController();
-//        CCO.setMain(main);
+        CCO.setConnexion(connex);
+        CCO.setPersonne(personne); 
+        
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(ajoutSceneConn);
@@ -320,4 +327,12 @@ public class LaborantinController implements Initializable {
 
     }
     
+    public void setConnection(Connexion cone)
+    {
+        connex = cone;
+    } 
+    
+    public void setPersonne(Personne personneE){
+        personne=personneE; 
+    }
 }

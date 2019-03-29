@@ -18,9 +18,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import projetbasededonnee.Data.Experience;
 
 /**
- * FXML Controller class
- *
- * @author Antoine
+ * FXML Controller class pour la popup de la position des puits
+ * @verison 28/03/2019
+ * @author Antoine et Ludivine
  */
 public class PopupPositionPuitController implements Initializable {
 
@@ -34,6 +34,10 @@ public class PopupPositionPuitController implements Initializable {
 
     private Connexion laCo;
 
+    /**
+     * Setter pour la connexion
+     * @param laCo 
+     */
     public void setLaCo(Connexion laCo) {
         this.laCo = laCo;
     }
@@ -56,7 +60,6 @@ public class PopupPositionPuitController implements Initializable {
         {
             colonneListe.add(Integer.toString(i));
         }
-        
         
         // initialisation des colonnes du tableau
         numPlaqueCol.setCellValueFactory(new PropertyValueFactory<>("numPlaque"));

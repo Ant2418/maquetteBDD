@@ -9,8 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- *
- * @author Antoine
+ * Permet de génerer des données pour les tableaux
+ * @version 28/03/2019
+ * @author Antoine et Ludivine
  */
 public class Data {
     /**
@@ -20,9 +21,9 @@ public class Data {
      */   
     public static ObservableList<projetbasededonnee.Data.Experience> expListe =
         FXCollections.observableArrayList(
-            new projetbasededonnee.Data.Experience("1", "Dosage BSA", "En attente", "SMITH Ludivine ", "Toxicité", "Colorimétrique", "10", "3", "3", "9"),
-            new projetbasededonnee.Data.Experience("2", "Dosage PAL", "En attente", "DURANT Bernard ", "Toxicité", "Colorimétrique", "20", "3", "5", "15"),
-            new projetbasededonnee.Data.Experience("3", "Dosage Hmg", "A renouveler", "JEAN Lucas ", "Toxicité", "Colorimétrique", "15", "3", "2", "6")
+//            new projetbasededonnee.Data.Experience("1", "Dosage BSA", "En attente", "SMITH Ludivine ", "Toxicité", "Colorimétrique", "10", "3", "3", "9"),
+//            new projetbasededonnee.Data.Experience("2", "Dosage PAL", "En attente", "DURANT Bernard ", "Toxicité", "Colorimétrique", "20", "3", "5", "15"),
+//            new projetbasededonnee.Data.Experience("3", "Dosage Hmg", "A renouveler", "JEAN Lucas ", "Toxicité", "Colorimétrique", "15", "3", "2", "6")
         );
     
     public static ObservableList<projetbasededonnee.Data.Experience> expCherListe =
