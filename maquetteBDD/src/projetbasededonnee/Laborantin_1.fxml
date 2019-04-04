@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.LaborantinController">
+   <children>
+      <SplitPane dividerPositions="0.05" prefHeight="600.0" prefWidth="1000.0">
+         <items>
+            <VBox fx:id="menuVBox" alignment="TOP_CENTER" prefHeight="750.0" prefWidth="50.0" style="-fx-background-color: #979797;">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </VBox.margin>
+                     <image>
+                        <Image url="@user.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="deconnexionIV" fitHeight="45.0" fitWidth="45.0" layoutX="10.0" layoutY="30.0" onMouseClicked="#deconnexionEvent" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="50.0" />
+                     </VBox.margin>
+                     <image>
+                        <Image url="@power.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="home" fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="150.0" onMouseClicked="#homeEvent" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@home.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="experience" fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="205.0" onMouseClicked="#experienceLabEvent" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@flask.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="resultat" fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="260.0" onMouseClicked="#validationEvent" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@analysis.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </ImageView>
+               </children>
+            </VBox>
+            <BorderPane>
+               <center>
+                  <AnchorPane prefHeight="600.0" prefWidth="950.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane prefHeight="600.0" prefWidth="950.0">
+                           <children>
+                              <BorderPane prefHeight="600.0" prefWidth="950.0">
+                                 <top>
+                                    <VBox fx:id="titleAcceuil1" alignment="CENTER" prefHeight="100.0" prefWidth="950.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label text="Accueil Labo">
+                                             <font>
+                                                <Font size="48.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                 </top>
+                                 <center>
+                                    <GridPane BorderPane.alignment="CENTER">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <BorderPane.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </BorderPane.margin>
+                                       <children>
+                                          <TableView prefHeight="200.0" prefWidth="200.0">
+                                            <columns>
+                                              <TableColumn prefWidth="75.0" text="N° plaque" />
+                                              <TableColumn prefWidth="113.0" text="Type de plaque" />
+                                                <TableColumn prefWidth="113.0" text="Puits disponible" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                    </GridPane>
+                                 </center>
+                              </BorderPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="homePageLab" prefHeight="600.0" prefWidth="950.0" visible="false">
+                           <children>
+                              <BorderPane prefHeight="600.0" prefWidth="942.0">
+                                 <center>
+                                    <TableView fx:id="tableAccueil" prefHeight="616.0" prefWidth="941.0" BorderPane.alignment="CENTER">
+                                       <columns>
+                                          <TableColumn fx:id="numExpCol" prefWidth="25.0" text="N°" />
+                                          <TableColumn fx:id="nomExpCol" prefWidth="156.0" text="Nom" />
+                                          <TableColumn fx:id="etatCol" text="Etat" />
+                                          <TableColumn fx:id="labCol" prefWidth="162.0" text="Chercheur" />
+                                          <TableColumn fx:id="typeExpCol" prefWidth="92.0" text="      Type&#10;d'expérience" />
+                                          <TableColumn fx:id="typeAnaCol" prefWidth="104.0" text="   Type&#10;d'analyse" />
+                                          <TableColumn fx:id="dureeCol" prefWidth="46.0" text="Durée&#10;(min)" />
+                                          <TableColumn fx:id="nupletCol" prefWidth="61.0" text="Nombre&#10;réplicat" />
+                                          <TableColumn fx:id="puitCol" prefWidth="82.0" text="    Nombre&#10;puit/replicat&#10;" />
+                                          <TableColumn fx:id="totalPuitCol" prefWidth="50.0" text="Total&#10;puits" />
+                                          <TableColumn fx:id="checkCol" prefWidth="50.0" />
+                                       </columns>
+                                       <BorderPane.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </BorderPane.margin>
+                                    </TableView>
+                                 </center>
+                                 <top>
+                                    <VBox fx:id="titleAcceuil" alignment="CENTER" prefHeight="100.0" prefWidth="950.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label text="Accueil">
+                                             <font>
+                                                <Font size="48.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                 </top>
+                                 <bottom>
+                                    <Button mnemonicParsing="false" onMouseClicked="#experienceLabEvent" text="Ajouter à mes expériences" BorderPane.alignment="CENTER_RIGHT">
+                                       <BorderPane.margin>
+                                          <Insets bottom="20.0" right="20.0" />
+                                       </BorderPane.margin>
+                                    </Button>
+                                 </bottom>
+                              </BorderPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="expLabPage" onMouseClicked="#experienceLabEvent" prefHeight="600.0" prefWidth="950.0" visible="false">
+                           <children>
+                              <BorderPane prefHeight="600.0" prefWidth="942.0">
+                                 <top>
+                                    <VBox fx:id="titleAcceuil2" alignment="CENTER" prefHeight="100.0" prefWidth="950.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label text="Mes expériences">
+                                             <font>
+                                                <Font size="48.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                 </top>
+                                 <center>
+                                    <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                                      <tabs>
+                                        <Tab fx:id="tableARenouveller" text="A Renouveler">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView fx:id="tableLabAR" layoutX="36.0" layoutY="26.0" onMouseClicked="#ligneSelectionne" prefHeight="380.0" prefWidth="830.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="numExpLabARCol" prefWidth="25.0" text="N°" />
+                                                            <TableColumn fx:id="nomExpLabARCol" prefWidth="156.0" text="Nom" />
+                                                            <TableColumn fx:id="chercheurLabARCol" prefWidth="162.0" text="Chercheur" />
+                                                            <TableColumn fx:id="typeExpLabARCol" prefWidth="92.0" text="      Type&#10;d'expérience" />
+                                                            <TableColumn fx:id="typeAnaLabARCol" prefWidth="104.0" text="   Type&#10;d'analyse" />
+                                                            <TableColumn fx:id="dureeLabARCol" prefWidth="46.0" text="Durée&#10;(min)" />
+                                                            <TableColumn fx:id="nupletLabARCol" prefWidth="61.0" text="Nombre&#10;réplicat" />
+                                                            <TableColumn fx:id="puitLabARCol" prefWidth="82.0" text="    Nombre&#10;puit/replicat&#10;" />
+                                                            <TableColumn fx:id="totalPuitLabARCol" prefWidth="50.0" text="Total&#10;puits" />
+                                                            <TableColumn fx:id="checkLabARCol" prefWidth="50.0" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <Button fx:id="lancerExpButton" layoutX="749.0" layoutY="412.0" mnemonicParsing="false" onAction="#lancerExpEvent" text="Lancer l'expérience" />
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                          <Tab fx:id="tableEnAttente" text="En attente">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView fx:id="tableLabEA" layoutX="36.0" layoutY="26.0" prefHeight="380.0" prefWidth="830.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="numExpLabEACol" prefWidth="25.0" text="N°" />
+                                                            <TableColumn fx:id="nomExpLabEACol" prefWidth="156.0" text="Nom" />
+                                                            <TableColumn fx:id="chercheurLabEACol" prefWidth="162.0" text="Chercheur" />
+                                                            <TableColumn fx:id="typeExpLabEACol" prefWidth="92.0" text="      Type&#10;d'expérience" />
+                                                            <TableColumn fx:id="typeAnaLabEACol" prefWidth="104.0" text="   Type&#10;d'analyse" />
+                                                            <TableColumn fx:id="dureeLabEACol" prefWidth="46.0" text="Durée&#10;(min)" />
+                                                            <TableColumn fx:id="nupletLabEACol" prefWidth="61.0" text="Nombre&#10;réplicat" />
+                                                            <TableColumn fx:id="puitLabEACol" prefWidth="82.0" text="    Nombre&#10;puit/replicat&#10;" />
+                                                            <TableColumn fx:id="totalPuitLabEACol" prefWidth="50.0" text="Total&#10;puits" />
+                                                            <TableColumn fx:id="checkLabCol1" prefWidth="50.0" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <Button fx:id="lancerExpButton" layoutX="749.0" layoutY="412.0" mnemonicParsing="false" onAction="#lancerExpEvent" text="Lancer l'expérience" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                          <Tab fx:id="tableEnCours" text="En cours">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView fx:id="tableLabEC" layoutX="61.0" layoutY="26.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="numExpLabECCol" prefWidth="25.0" text="N°" />
+                                                            <TableColumn fx:id="nomExpLabECCol1" prefWidth="156.0" text="Nom" />
+                                                            <TableColumn fx:id="chercheurLabECCol1" prefWidth="162.0" text="Chercheur" />
+                                                            <TableColumn fx:id="typeExpLabECCol1" prefWidth="92.0" text="      Type&#10;d'expérience" />
+                                                            <TableColumn fx:id="typeAnaLabECCol1" prefWidth="104.0" text="   Type&#10;d'analyse" />
+                                                            <TableColumn fx:id="dureeLabECCol1" prefWidth="46.0" text="Durée&#10;(min)" />
+                                                            <TableColumn fx:id="nupletLabECCol1" prefWidth="61.0" text="Nombre&#10;réplicat" />
+                                                            <TableColumn fx:id="puitLabECCol1" prefWidth="82.0" text="    Nombre&#10;puit/replicat&#10;" />
+                                                            <TableColumn fx:id="totalPuitLabECCol1" prefWidth="50.0" text="Total&#10;puits" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                          <Tab fx:id="TableTermine" text="Terminé">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                             </content>
+                                          </Tab>
+                                          <Tab fx:id="TableFacture" text="Facturé">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                             </content>
+                                          </Tab>
+                                      </tabs>
+                                       <BorderPane.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" />
+                                       </BorderPane.margin>
+                                    </TabPane>
+                                 </center>
+                              </BorderPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="visuExpPage" prefHeight="600.0" prefWidth="950.0" visible="false">
+                           <children>
+                              <BorderPane prefHeight="600.0" prefWidth="950.0">
+                                 <top>
+                                    <VBox alignment="CENTER" prefHeight="100.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label text="Lancer une expérience">
+                                             <font>
+                                                <Font size="48.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                 </top>
+                                 <center>
+                                    <GridPane BorderPane.alignment="CENTER">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <GridPane>
+                                            <columnConstraints>
+                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Type de plaque : " GridPane.rowIndex="1" />
+                                                <Label text="Durée de l'expérience : " GridPane.rowIndex="2" />
+                                                <Label text="Suivi dans le temps : " GridPane.rowIndex="3" />
+                                                <Label text="Fréquence : " GridPane.rowIndex="4" />
+                                                <Label text="nombre de puits / réplicat : " GridPane.rowIndex="5" />
+                                                <Label fx:id="typePlaqueLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label fx:id="dureeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label fx:id="suiviLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label fx:id="frequenceLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label fx:id="nbPuitReplicatLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="Type d'expérience : " GridPane.columnIndex="2" />
+                                                <Label text="Type d'analyse : " GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                <Label text="Bais 1 : " GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                <Label text="Biais 2 : " GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                                <Label text="Biais 3 : " GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                                <Label fx:id="typeExpLabel" text="Label" GridPane.columnIndex="3" />
+                                                <Label fx:id="typeAnaLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                                <Label fx:id="alpha1Label" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                                <Label fx:id="alpha2Label" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                                <Label fx:id="alpha3Label" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                                <Label text="Date de transmission : " GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                                <Label fx:id="debutExpLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                                <Label layoutX="237.0" layoutY="60.0" text="Nom de l'expérience : " />
+                                                <Label fx:id="nomLabel" text="Label" GridPane.columnIndex="1" />
+                                             </children>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                             <padding>
+                                                <Insets bottom="10.0" left="160.0" right="160.0" top="10.0" />
+                                             </padding>
+                                          </GridPane>
+                                          <TableView fx:id="tableNUplet" onMousePressed="#visuPositionPuitOnClicked" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                            <columns>
+                                              <TableColumn fx:id="replicatCol" prefWidth="75.0" text="Réplicat" />
+                                              <TableColumn fx:id="agentBioCol" prefWidth="83.0" text="   Agent&#10;biologique" />
+                                                <TableColumn fx:id="qteAgentBioCol" prefWidth="124.33334350585938" text="        Quantité&#10;d'agent biologique" />
+                                                <TableColumn fx:id="typeCellCol" prefWidth="100.66668701171875" text="Type de cellule" />
+                                                <TableColumn fx:id="qteCellCol" prefWidth="78.66668701171875" text="Quantité&#10;de cellule" />
+                                                <TableColumn fx:id="plaqueCol" prefWidth="77.3333740234375" text="Plaque" />
+                                                <TableColumn fx:id="photometreCol" prefWidth="86.33331298828125" text="Photomètre" />
+                                            </columns>
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" left="160.0" right="160.0" top="10.0" />
+                                             </GridPane.margin>
+                                             <tooltip>
+                                                <Tooltip text="Double clique sur une ligne permet de visualiser &#10;où sont vos réplicats dans la plaque que vous &#10;avez choisi" />
+                                             </tooltip>
+                                          </TableView>
+                                       </children>
+                                    </GridPane>
+                                 </center>
+                                 <bottom>
+                                    <GridPane BorderPane.alignment="CENTER">
+                                       <columnConstraints>
+                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <ImageView fx:id="validerIV" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#homeEvent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                                             <image>
+                                                <Image url="@checked.png" />
+                                             </image>
+                                             <GridPane.margin>
+                                                <Insets bottom="20.0" right="20.0" />
+                                             </GridPane.margin>
+                                          </ImageView>
+                                          <Button mnemonicParsing="false" text="Ajouter une plaque">
+                                             <GridPane.margin>
+                                                <Insets bottom="30.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                       </children>
+                                    </GridPane>
+                                 </bottom>
+                              </BorderPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="validationPage" onMouseClicked="#validationEvent" prefHeight="600.0" prefWidth="950.0" visible="false">
+                           <children>
+                              <BorderPane prefHeight="600.0" prefWidth="950.0">
+                                 <top>
+                                    <VBox fx:id="titleAcceuil11" alignment="CENTER" prefHeight="100.0" prefWidth="950.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label text="Validation des résultats">
+                                             <font>
+                                                <Font size="48.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox fx:id="experienceCB" prefWidth="150.0" promptText="Expérience">
+                                             <VBox.margin>
+                                                <Insets bottom="20.0" right="755.0" top="20.0" />
+                                             </VBox.margin>
+                                          </ComboBox>
+                                       </children>
+                                    </VBox>
+                                 </top>
+                                 <center>
+                                    <TableView fx:id="tableResultat" BorderPane.alignment="CENTER">
+                                       <columns>
+                                          <TableColumn fx:id="resultExpCol" prefWidth="75.0" text="  Résultat&#10;Expérience" />
+                                          <TableColumn fx:id="resultatReplicatCol" prefWidth="738.3333129882812" text="Résultat des réplicats">
+                                             <columns>
+                                                <TableColumn fx:id="decisionCol" prefWidth="75.0" text="Décision" />
+                                                <TableColumn fx:id="couleurCol" prefWidth="75.0" text="Couleur" />
+                                                <TableColumn fx:id="moyCOl" prefWidth="275.0" text="Moyenne">
+                                                   <columns>
+                                                      <TableColumn fx:id="moyRougeCol" prefWidth="75.0" text="Rouge" />
+                                                      <TableColumn fx:id="moyVertCol" prefWidth="75.0" text="Vert" />
+                                                      <TableColumn fx:id="moyBleuCol" prefWidth="75.0" text="Bleu" />
+                                                      <TableColumn fx:id="moyTransCol" prefWidth="75.0" text="Transparent" />
+                                                   </columns>
+                                                </TableColumn>
+                                                <TableColumn fx:id="sdCol" prefWidth="275.0" text="Ecart type">
+                                                   <columns>
+                                                      <TableColumn fx:id="sdRougeCol1" prefWidth="75.0" text="Rouge" />
+                                                      <TableColumn fx:id="sdVertCol1" prefWidth="75.0" text="Vert" />
+                                                      <TableColumn fx:id="sdBleuCol1" prefWidth="75.0" text="Bleu" />
+                                                      <TableColumn fx:id="sdTransCol1" prefWidth="75.0" text="Transparent" />
+                                                   </columns>
+                                                </TableColumn>
+                                             </columns>
+                                          </TableColumn>
+                                          <TableColumn fx:id="resultExpCol1" prefWidth="75.0" text="Couleur&#10;du puit" />
+                                       </columns>
+                                       <BorderPane.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" />
+                                       </BorderPane.margin>
+                                    </TableView>
+                                 </center>
+                                 <bottom>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <ImageView fx:id="refuserIV" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@multiply.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <ImageView fx:id="validerResultat" fitHeight="60.0" fitWidth="60.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@checked.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </HBox>
+                                 </bottom>
+                              </BorderPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

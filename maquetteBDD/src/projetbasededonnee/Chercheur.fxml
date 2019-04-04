@@ -4,6 +4,8 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -19,11 +21,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.AcceuilChercheurController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.AcceuilChercheurController">
    <children>
-      <SplitPane dividerPositions="0.05" prefHeight="600.0" prefWidth="1000.0">
+      <SplitPane dividerPositions="0.05" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
-            <VBox fx:id="menuVBox" alignment="TOP_CENTER" prefHeight="600.0" prefWidth="50.0" style="-fx-background-color: #979797;">
+            <VBox fx:id="menuVBox" alignment="TOP_CENTER" prefWidth="50.0" style="-fx-background-color: #979797;" SplitPane.resizableWithParent="false">
                <children>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <VBox.margin>
@@ -59,13 +61,13 @@
                   </ImageView>
                </children>
             </VBox>
-            <BorderPane prefHeight="600.0">
+            <BorderPane SplitPane.resizableWithParent="false">
                <center>
                   <AnchorPane prefHeight="600.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="homePageChercheur" prefHeight="600.0" prefWidth="950.0">
+                        <AnchorPane fx:id="homePageChercheur" prefHeight="556.0" prefWidth="950.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <BorderPane prefHeight="600.0" prefWidth="950.0">
+                              <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <center>
                                     <TableView fx:id="tableViewAccueil" BorderPane.alignment="CENTER">
                                        <columns>
@@ -87,6 +89,9 @@
                                        <BorderPane.margin>
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                        </BorderPane.margin>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
                                     </TableView>
                                  </center>
                                  <top>
@@ -103,11 +108,11 @@
                               </BorderPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="ajoutExpPage" prefHeight="600.0" prefWidth="950.0" visible="false">
+                        <AnchorPane fx:id="ajoutExpPage" prefHeight="600.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <BorderPane prefHeight="600.0" prefWidth="950.0">
+                              <BorderPane prefHeight="600.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
-                                    <VBox alignment="CENTER" prefHeight="100.0" BorderPane.alignment="CENTER">
+                                    <VBox fx:id="ErreurAjExp_Label" alignment="CENTER" prefHeight="100.0" BorderPane.alignment="CENTER">
                                        <children>
                                           <Label fx:id="AddExpLabel" text="Ajouter une expérience">
                                              <font>
@@ -134,32 +139,32 @@
                                         <RowConstraints maxHeight="385.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <ComboBox fx:id="PlaqueCombo" prefWidth="150.0" promptText="Type de plaque" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label fx:id="nbPuitReplicatLabel1" text="Nom de l'expérience *   " />
+                                          <TextField fx:id="nomExpTextField1" promptText="Nom de l'expérience" GridPane.columnIndex="1" />
+                                          <Label fx:id="nbPuitReplicatLabel" text="Nombre de puits par réplicat *   " GridPane.rowIndex="1" />
+                                          <Spinner fx:id="puitReplicatSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <Label text="Type de plaque *   " GridPane.rowIndex="2" />
+                                          <ComboBox fx:id="PlaqueCombo" prefWidth="150.0" promptText="Type de plaque" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <Label text="Durée de l'expérience * (min)   " GridPane.rowIndex="3" />
-                                          <TextField fx:id="dureeTextfield" prefHeight="25.0" prefWidth="188.0" promptText="MM" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <Spinner fx:id="dureeSpinner" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <Label fx:id="suiviLabel" text="Suivi dans le temps *   " GridPane.rowIndex="4" />
+                                          <RadioButton fx:id="OuiSuiviButton" mnemonicParsing="false" onAction="#OuiSuiviButtonEvent" text="Oui" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                                           <RadioButton fx:id="NonSuiviButton" mnemonicParsing="false" onAction="#NonSuiviButtonEvent" text="Non" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                                              <GridPane.margin>
                                                 <Insets left="50.0" />
                                              </GridPane.margin></RadioButton>
-                                          <RadioButton fx:id="OuiSuiviButton" mnemonicParsing="false" onAction="#OuiSuiviButtonEvent" text="Oui" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                                           <Label fx:id="FreqLabel" text="Fréquence*   " visible="false" GridPane.rowIndex="5" />
-                                          <TextField fx:id="frequTextField" promptText="Fréquence" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <Label fx:id="nbPuitReplicatLabel" text="Nombre de puits par réplicat *   " GridPane.rowIndex="1" />
-                                          <TextField fx:id="puitReplicatTextField" promptText="Nombre de puits" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Spinner fx:id="frequTextField" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                           <Label fx:id="typeExpLabel" text="Type d'expérience *   " GridPane.columnIndex="2" />
-                                          <Label fx:id="typeAnaLabel" text="Type d'analyse *   " GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <Label fx:id="alpha1Label" text="Biais 1 *   " GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <Label fx:id="alpha2Label" text="Biais 2 *   " GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                          <Label fx:id="Alpha3Label" text="Biais 3*   " visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                           <ComboBox fx:id="TypeExpCombo" prefWidth="150.0" promptText="Type d'expérience" GridPane.columnIndex="3" />
+                                          <Label fx:id="typeAnaLabel" text="Type d'analyse *   " GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                           <ComboBox fx:id="TypeAnalyseCombo" prefWidth="150.0" promptText="Type d'analyse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                          <TextField fx:id="Alpha1TextField" promptText="Alpha 1" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                          <TextField fx:id="Alpha2TextField" promptText="Alpha 2" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                          <TextField fx:id="Alpha3TextField" promptText="Alpha 3" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                          <Label fx:id="nbPuitReplicatLabel1" text="Nom de l'expérience *   " />
-                                          <TextField fx:id="nomExpTextField1" promptText="Nom de l'expérience" GridPane.columnIndex="1" />
+                                          <Label fx:id="alpha1Label" text="Biais 1 *   " GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <Spinner fx:id="Alpha1Spinner" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <Label fx:id="alpha2Label" text="Biais 2 *   " GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <Spinner fx:id="Alpha2Spinner" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <Label fx:id="Alpha3Label" text="Biais 3*   " visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <Spinner fx:id="Alpha3Spinner" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                        </children>
                                        <padding>
                                           <Insets bottom="100.0" left="125.0" right="125.0" top="100.0" />
@@ -167,20 +172,35 @@
                                     </GridPane>
                                  </center>
                                  <bottom>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" onMouseClicked="#AddUpletEvent" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER_RIGHT">
-                                       <image>
-                                          <Image url="@checked.png" />
-                                       </image>
+                                    <GridPane BorderPane.alignment="CENTER">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="831.0" minWidth="10.0" prefWidth="831.0" />
+                                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="459.0" minWidth="10.0" prefWidth="99.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <ImageView fitHeight="60.0" fitWidth="60.0" onMouseClicked="#AddUpletEvent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                                             <image>
+                                                <Image url="@checked.png" />
+                                             </image>
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" right="10.0" />
+                                             </GridPane.margin>
+                                          </ImageView>
+                                          <Label fx:id="ErreurExp_Label" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Label" textAlignment="RIGHT" visible="false" GridPane.halignment="RIGHT" />
+                                       </children>
                                        <BorderPane.margin>
-                                          <Insets bottom="20.0" right="20.0" />
+                                          <Insets bottom="30.0" right="20.0" />
                                        </BorderPane.margin>
-                                    </ImageView>
+                                    </GridPane>
                                  </bottom>
                               </BorderPane>
                            </children></AnchorPane>
-                        <AnchorPane fx:id="AddUpletPage" prefHeight="600.0" prefWidth="950.0" visible="false">
+                        <AnchorPane fx:id="AddUpletPage" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <BorderPane prefHeight="600.0" prefWidth="950.0">
+                              <BorderPane prefHeight="600.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
                                     <VBox fx:id="titleAcceuil1" alignment="CENTER" prefHeight="100.0" prefWidth="950.0" BorderPane.alignment="CENTER">
                                        <children>
@@ -193,14 +213,16 @@
                                     </VBox>
                                  </top>
                                  <center>
-                                    <GridPane BorderPane.alignment="CENTER">
+                                    <GridPane prefHeight="455.0" prefWidth="950.0" BorderPane.alignment="CENTER">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="177.0" minHeight="10.0" prefHeight="177.0" vgrow="SOMETIMES" />
+                                          <RowConstraints vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="121.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="128.0" minHeight="0.0" prefHeight="2.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="177.0" minHeight="10.0" prefHeight="174.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
                                           <GridPane>
@@ -216,14 +238,16 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
+                                                <Label text="Nom de l'expérience : " />
                                                 <Label text="Type de plaque : " GridPane.rowIndex="1" />
                                                 <Label text="Durée de l'expérience : " GridPane.rowIndex="2" />
                                                 <Label text="Suivi dans le temps : " GridPane.rowIndex="3" />
                                                 <Label text="Fréquence : " GridPane.rowIndex="4" />
                                                 <Label text="nombre de puits / réplicat : " GridPane.rowIndex="5" />
+                                                <Label fx:id="nomExpLable" text="Label" GridPane.columnIndex="1" />
                                                 <Label fx:id="typePlaqueLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <Label fx:id="dureeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <Label fx:id="suiviLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -234,24 +258,76 @@
                                                 <Label text="Bais 1 : " GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                                 <Label text="Biais 2 : " GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                                 <Label text="Biais 3 : " GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                                <Label text="Début de l'expérience : " GridPane.columnIndex="2" GridPane.rowIndex="5" />
                                                 <Label fx:id="typeExpLabel" text="Label" GridPane.columnIndex="3" />
                                                 <Label fx:id="typeAnaLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                                 <Label fx:id="alpha1Label" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                                 <Label fx:id="alpha2Label" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                                 <Label fx:id="alpha3Label" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                                <Label text="Début de l'expérience : " GridPane.columnIndex="2" GridPane.rowIndex="5" />
                                                 <Label fx:id="debutExpLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                                <Label text="Nom de l'expérience : " />
-                                                <Label fx:id="nomExpLable" text="Label" GridPane.columnIndex="1" />
                                              </children>
                                              <opaqueInsets>
                                                 <Insets />
                                              </opaqueInsets>
-                                             <padding>
-                                                <Insets bottom="10.0" left="160.0" right="160.0" top="10.0" />
-                                             </padding>
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" />
+                                             </GridPane.margin>
                                           </GridPane>
-                                          <TableView fx:id="tableNUplet" prefHeight="99.0" prefWidth="630.0" GridPane.rowIndex="2">
+                                          <Separator prefWidth="200.0" GridPane.rowIndex="1" />
+                                          <GridPane GridPane.rowIndex="2">
+                                            <columnConstraints>
+                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="389.0" minWidth="10.0" prefWidth="205.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="336.0" minWidth="10.0" prefWidth="216.0" />
+                                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="355.0" minWidth="10.0" prefWidth="217.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="412.0" minWidth="10.0" prefWidth="164.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="207.0" minWidth="10.0" prefWidth="89.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="48.0" minHeight="9.0" prefHeight="9.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="48.0" minHeight="9.0" prefHeight="9.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="45.0" minHeight="0.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label layoutX="10.0" layoutY="57.0" text="Agent biologique">
+                                                   <GridPane.margin>
+                                                      <Insets right="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <ComboBox layoutX="248.0" layoutY="53.0" prefWidth="200.0" promptText="Faites votre choix" GridPane.columnIndex="1" />
+                                                <Label layoutX="10.0" layoutY="20.0" text="Quantité d'agent biologique" GridPane.columnIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets right="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Spinner GridPane.columnIndex="3" />
+                                                <Label text="Type cellulaire" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets right="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <ComboBox prefHeight="25.0" prefWidth="200.0" promptText="Faites votre choix" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label layoutX="486.0" layoutY="20.0" text="Quanitité de celulle" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets right="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Spinner GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                                <ImageView fx:id="resuserIV" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#AddUpletEvent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                                   <image>
+                                                      <Image url="@plus.png" />
+                                                   </image>
+                                                   <GridPane.margin>
+                                                      <Insets bottom="15.0" left="20.0" />
+                                                   </GridPane.margin>
+                                                </ImageView>
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets bottom="30.0" left="5.0" right="30.0" top="20.0" />
+                                             </GridPane.margin>
+                                          </GridPane>
+                                          <TableView fx:id="tableNUplet" GridPane.rowIndex="4">
                                              <columns>
                                                 <TableColumn fx:id="replicatCol" prefWidth="111.0" text="Réplicat" />
                                                 <TableColumn fx:id="agentBioCol" prefWidth="141.0" text="   Agent&#10;biologique" />
@@ -260,75 +336,33 @@
                                                 <TableColumn fx:id="qteCellCol" prefWidth="133.0" text="Quantité&#10;de cellule" />
                                              </columns>
                                              <GridPane.margin>
-                                                <Insets bottom="10.0" left="160.0" right="160.0" top="10.0" />
+                                                <Insets bottom="10.0" left="160.0" right="160.0" top="30.0" />
                                              </GridPane.margin>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
                                           </TableView>
-                                          <GridPane GridPane.rowIndex="1">
-                                            <columnConstraints>
-                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <Label text="Type cellulaire" GridPane.rowIndex="1">
-                                                   <GridPane.margin>
-                                                      <Insets right="10.0" />
-                                                   </GridPane.margin>
-                                                </Label>
-                                                <Label layoutX="10.0" layoutY="57.0" text="Agent biologique">
-                                                   <GridPane.margin>
-                                                      <Insets right="10.0" />
-                                                   </GridPane.margin>
-                                                </Label>
-                                                <Label layoutX="10.0" layoutY="20.0" text="Quantité d'agent biologique" GridPane.columnIndex="2">
-                                                   <GridPane.margin>
-                                                      <Insets right="10.0" />
-                                                   </GridPane.margin>
-                                                </Label>
-                                                <Label layoutX="486.0" layoutY="20.0" text="Quanitité de celulle" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                                   <GridPane.margin>
-                                                      <Insets right="10.0" />
-                                                   </GridPane.margin>
-                                                </Label>
-                                                <ComboBox prefWidth="200.0" promptText="Faites votre choix" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <ComboBox layoutX="248.0" layoutY="53.0" prefWidth="200.0" promptText="Faites votre choix" GridPane.columnIndex="1" />
-                                                <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                                <TextField layoutX="723.0" layoutY="53.0" GridPane.columnIndex="3" />
-                                             </children>
-                                             <GridPane.margin>
-                                                <Insets left="5.0" right="100.0" />
-                                             </GridPane.margin>
-                                          </GridPane>
+                                          <Separator GridPane.rowIndex="3" />
                                        </children>
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
                                     </GridPane>
                                  </center>
                                  <bottom>
-                                    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="950.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <ImageView fx:id="resuserIV" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#AddUpletEvent" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@plus.png" />
-                                             </image>
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </ImageView>
                                           <ImageView fx:id="validerIV11" fitHeight="60.0" fitWidth="60.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#homeEvent" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@checked.png" />
                                              </image>
                                              <HBox.margin>
-                                                <Insets right="20.0" />
+                                                <Insets bottom="10.0" right="20.0" />
                                              </HBox.margin>
                                           </ImageView>
                                        </children>
                                        <opaqueInsets>
-                                          <Insets />
+                                          <Insets bottom="30.0" />
                                        </opaqueInsets>
                                     </HBox>
                                  </bottom>

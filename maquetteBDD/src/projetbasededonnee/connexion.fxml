@@ -13,9 +13,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.ConnexionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.ConnexionController">
    <children>
-      <BorderPane layoutX="314.0" layoutY="150.0" prefHeight="300.0" prefWidth="400.0">
+      <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lab Management" textAlignment="CENTER" BorderPane.alignment="CENTER">
                <font>
@@ -27,36 +27,39 @@
             </Text>
          </top>
          <center>
-            <GridPane prefHeight="105.0" prefWidth="245.0" BorderPane.alignment="CENTER">
+            <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
               <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="73.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="218.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="172.0" />
               </columnConstraints>
               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="148.0" minHeight="63.0" prefHeight="104.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="200.0" minHeight="79.0" prefHeight="102.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="212.0" minHeight="0.0" prefHeight="71.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="262.0" minHeight="91.0" prefHeight="91.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <BorderPane.margin>
-                  <Insets bottom="60.0" left="50.0" right="75.0" top="50.0" />
+                  <Insets bottom="100.0" left="200.0" right="350.0" top="100.0" />
                </BorderPane.margin>
                <children>
-                  <Label text="email">
+                  <Label text="Email" textAlignment="RIGHT">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label layoutX="10.0" layoutY="15.0" text="mot de passe" GridPane.rowIndex="1">
+                  <Label layoutX="10.0" layoutY="15.0" text="Mot de passe" textAlignment="RIGHT" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="emailTF" GridPane.columnIndex="1" />
-                  <PasswordField fx:id="mdpPF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="emailTF" promptText="EMAIL" GridPane.columnIndex="1" />
+                  <PasswordField fx:id="mdpPF" promptText="Mot de passe" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Button fx:id="connexionButton" mnemonicParsing="false" onAction="#connexionButton" text="Connexion" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                   <Label fx:id="ErreurLabel" prefHeight="17.0" prefWidth="181.0" text="Veuillez remplir tous les champs" textFill="#f22c09" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
+               <padding>
+                  <Insets bottom="100.0" />
+               </padding>
             </GridPane>
          </center>
       </BorderPane>

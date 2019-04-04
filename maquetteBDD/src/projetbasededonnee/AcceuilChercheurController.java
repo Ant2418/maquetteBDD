@@ -12,9 +12,15 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +33,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -36,6 +44,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class de Chercheur.fxml
@@ -86,17 +95,19 @@ public class AcceuilChercheurController implements Initializable {
     @FXML    private TableColumn<?, ?> qteCellCol;
     @FXML    private TableColumn<?, ?> plaqueCol;
     @FXML    private TableColumn<?, ?> photometreCol;
-    @FXML    private TextField frequTextField; 
-    @FXML    private TextField Alpha3TextField; 
-    @FXML    private TextField Alpha1TextField; 
-    @FXML    private TextField Alpha2TextField;
-    @FXML    private TextField dureeTextfield;
-    @FXML    private TextField puitReplicatTextField;
+    @FXML    private Spinner frequTextField; 
+    @FXML    private Spinner Alpha3Spinner; 
+    @FXML    private Spinner Alpha1Spinner; 
+    @FXML    private Spinner Alpha2Spinner;
+    @FXML    private Spinner dureeSpinner;
+    @FXML    private Spinner puitReplicatSpinner;
     @FXML    private RadioButton OuiSuiviButton;
     @FXML    private RadioButton NonSuiviButton;
     @FXML    private ComboBox PlaqueCombo;
     @FXML    private ComboBox TypeExpCombo;
-    @FXML    private ComboBox TypeAnalyseCombo; 
+    @FXML    private ComboBox TypeAnalyseCombo;
+    @FXML    private Label ErreurExp_Label;
+    @FXML    private TextField nomExpTextField1;
     
     private Connection con;
     private ConnexionController maCo;
@@ -105,11 +116,11 @@ public class AcceuilChercheurController implements Initializable {
     private ProjetBaseDeDonnee main;
     private Connexion connex; 
     private Personne personne; 
-    private Statement stmt, stmt1, stmt2; 
-    private ResultSet rs, rs1,rs2;
+    private Statement stmt, stmt1, stmt2,stmt3; 
+    private ResultSet rs, rs1,rs2, rs3;
     private Integer id_pers, id_exp, nbpuit, nb_replicat;
     private String nom_exp, etat_exp, type_exp, type_analyse;
-    private Date horo_deb, horo_fin; 
+    private Date horo_deb, horo_fin,time; 
     
     //liste observable
     private ObservableList<projetbasededonnee.Data.AccueilChercheur> dataAccueil;
@@ -125,8 +136,7 @@ public class AcceuilChercheurController implements Initializable {
         ajoutExpPage.setVisible(false); 
         AddUpletPage.setVisible(false);
         dataAccueil = FXCollections.observableArrayList();
-        setCellTableAccueil();
-
+        setCellTableAccueil();     
     }      
 
     private void setCellTableAccueil(){
@@ -144,7 +154,8 @@ public class AcceuilChercheurController implements Initializable {
         
     }
     
-    private void loadDataAccueilDatabase(){
+    public void loadDataAccueilDatabase(){
+        dataAccueil.clear();
          try{
         //Ajouter valeur dans tableau
             con = connex.getCon();
@@ -160,7 +171,7 @@ public class AcceuilChercheurController implements Initializable {
         }
          try{
             
-            rs = stmt1.executeQuery("SELECT ID_EXPERIENCE, NOMEXP, ETAT_EXP, NOM, PRENOM, TYPE_EXP, TYPE_ANALYSE, NBPUIT, HORODATAGE_DEB, HORODATAGE_FIN FROM EXPERIENCE JOIN Fait using(id_experience) JOIN PERSONNE USING(id_personne) where id_personne= '" + id_pers + "'");
+            rs = stmt1.executeQuery("SELECT ID_EXPERIENCE, NOMEXP, ETAT_EXP, NOM, PRENOM, TYPE_EXP, TYPE_ANALYSE, NBPUIT, HORODATAGE_DEB, HD_TRANSMISSION_CHERCHEUR FROM EXPERIENCE JOIN Fait using(id_experience) JOIN PERSONNE USING(id_personne) where id_personne= '" + id_pers + "'");
             
             while (rs.next()) {      
                
@@ -245,9 +256,47 @@ public class AcceuilChercheurController implements Initializable {
         AddUpletPage.setVisible(false);     
         
         // initialisation des listes deroulante (comboBox)
-        PlaqueCombo.getItems().addAll("96 puits", "384 puits");
-        TypeExpCombo.getItems().addAll("Immunologique", "Toxicité");
-        TypeAnalyseCombo.getItems().addAll("Colorimétrique", "Opacimétrique"); 
+        PlaqueCombo.getItems().addAll("96puits", "384puits");
+        TypeExpCombo.getItems().addAll("Immunologique", "Toxicologique");
+        TypeAnalyseCombo.getItems().addAll("Colorimetrique", "Opacimetrique");
+        
+        // Value factory.
+        SpinnerValueFactory<Integer> valueFactory = //
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 0);
+ 
+        frequTextField.setValueFactory(valueFactory);
+
+        // Value factory.
+        SpinnerValueFactory<Integer> Alpha3SpinnervalueFactory = //
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 0);
+ 
+        Alpha3Spinner.setValueFactory(Alpha3SpinnervalueFactory);
+        
+        // Value factory.
+        SpinnerValueFactory<Integer> Alpha1SpinnervalueFactory = //
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 0);
+ 
+        Alpha1Spinner.setValueFactory(Alpha1SpinnervalueFactory);
+        
+        
+        // Value factory.
+        SpinnerValueFactory<Integer> Alpha2SpinnervalueFactory = //
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 0);
+ 
+        Alpha2Spinner.setValueFactory(Alpha2SpinnervalueFactory);
+        
+        // Value factory.
+        SpinnerValueFactory<Integer> dureeSpinnervalueFactory = //
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 0);
+ 
+        dureeSpinner.setValueFactory(dureeSpinnervalueFactory);
+        
+         // Value factory.
+        SpinnerValueFactory<Integer> puitReplicatSpinnervalueFactory = //
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 0);
+ 
+        puitReplicatSpinner.setValueFactory(puitReplicatSpinnervalueFactory);
+   
     }
     
     /**
@@ -258,7 +307,7 @@ public class AcceuilChercheurController implements Initializable {
         frequTextField.setVisible(true);
         FreqLabel.setVisible(true);
         Alpha3Label.setVisible(true);
-        Alpha3TextField.setVisible(true);
+        Alpha3Spinner.setVisible(true);
         NonSuiviButton.setSelected(false);
     }
     
@@ -270,11 +319,9 @@ public class AcceuilChercheurController implements Initializable {
         frequTextField.setVisible(false);
         FreqLabel.setVisible(false);
         Alpha3Label.setVisible(false);
-        Alpha3TextField.setVisible(false);
+        Alpha3Spinner.setVisible(false);
         OuiSuiviButton.setSelected(false);
     }
-    
-
     
     /**
      * Event si l'utilisateur clique sur ajouter un uplet
@@ -282,12 +329,42 @@ public class AcceuilChercheurController implements Initializable {
      * @throws IOException 
      */
     public void AddUpletEvent(MouseEvent event) throws IOException{
+        
+        try{
+
+            if (NonSuiviButton.isSelected()) {
+            
+                projetbasededonnee.Data.CurrentDate Date = new projetbasededonnee.Data.CurrentDate();
+                
+                con = connex.getCon();
+                stmt = con.createStatement();
+                stmt1 = con.createStatement();
+                stmt2 = con.createStatement();
+                stmt3 = con.createStatement();
+                                
+                rs= stmt.executeQuery("INSERT INTO EXPERIENCE(NOMEXP, ETAT_EXP, DUREE, NBPUIT, TYPE_EXP, TYPE_ANALYSE, ALPHA1, ALPHA2, HD_DEMANDE_CHERCHEUR, UPLETTERMINE)VALUES('"+ nomExpTextField1.getText() + "', 'En Attente', "+ dureeSpinner.getValue() + ", "+ puitReplicatSpinner.getValue() + ", '"+ TypeExpCombo.getSelectionModel().getSelectedItem() + "', '"+ TypeAnalyseCombo.getSelectionModel().getSelectedItem() + "', "+ Alpha1Spinner.getValue() + ", "+ Alpha2Spinner.getValue() + ", '"+ Date.getdateFormat().format(Date.getDate()) + "', "+ 0 + ")");
+                
+                rs1 = stmt1.executeQuery("SELECT MAX(id_experience) FROM EXPERIENCE");
+                while (rs1.next()) { 
+                    id_exp = rs1.getInt(1);
+                }
+                rs2 = stmt2.executeQuery("SELECT ID_PERSONNE FROM PERSONNE WHERE EMAIL = '" + personne.getEmail() + "'");
+                while (rs2.next()) { 
+                    id_pers = rs2.getInt(1);
+                }
+                rs3 = stmt3.executeQuery("INSERT INTO FAIT VALUES("+ id_pers + ", " + id_exp  + ")");
+            }
+            
+        }catch (Exception e) {
+            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+        }
+
         homePageChercheur.setVisible(false);
         ajoutExpPage.setVisible(false);
         AddUpletPage.setVisible(true);
     }
     
-    
+
     /**
      * Setter pour modifier le main
      * @param mainPBD 
@@ -305,5 +382,6 @@ public class AcceuilChercheurController implements Initializable {
     public void setPersonne(Personne personneE){
         personne=personneE; 
     }
+    
 }
 

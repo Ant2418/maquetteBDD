@@ -70,7 +70,7 @@ public class ConnexionController implements Initializable {
         if (emailTF.getText().isEmpty() == false && mdpPF.getText().isEmpty() == false) { 
             try {
               
-            con = connexion.getCon();
+            con = connexion.getCon();          
             stmt = con.createStatement();
             rs = stmt.executeQuery("SELECT FONCTION, PRENOM, NOM, EMAIL FROM PERSONNE WHERE email ='" + emailTF.getText() + "' AND mot_de_passe = '" + mdpPF.getText() + "'");
             while (rs.next()) {
@@ -78,15 +78,12 @@ public class ConnexionController implements Initializable {
                 prenom= rs.getString(2);
                 nom=rs.getString(3);
                 email=rs.getString(4);
-
 //                ajout le nom, prénom, email et fonction à la personne connecté
                 personne.setPrenom(prenom);
                 personne.setNom(nom);
                 personne.setEmail(email);
                 personne.setFonction(res);
-                
-               
-                
+                System.out.println(res);
                 if ("chercheur".equals(res)) {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("Chercheur.fxml"));
                     Parent ajoutParent = (Parent) loader.load();
@@ -95,8 +92,8 @@ public class ConnexionController implements Initializable {
                     Scene ajoutScene = new Scene(ajoutParent);
                     ACCo.setConnection(connexion);
                     ACCo.setPersonne(personne);
+                    ACCo.loadDataAccueilDatabase();
                     
-
                     //This line gets the Stage information
                     Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
@@ -106,15 +103,12 @@ public class ConnexionController implements Initializable {
                 else if ("laborantin".equals(res)){
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("Laborantin.fxml"));
                     Parent ajoutParent = (Parent) loader.load();
-                    
-                    
+
                     LaborantinController LCO = loader.getController();
                     Scene ajoutScene = new Scene(ajoutParent);
                     LCO.setConnection(connexion);
                     LCO.setPersonne(personne);
-                    
-              
-                    
+                       
                     //This line gets the Stage information
                     Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
@@ -137,11 +131,8 @@ public class ConnexionController implements Initializable {
             ErreurLabel.setVisible(true);
                   
         }
-          
-       
-        }
- 
-    
+    }
+
     public void setConnexion(Connexion conect){
         connexion = conect; 
    
