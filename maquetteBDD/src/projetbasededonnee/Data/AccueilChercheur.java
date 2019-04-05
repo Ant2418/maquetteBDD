@@ -24,6 +24,14 @@ public class AccueilChercheur {
     private Date horo_fin;
     private Integer nb_replicat;
 
+    public void setNb_replicat(Integer nb_replicat) {
+        this.nb_replicat = nb_replicat;
+    }
+
+    public Integer getNb_replicat() {
+        return nb_replicat;
+    }
+
     public AccueilChercheur(Integer id_exp, String nom_exp, String etat_exp, String nom, String type_exp, String type_analyse, Integer nb_replicat, Integer nb_puit, Date horo_deb, Date horo_fin) {
         this.id_exp = id_exp;
         this.nom_exp = nom_exp;

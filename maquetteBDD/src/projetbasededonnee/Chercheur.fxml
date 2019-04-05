@@ -142,11 +142,11 @@
                                           <Label fx:id="nbPuitReplicatLabel1" text="Nom de l'expérience *   " />
                                           <TextField fx:id="nomExpTextField1" promptText="Nom de l'expérience" GridPane.columnIndex="1" />
                                           <Label fx:id="nbPuitReplicatLabel" text="Nombre de puits par réplicat *   " GridPane.rowIndex="1" />
-                                          <Spinner fx:id="puitReplicatSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Spinner fx:id="puitReplicatSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <Label text="Type de plaque *   " GridPane.rowIndex="2" />
                                           <ComboBox fx:id="PlaqueCombo" prefWidth="150.0" promptText="Type de plaque" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <Label text="Durée de l'expérience * (min)   " GridPane.rowIndex="3" />
-                                          <Spinner fx:id="dureeSpinner" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <Spinner fx:id="dureeSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <Label fx:id="suiviLabel" text="Suivi dans le temps *   " GridPane.rowIndex="4" />
                                           <RadioButton fx:id="OuiSuiviButton" mnemonicParsing="false" onAction="#OuiSuiviButtonEvent" text="Oui" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                                           <RadioButton fx:id="NonSuiviButton" mnemonicParsing="false" onAction="#NonSuiviButtonEvent" text="Non" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
@@ -154,17 +154,17 @@
                                                 <Insets left="50.0" />
                                              </GridPane.margin></RadioButton>
                                           <Label fx:id="FreqLabel" text="Fréquence*   " visible="false" GridPane.rowIndex="5" />
-                                          <Spinner fx:id="frequTextField" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <Spinner fx:id="frequTextField" editable="true" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                           <Label fx:id="typeExpLabel" text="Type d'expérience *   " GridPane.columnIndex="2" />
                                           <ComboBox fx:id="TypeExpCombo" prefWidth="150.0" promptText="Type d'expérience" GridPane.columnIndex="3" />
                                           <Label fx:id="typeAnaLabel" text="Type d'analyse *   " GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                           <ComboBox fx:id="TypeAnalyseCombo" prefWidth="150.0" promptText="Type d'analyse" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                           <Label fx:id="alpha1Label" text="Biais 1 *   " GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <Spinner fx:id="Alpha1Spinner" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <Spinner fx:id="Alpha1Spinner" editable="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                           <Label fx:id="alpha2Label" text="Biais 2 *   " GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                          <Spinner fx:id="Alpha2Spinner" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <Spinner fx:id="Alpha2Spinner" editable="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                           <Label fx:id="Alpha3Label" text="Biais 3*   " visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                          <Spinner fx:id="Alpha3Spinner" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                          <Spinner fx:id="Alpha3Spinner" editable="true" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                        </children>
                                        <padding>
                                           <Insets bottom="100.0" left="125.0" right="125.0" top="100.0" />
@@ -189,7 +189,10 @@
                                                 <Insets bottom="10.0" right="10.0" />
                                              </GridPane.margin>
                                           </ImageView>
-                                          <Label fx:id="ErreurExp_Label" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Label" textAlignment="RIGHT" visible="false" GridPane.halignment="RIGHT" />
+                                          <Label fx:id="ErreurExp_Label" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Veuillez remplir tout le formulaire." textAlignment="RIGHT" textFill="RED" visible="false" GridPane.halignment="RIGHT">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font></Label>
                                        </children>
                                        <BorderPane.margin>
                                           <Insets bottom="30.0" right="20.0" />
