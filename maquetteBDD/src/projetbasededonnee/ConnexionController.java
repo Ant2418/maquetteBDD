@@ -23,6 +23,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import static javafx.scene.input.KeyCode.ENTER;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -65,6 +67,16 @@ public class ConnexionController implements Initializable {
      */
     public void connexionButton(ActionEvent event) throws  IOException, SQLException
     {
+       connexion();
+    }
+    
+    public void keyPressed(KeyEvent e) {
+        if (e.getCode() == ENTER) {
+            connexion();
+        }
+    }
+
+    public void connexion(){
         ErreurLabel.setVisible(false);
         ErreurLabel.setText("Veuillez remplir tous les champs");
         if (emailTF.getText().isEmpty() == false && mdpPF.getText().isEmpty() == false) { 
