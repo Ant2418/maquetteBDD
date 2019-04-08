@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -71,7 +70,6 @@ public class AcceuilChercheurController implements Initializable {
     
     //¨Page pour ajouter des Uplets à une expérience
     @FXML    private AnchorPane AddUpletPage;
-    @FXML    private Label typePlaqueLabel;
     @FXML    private Label dureeLabel;
     @FXML    private Label suiviLabel;
     @FXML    private Label FreqLabel;
@@ -82,14 +80,12 @@ public class AcceuilChercheurController implements Initializable {
     @FXML    private Label alpha2Label;
     @FXML    private Label Alpha3Label;
     @FXML    private Label debutExpLabel;
-    @FXML    private TableView<?> tableNUplet;
+    @FXML    private TableView<projetbasededonnee.Data.AccueilChercheur> tableNUplet;
     @FXML    private TableColumn<?, ?> replicatCol;
     @FXML    private TableColumn<?, ?> agentBioCol;
     @FXML    private TableColumn<?, ?> qteAgentBioCol;
     @FXML    private TableColumn<?, ?> typeCellCol;
     @FXML    private TableColumn<?, ?> qteCellCol;
-    @FXML    private TableColumn<?, ?> plaqueCol;
-    @FXML    private TableColumn<?, ?> photometreCol;
     @FXML    private Spinner frequTextField; 
     @FXML    private Spinner Alpha3Spinner; 
     @FXML    private Spinner Alpha1Spinner; 
@@ -98,13 +94,31 @@ public class AcceuilChercheurController implements Initializable {
     @FXML    private Spinner puitReplicatSpinner;
     @FXML    private RadioButton OuiSuiviButton;
     @FXML    private RadioButton NonSuiviButton;
-    @FXML    private ComboBox PlaqueCombo;
     @FXML    private ComboBox TypeExpCombo;
     @FXML    private ComboBox TypeAnalyseCombo;
     @FXML    private Label ErreurExp_Label;
     @FXML    private TextField nomExpTextField1;
   
     
+    //Ajout un n_uplet
+    @FXML   private Label nomExpLableUplet; 
+    @FXML   private Label typeExpLabelUplet; 
+    @FXML   private Label dureeLabelUplet; 
+    @FXML   private Label suiviLabelUplet; 
+    @FXML   private Label typeAnaLabelUplet; 
+    @FXML   private Label nbPuitReplicatLabelUplet; 
+    @FXML   private Label alpha1LabelUplet; 
+    @FXML   private Label alpha2LabelUplet; 
+    @FXML   private Label frequenceLabelUplet; 
+    @FXML   private Label alpha3LabelUplet; 
+    @FXML   private ComboBox AgentBioCombo;
+    @FXML   private ComboBox CelluleCombo;
+    @FXML   private Spinner AgentBioSpinner;
+    @FXML   private Spinner CelluleSpinner; 
+    @FXML   private Label Erreur_Ajout_Uplet;
+    
+
+    private Integer nb_agentbio,id_agent_bio, nb_cellule, id_cellule,nb_solution,id_solution, id_uplet, quantiteAgent_bio, quantiteCellule;
     private Connection con;
     private ConnexionController maCo;
     private String prenom; 
@@ -115,12 +129,13 @@ public class AcceuilChercheurController implements Initializable {
     private Statement stmt, stmt1, stmt2,stmt3,stmt4; 
     private ResultSet rs, rs1,rs2, rs3,rs4;
     private Integer id_pers, id_exp, nbpuit, nbReplicat,nbre,duree, puitReplicat, Alpha1, Alpha2;
-    private String nom_exp, etat_exp, type_exp, type_analyse, TypePlaque;
+    private String nom_exp, etat_exp, type_exp, type_analyse,nomAgent_bio,nomCellule,nomExp;
     private Date horo_deb, horo_fin,time;
 
     
     //liste observable
     private ObservableList<projetbasededonnee.Data.AccueilChercheur> dataAccueil;
+    private ObservableList<projetbasededonnee.Data.AccueilChercheur> dataUplet;
    
     /**I
      * Initializes the controller class.
@@ -137,7 +152,7 @@ public class AcceuilChercheurController implements Initializable {
     }      
 
     private void setCellTableAccueil(){
-        
+       
         numExpCol.setCellValueFactory(new PropertyValueFactory<>("id_exp"));
         nomExpCol.setCellValueFactory(new PropertyValueFactory<>("nom_exp"));
         etatCol.setCellValueFactory(new PropertyValueFactory<>("etat_exp"));
@@ -151,6 +166,39 @@ public class AcceuilChercheurController implements Initializable {
         
     }
     
+    private void setCellTableUplet(){
+        
+        dataUplet = FXCollections.observableArrayList();
+        
+        replicatCol.setCellValueFactory(new PropertyValueFactory<>("id_uplet"));
+        agentBioCol.setCellValueFactory(new PropertyValueFactory<>("nom_agent_bio"));
+        qteAgentBioCol.setCellValueFactory(new PropertyValueFactory<>("qte_agent_bio"));
+        typeCellCol.setCellValueFactory(new PropertyValueFactory<>("nom_cellule"));
+        qteCellCol.setCellValueFactory(new PropertyValueFactory<>("qte_cellule"));
+    }
+    
+    public void loadDataUplet(Integer id_exp){
+        dataUplet.clear();
+        try{
+            con = connex.getCon();
+            stmt = con.createStatement();
+            
+            rs=stmt.executeQuery("SELECT id_n_uplet, nomA, nomC, QteA, qteC FROM N_UPLET JOIN SOLUTION USING(id_solution) JOIN AGENT_BIOLOGIQUE USING(id_agent_bio) JOIN CELLULE USING(id_cell_cancereuse) WHERE id_experience = "+ id_exp +"");
+            while(rs.next()){
+                id_uplet=rs.getInt(1);
+                nomAgent_bio=rs.getString(2);
+                nomCellule=rs.getString(3);
+                quantiteAgent_bio=rs.getInt(4);
+                quantiteCellule=rs.getInt(5);
+                
+                dataUplet.add(new projetbasededonnee.Data.AccueilChercheur(id_uplet, nomAgent_bio, nomCellule, quantiteAgent_bio, quantiteCellule));
+                
+            }  
+            tableNUplet.setItems(dataUplet);
+        } catch (Exception e) {
+            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
     public void loadDataAccueilDatabase(){
         dataAccueil.clear();
         try{
@@ -276,8 +324,6 @@ public class AcceuilChercheurController implements Initializable {
         AddUpletPage.setVisible(false);     
         
         // initialisation des listes deroulante (comboBox)
-        PlaqueCombo.getItems().clear(); 
-        PlaqueCombo.getItems().addAll("96puits", "384puits");
         TypeExpCombo.getItems().clear(); 
         TypeExpCombo.getItems().addAll("Immunologique", "Toxicologique");
         TypeAnalyseCombo.getItems().clear(); 
@@ -437,7 +483,6 @@ public class AcceuilChercheurController implements Initializable {
         puitReplicatSpinner.setStyle(null);
         TypeExpCombo.setStyle(null);
         TypeAnalyseCombo.setStyle(null);
-        PlaqueCombo.setStyle(null);
         Alpha1Spinner.setStyle(null);
         Alpha2Spinner.setStyle(null);
         Alpha3Spinner.setStyle(null);
@@ -450,8 +495,14 @@ public class AcceuilChercheurController implements Initializable {
         Alpha1= (Integer) Alpha1Spinner.getValue();
         Alpha2= (Integer) Alpha2Spinner.getValue();
         
-        if(nomExpTextField1.getText().isEmpty()==false && duree!=0 && dureeSpinner.getValue()!=null && puitReplicatSpinner.getValue()!=null && TypeExpCombo.getSelectionModel().getSelectedItem()!= null && PlaqueCombo.getSelectionModel().getSelectedItem()!= null && TypeAnalyseCombo.getSelectionModel().getSelectedItem()!=null && Alpha1Spinner.getValue()!= null && Alpha1 != 0 && Alpha2Spinner.getValue()!=null && Alpha2!=0){
-            TypePlaque= (String) PlaqueCombo.getSelectionModel().getSelectedItem();
+        if(nomExpTextField1.getText().isEmpty()==false && duree!=0 && dureeSpinner.getValue()!=null && puitReplicatSpinner.getValue()!=null && TypeExpCombo.getSelectionModel().getSelectedItem()!= null && TypeAnalyseCombo.getSelectionModel().getSelectedItem()!=null && Alpha1Spinner.getValue()!= null && Alpha1 != 0 && Alpha2Spinner.getValue()!=null && Alpha2!=0){
+            nomExp=nomExpTextField1.getText();
+            String TypeExp=(String) TypeExpCombo.getSelectionModel().getSelectedItem(); 
+            String TypeAna =(String)TypeAnalyseCombo.getSelectionModel().getSelectedItem();
+            Integer dureeExp=(Integer) dureeSpinner.getValue();
+            Integer puitReplicat=(Integer) puitReplicatSpinner.getValue(); 
+            Double Alpha3=(Double) Alpha3Spinner.getValue(); 
+          
             if (NonSuiviButton.isSelected()) {
 
                     projetbasededonnee.Data.CurrentDate Date = new projetbasededonnee.Data.CurrentDate();
@@ -493,15 +544,20 @@ public class AcceuilChercheurController implements Initializable {
                     
                     homePageChercheur.setVisible(false);
                     ajoutExpPage.setVisible(false);
+                    
+                    DisplayLabels(nomExp,TypeExp, TypeAna, dureeExp,"non", puitReplicat, Alpha1,Alpha2, 0.0, 0);    
+                    SolutionChoice();
+                    setCellTableUplet();
+                    loadDataUplet(id_exp);
                     AddUpletPage.setVisible(true);
                     
+                   
                     nomExpTextField1.clear();
                     dureeSpinner.getValueFactory().setValue(1);
                     frequTextField.getValueFactory().setValue(1);
                     puitReplicatSpinner.getValueFactory().setValue(1);
                     TypeExpCombo.getItems().clear(); 
-                    TypeAnalyseCombo.getItems().clear(); 
-                    PlaqueCombo.getItems().clear(); 
+                    TypeAnalyseCombo.getItems().clear();  
                     Alpha1Spinner.getValueFactory().setValue(1);
                     Alpha2Spinner.getValueFactory().setValue(1);
                     Alpha3Spinner.getValueFactory().setValue(0.0);
@@ -573,8 +629,26 @@ public class AcceuilChercheurController implements Initializable {
                         }
                         homePageChercheur.setVisible(false);
                         ajoutExpPage.setVisible(false);
+                        DisplayLabels(nomExp,(String) TypeExpCombo.getSelectionModel().getSelectedItem(), (String)TypeAnalyseCombo.getSelectionModel().getSelectedItem(), (Integer) dureeSpinner.getValue(),"oui", (Integer) puitReplicatSpinner.getValue(), (Integer) Alpha1Spinner.getValue(), (Integer) Alpha2Spinner.getValue(), (Double) Alpha3Spinner.getValue(), (Integer) frequTextField.getValue());
+                        SolutionChoice();
+                        setCellTableUplet();
+                        loadDataUplet(id_exp);
                         AddUpletPage.setVisible(true);
                     
+                        //Reinitialisation
+                        nomExpTextField1.clear();
+                        dureeSpinner.getValueFactory().setValue(1);
+                        frequTextField.getValueFactory().setValue(1);
+                        puitReplicatSpinner.getValueFactory().setValue(1);
+                        TypeExpCombo.getItems().clear(); 
+                        TypeAnalyseCombo.getItems().clear();  
+                        Alpha1Spinner.getValueFactory().setValue(1);
+                        Alpha2Spinner.getValueFactory().setValue(1);
+                        Alpha3Spinner.getValueFactory().setValue(0.0);
+                        NonSuiviButton.setSelected(false);
+                        OuiSuiviButton.setSelected(false);
+                                               
+                        
                     }catch (SQLException e) {
                          System.out.println("Exception SQL : ");
                         while (e != null) {
@@ -604,8 +678,6 @@ public class AcceuilChercheurController implements Initializable {
                         }
                     }
                     }
-                    
-
                 }
                 else
                 {
@@ -627,7 +699,6 @@ public class AcceuilChercheurController implements Initializable {
                 ajoutExpPage.setVisible(true);
                 AddUpletPage.setVisible(false);
             }
-
         }                
         else
             { 
@@ -648,9 +719,6 @@ public class AcceuilChercheurController implements Initializable {
                 }
                 if(TypeAnalyseCombo.getSelectionModel().getSelectedItem()==null){
                     TypeAnalyseCombo.setStyle("-fx-border-color: red");
-                }
-                if(PlaqueCombo.getSelectionModel().getSelectedItem()== null){
-                    PlaqueCombo.setStyle("-fx-border-color: red");
                 }
                 if(Alpha1Spinner.getValue()==null || Alpha1==0){
                     Alpha1Spinner.setStyle("-fx-border-color: red");
@@ -676,10 +744,299 @@ public class AcceuilChercheurController implements Initializable {
                 homePageChercheur.setVisible(false);
                 ajoutExpPage.setVisible(true);
                 AddUpletPage.setVisible(false);
-                }
+                
+                
+        }
                       
 
     }
+    
+    /**
+     * 
+     * @param nomExp
+     * @param typeExp
+     * @param typeAna
+     * @param dureeExp
+     * @param suiviExp
+     * @param puitReplicat
+     * @param Biais1
+     * @param Biais2
+     * @param Biais3
+     * @param FrequExp 
+     */
+    public void DisplayLabels(String nomExp, String typeExp, String typeAna, Integer dureeExp, String suiviExp, Integer puitReplicat, Integer Biais1, Integer Biais2 ,Double Biais3, Integer FrequExp){
+        nomExpLableUplet.setText(nomExp);
+        typeExpLabelUplet.setText(typeExp); 
+        dureeLabelUplet.setText(String.valueOf(dureeExp)); 
+        suiviLabelUplet.setText(suiviExp);
+        typeAnaLabelUplet.setText(typeAna); 
+        nbPuitReplicatLabelUplet.setText(String.valueOf(puitReplicat)); 
+        alpha1LabelUplet.setText(String.valueOf(Biais1)); 
+        alpha2LabelUplet.setText(String.valueOf(Biais2)); 
+        
+        if (suiviExp=="oui"){
+            frequenceLabelUplet.setText(String.valueOf(FrequExp)); 
+            alpha3LabelUplet.setText(String.valueOf(Biais3));
+        }        
+    }
+    
+    /**
+     * 
+     */
+    public void SolutionChoice(){
+        
+        //Initialisation des combo-box
+        AgentBioCombo.getItems().clear();
+        try{
+            stmt2 = con.createStatement();
+            rs2 = stmt2.executeQuery("SELECT DISTINCT(NOMA) FROM AGENT_BIOLOGIQUE");
+            while (rs2.next()) { 
+                AgentBioCombo.getItems().add(rs2.getString(1));
+            }
+        }catch (Exception e) {
+            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        CelluleCombo.getItems().clear();
+        try{
+            stmt3 = con.createStatement();
+            rs3 = stmt3.executeQuery("SELECT DISTINCT(NOMC), TYPE_CELLULAIRE FROM CELLULE");
+            while (rs3.next()) { 
+                CelluleCombo.getItems().add(rs3.getString(1)+ " - " + rs3.getString(2));
+            }
+        }catch (Exception e) {
+            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        
+        //Les spinners
+        
+         // Value factory.
+        SpinnerValueFactory<Integer> AgentbioSpinnervalueFactory = //
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 100,100);
+ 
+        AgentBioSpinner.setValueFactory(AgentbioSpinnervalueFactory);
+        
+        AgentBioSpinner.setEditable(true);
+        
+        TextFormatter formatter2=new TextFormatter(AgentbioSpinnervalueFactory.getConverter(),AgentbioSpinnervalueFactory.getValue());
+        AgentBioSpinner.getEditor().setTextFormatter(formatter2);
+        
+        AgentbioSpinnervalueFactory.valueProperty().bindBidirectional(formatter2.valueProperty());
+        
+        AgentBioSpinner.focusedProperty().addListener((observable,oldValue,newValue)->{
+            if(!newValue){
+                AgentBioSpinner.increment(0);
+            }
+        });
+        
+        SpinnerValueFactory<Integer> CelluleSpinnervalueFactory = //
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 100,100);
+ 
+        CelluleSpinner.setValueFactory(CelluleSpinnervalueFactory);
+        
+        CelluleSpinner.setEditable(true);
+        
+        TextFormatter formatter3=new TextFormatter(CelluleSpinnervalueFactory.getConverter(),CelluleSpinnervalueFactory.getValue());
+        CelluleSpinner.getEditor().setTextFormatter(formatter3);
+        
+        CelluleSpinnervalueFactory.valueProperty().bindBidirectional(formatter3.valueProperty());
+        
+        CelluleSpinner.focusedProperty().addListener((observable,oldValue,newValue)->{
+            if(!newValue){
+                CelluleSpinner.increment(0);
+            }
+        });     
+    }
+    
+    //Quand on clique sur plus
+    public void AddUpletSolution(MouseEvent event) throws IOException{
+        AddUplet(id_exp);
+        loadDataUplet(id_exp);
+    }
+    
+    public void AddUplet(Integer id_exp){
+        
+        Erreur_Ajout_Uplet.setVisible(false);
+        Erreur_Ajout_Uplet.setText("Veuillez remplir tous les champs");
+        CelluleSpinner.setStyle(null);
+        AgentBioSpinner.setStyle(null);
+        CelluleCombo.setStyle(null);
+        AgentBioCombo.setStyle(null);
+        
+        if(AgentBioSpinner.getValue() != null && (Integer) AgentBioSpinner.getValue()!=0 && CelluleSpinner.getValue()!=null && (Integer) CelluleSpinner.getValue()!=0 && AgentBioCombo.getSelectionModel().getSelectedItem()!=null && CelluleCombo.getSelectionModel().getSelectedItem()!=null ){
+            con = connex.getCon();
+      
+            //Pour agent biologique
+            try{
+            stmt = con.createStatement();
+
+            rs= stmt.executeQuery("SELECT count(*) FROM AGENT_BIOLOGIQUE WHERE NOMA = '" + AgentBioCombo.getValue() + "' and qteA = "+ AgentBioSpinner.getValue() + "");
+            while (rs.next()) { 
+                nb_agentbio=rs.getInt(1);
+            }
+            
+            if (nb_agentbio == 0) {
+                Double prix= 3.0 * (Integer) AgentBioSpinner.getValue();
+                System.out.println(prix); 
+                try{
+                    stmt = con.createStatement();
+                    rs=stmt.executeQuery("INSERT INTO AGENT_BIOLOGIQUE (ID_AGENT_BIO, QTEA, NOMA,PRIXA) VALUES("+ 1 +", "+ AgentBioSpinner.getValue() + ", '" + AgentBioCombo.getValue() + "', " + prix +")");    
+                }catch (Exception e){
+                    Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                }
+                try{
+                    stmt = con.createStatement();
+                    rs=stmt.executeQuery("SELECT MAX(id_agent_bio) from agent_biologique");
+                    while (rs.next()){
+                        id_agent_bio=rs.getInt(1);
+                    }
+                }catch (Exception e) {
+                    Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+            else
+            {
+                try{
+                    stmt = con.createStatement();
+                    rs=stmt.executeQuery("SELECT ID_AGENT_BIO FROM AGENT_BIOLOGIQUE WHERE NOMA= '" + AgentBioCombo.getSelectionModel().getSelectedItem() + "' and QTEA= "+ AgentBioSpinner.getValue() + "");    
+                    while (rs.next()) { 
+                    id_agent_bio =rs.getInt(1);
+                    }
+                }catch (Exception e) {
+                    Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+            }catch (Exception e) {
+            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+            }
+            
+            //Pour cellule
+            try{
+            stmt = con.createStatement();                                                                                                                              
+            rs= stmt.executeQuery("SELECT count(*) FROM CELLULE WHERE NOMC = '" + (CelluleCombo.getValue() + "").split(" - ")[0] + "' and qteC = "+ CelluleSpinner.getValue() + " and TYPE_CELLULAIRE='" + (CelluleCombo.getValue() + "").split(" - ")[1] + "' ");
+            while (rs.next()) { 
+                nb_cellule=rs.getInt(1);
+            }
+            
+            if (nb_cellule ==0) {
+                Double prix= 2.0 * (Integer) CelluleSpinner.getValue();
+                try{
+                    stmt = con.createStatement();
+                    rs=stmt.executeQuery("INSERT INTO CELLULE VALUES("+ 1 +",'" + (CelluleCombo.getValue() + "").split(" - ")[1] + "',  "+ CelluleSpinner.getValue() + ",'" + (CelluleCombo.getValue() + "").split(" - ")[0] + "', " + prix +")");    
+                }catch (Exception e) {
+                    Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                }
+                try{
+                    stmt = con.createStatement();
+                    rs=stmt.executeQuery("SELECT MAX(id_cell_cancereuse) from cellule");
+                    while (rs.next()){
+                        id_cellule=rs.getInt(1);
+                    }
+                }catch (Exception e) {
+                    Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+            else
+            {
+                try{
+                    stmt = con.createStatement();
+                    rs=stmt.executeQuery("SELECT ID_CELL_cancereuse FROM CELLULE WHERE NOMC= '" + (CelluleCombo.getValue() + "").split(" - ")[0] + "' and QTEC= "+ CelluleSpinner.getValue() + " and TYPE_CELLULAIRE = '" + (CelluleCombo.getValue() + "").split(" - ")[1] + "'");    
+                    while (rs.next()) { 
+                    id_cellule =rs.getInt(1);
+                    }
+                }catch (Exception e) {
+                    Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+            }catch (Exception e) {
+            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+            }
+            
+            //ON creer la solution 
+            try{
+                stmt = con.createStatement();                                           
+                                                                                                
+                rs= stmt.executeQuery("SELECT count(*) FROM SOLUTION WHERE id_cell_cancereuse = " + id_cellule + " and id_agent_bio = "+ id_agent_bio + "");
+                while (rs.next()) { 
+                    nb_solution=rs.getInt(1);
+                }
+                
+                if (nb_solution==0){
+                    try{
+                    stmt=con.createStatement();
+                    rs=stmt.executeQuery("INSERT INTO SOLUTION (id_solution, id_cell_cancereuse, id_agent_bio) VALUES(" + 1 +", " + id_cellule + ", "+ id_agent_bio +")");
+                    }catch (Exception e) {
+                        Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                    }
+                    try{
+                    stmt = con.createStatement();
+                    rs=stmt.executeQuery("SELECT MAX(id_solution) from solution");
+                    while (rs.next()){
+                        id_solution=rs.getInt(1);
+                    }
+                    }catch (Exception e) {
+                        Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                    }
+                }
+                else{
+                    try{
+                    stmt=con.createStatement();
+                    rs=stmt.executeQuery("SELECT ID_SOLUTION FROM SOLUTION WHERE id_cell_cancereuse = " + id_cellule + " and id_agent_bio = "+ id_agent_bio + "");
+                    while(rs.next()){
+                        id_solution=rs.getInt(1);
+                    }
+                    }catch (Exception e) {
+                        Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                    }
+                }
+            }catch (Exception e) {
+            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+            }
+            
+            //On a l'id_solution On peut creer le n_uplet
+            try{
+                stmt=con.createStatement();
+                rs=stmt.executeQuery("INSERT INTO N_UPLET VALUES(" + 1 +"," + id_exp + ", "+ id_solution +", " + 0 +", " + 0 +", " + 0 +")");   
+                Erreur_Ajout_Uplet.setText("Le réplicat a été ajouté");
+                Erreur_Ajout_Uplet.setVisible(true);
+                
+                //Reinitialisation
+                CelluleSpinner.getValueFactory().setValue(0);
+                AgentBioSpinner.getValueFactory().setValue(0);
+                CelluleCombo.getItems().clear();
+                AgentBioCombo.getItems().clear(); 
+                SolutionChoice();
+                loadDataUplet(id_exp); 
+
+            }catch (Exception e) {
+            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+            }
+            
+            
+            
+        }
+        else{
+            Erreur_Ajout_Uplet.setVisible(true);
+            if(CelluleCombo.getSelectionModel().getSelectedItem()==null){
+                CelluleCombo.setStyle("-fx-border-color: red"); 
+            }
+            if(CelluleSpinner.getValue()==null || (Integer) CelluleSpinner.getValue()==0){
+                CelluleSpinner.setStyle("-fx-border-color: red");
+            }
+            if(AgentBioCombo.getSelectionModel().getSelectedItem()==null){
+                AgentBioCombo.setStyle("-fx-border-color: red"); 
+            }
+            if(AgentBioSpinner.getValue()==null || (Integer)AgentBioSpinner.getValue()==0){
+                AgentBioSpinner.setStyle("-fx-border-color: red");
+            }
+        }
+        
+     
+        
+    }
+              
+            
+            
     /**
      * Setter pour modifier le main
      * @param mainPBD 
