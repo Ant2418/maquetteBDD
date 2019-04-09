@@ -66,24 +66,24 @@
                <center>
                   <AnchorPane prefHeight="600.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="homePageChercheur" prefHeight="556.0" prefWidth="950.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="homePageChercheur" prefHeight="556.0" prefWidth="950.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <center>
                                     <TableView fx:id="tableViewAccueil" BorderPane.alignment="CENTER">
                                        <columns>
-                                          <TableColumn fx:id="numExpCol" prefWidth="37.0" text="N°" />
-                                          <TableColumn fx:id="nomExpCol" prefWidth="118.0" text="Nom" />
-                                          <TableColumn fx:id="etatCol" prefWidth="85.66665649414062" text="Etat" />
-                                          <TableColumn fx:id="labCol" prefWidth="110.66668701171875" text="Laborantin" />
-                                          <TableColumn fx:id="typeExpCol" prefWidth="109.6666259765625" text="      Type&#10;d'expérience" />
-                                          <TableColumn fx:id="TypeAnaCol" prefWidth="126.0" text="    Type &#10;d'analyse" />
-                                          <TableColumn fx:id="nupletCol" prefWidth="102.0" text="Nombre&#10;réplicat" />
-                                          <TableColumn fx:id="puitCol" prefWidth="98.33331298828125" text="    Nombre&#10;puit/replicat&#10;" />
-                                          <TableColumn fx:id="dateCol" prefWidth="103.3333740234375" text="Date">
+                                          <TableColumn fx:id="numExpCol" prefWidth="-1.0" text="N°" />
+                                          <TableColumn fx:id="nomExpCol" prefWidth="-1.0" text="Nom" />
+                                          <TableColumn fx:id="etatCol" prefWidth="-1.0" text="Etat" />
+                                          <TableColumn fx:id="labCol" prefWidth="-1.0" text="Laborantin" />
+                                          <TableColumn fx:id="typeExpCol" prefWidth="-1.0" text="      Type&#10;d'expérience" />
+                                          <TableColumn fx:id="TypeAnaCol" prefWidth="-1.0" text="    Type &#10;d'analyse" />
+                                          <TableColumn fx:id="nupletCol" prefWidth="-1.0" text="Nombre&#10;réplicat" />
+                                          <TableColumn fx:id="puitCol" prefWidth="-1.0" text="    Nombre&#10;puit/replicat&#10;" />
+                                          <TableColumn fx:id="dateCol" prefWidth="-1.0" text="Date">
                                              <columns>
-                                                <TableColumn fx:id="debCol" prefWidth="70.0" text="début" />
-                                                <TableColumn fx:id="finCol" prefWidth="68.0" text="fin" />
+                                                <TableColumn fx:id="debCol" prefWidth="-1.0" text="début" />
+                                                <TableColumn fx:id="finCol" prefWidth="-1.0" text="fin" />
                                              </columns>
                                           </TableColumn>
                                        </columns>
@@ -109,7 +109,7 @@
                               </BorderPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="ajoutExpPage" prefHeight="600.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="ajoutExpPage" prefHeight="600.0" prefWidth="950.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane prefHeight="600.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
@@ -152,7 +152,7 @@
                                              <GridPane.margin>
                                                 <Insets left="50.0" />
                                              </GridPane.margin></RadioButton>
-                                          <Label fx:id="FreqLabel" text="Fréquence*   " visible="false" GridPane.rowIndex="4">
+                                          <Label fx:id="FreqLabel" prefHeight="17.0" prefWidth="98.0" text="Fréquence* (min)" visible="false" GridPane.rowIndex="4">
                                              <tooltip>
                                                 <Tooltip text="Intervalle de temps entre les différentes mesures" />
                                              </tooltip></Label>
@@ -362,11 +362,11 @@
                                           </GridPane>
                                           <TableView fx:id="tableNUplet" prefHeight="162.0" prefWidth="610.0" GridPane.rowIndex="7">
                                              <columns>
-                                                <TableColumn fx:id="replicatCol" prefWidth="111.0" text="Réplicat" />
-                                                <TableColumn fx:id="agentBioCol" prefWidth="141.0" text="   Agent&#10;biologique" />
-                                                <TableColumn fx:id="qteAgentBioCol" prefWidth="118.0" text="        Quantité&#10;d'agent biologique" />
-                                                <TableColumn fx:id="typeCellCol" prefWidth="126.0" text="Type de cellule" />
-                                                <TableColumn fx:id="qteCellCol" prefWidth="133.0" text="Quantité&#10;de cellule" />
+                                                <TableColumn fx:id="replicatCol" prefWidth="-1.0" text="Réplicat" />
+                                                <TableColumn fx:id="agentBioCol" prefWidth="-1.0" text="   Agent&#10;biologique" />
+                                                <TableColumn fx:id="qteAgentBioCol" prefWidth="-1.0" text="        Quantité&#10;d'agent biologique" />
+                                                <TableColumn fx:id="typeCellCol" prefWidth="-1.0" text="Type de cellule" />
+                                                <TableColumn fx:id="qteCellCol" prefWidth="-1.0" text="Quantité&#10;de cellule" />
                                              </columns>
                                              <GridPane.margin>
                                                 <Insets bottom="10.0" left="160.0" right="160.0" top="30.0" />

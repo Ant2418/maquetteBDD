@@ -54,7 +54,7 @@
                   </Label>
                   <TextField fx:id="emailTF" promptText="EMAIL" GridPane.columnIndex="1" />
                   <PasswordField fx:id="mdpPF" promptText="Mot de passe" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button fx:id="connexionButton" mnemonicParsing="false" onAction="#connexionButton" text="Connexion" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                  <Button fx:id="connexionButton" mnemonicParsing="false" onAction="#connexionButton" onKeyPressed="#keyPressed" text="Connexion" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                   <Label fx:id="ErreurLabel" prefHeight="17.0" prefWidth="181.0" text="Veuillez remplir tous les champs" textFill="#f22c09" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
                <padding>

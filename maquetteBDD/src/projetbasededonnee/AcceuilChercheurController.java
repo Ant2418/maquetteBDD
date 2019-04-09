@@ -335,15 +335,13 @@ public class AcceuilChercheurController implements Initializable {
         SpinnerValueFactory<Integer> valueFactory = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 1);
  
-        frequTextField.setValueFactory(valueFactory);
-        
+        frequTextField.setValueFactory(valueFactory); 
         frequTextField.setEditable(true);
         
         TextFormatter formatter=new TextFormatter(valueFactory.getConverter(),valueFactory.getValue());
         frequTextField.getEditor().setTextFormatter(formatter);
         
         valueFactory.valueProperty().bindBidirectional(formatter.valueProperty());
-        
         frequTextField.focusedProperty().addListener((observable,oldValue,newValue)->{
             if(!newValue){
                 frequTextField.increment(0);
