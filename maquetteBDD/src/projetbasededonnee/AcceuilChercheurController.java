@@ -35,6 +35,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import static javafx.scene.input.KeyCode.ENTER;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -307,6 +309,7 @@ public class AcceuilChercheurController implements Initializable {
         homePageChercheur.setVisible(true);
         ajoutExpPage.setVisible(false); 
         AddUpletPage.setVisible(false);
+        Erreur_Ajout_Uplet.setVisible(false);
         loadDataAccueilDatabase();
     }
         
@@ -458,6 +461,21 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
+     * 
+     * @param e 
+     */
+    public void keyPressedOuiSuivi(KeyEvent e) {
+        if (e.getCode() == ENTER) {
+            frequTextField.setVisible(true);
+            FreqLabel.setVisible(true);
+            Alpha3Label.setVisible(true);
+            Alpha3Spinner.setVisible(true);
+            NonSuiviButton.setSelected(false);  
+            OuiSuiviButton.setSelected(true);
+        }
+    }
+    
+    /**
      * Event quand l'utilisateur clique sur nondupont pour savoir si l'expérience est suivi dans le temps
      * @param event 
      */
@@ -467,6 +485,21 @@ public class AcceuilChercheurController implements Initializable {
         Alpha3Label.setVisible(false);
         Alpha3Spinner.setVisible(false);
         OuiSuiviButton.setSelected(false);
+    }
+    
+    /**
+     * 
+     * @param e 
+     */
+    public void keyPressedNonSuivi(KeyEvent e) {
+        if (e.getCode() == ENTER) {
+            frequTextField.setVisible(false);
+            FreqLabel.setVisible(false);
+            Alpha3Label.setVisible(false);
+            Alpha3Spinner.setVisible(false);
+            OuiSuiviButton.setSelected(false);
+            NonSuiviButton.setSelected(true);
+        }
     }
     
     /**
@@ -500,8 +533,7 @@ public class AcceuilChercheurController implements Initializable {
             String TypeExp=(String) TypeExpCombo.getSelectionModel().getSelectedItem(); 
             String TypeAna =(String)TypeAnalyseCombo.getSelectionModel().getSelectedItem();
             Integer dureeExp=(Integer) dureeSpinner.getValue();
-            Integer puitReplicat=(Integer) puitReplicatSpinner.getValue(); 
-            Double Alpha3=(Double) Alpha3Spinner.getValue(); 
+            Integer puitReplicat=(Integer) puitReplicatSpinner.getValue();             
           
             if (NonSuiviButton.isSelected()) {
 
@@ -544,8 +576,7 @@ public class AcceuilChercheurController implements Initializable {
                     
                     homePageChercheur.setVisible(false);
                     ajoutExpPage.setVisible(false);
-                    
-                    DisplayLabels(nomExp,TypeExp, TypeAna, dureeExp,"non", puitReplicat, Alpha1,Alpha2, 0.0, 0);    
+                    DisplayLabels(nomExp, TypeExp, TypeAna, dureeExp,"non", puitReplicat, Alpha1,Alpha2, 0.0, 0);    
                     SolutionChoice();
                     setCellTableUplet();
                     loadDataUplet(id_exp);
@@ -591,7 +622,10 @@ public class AcceuilChercheurController implements Initializable {
                 
                 if (frequTextField.getValue()!=null && Alpha3Spinner.getValue()!=null){
                     
-                projetbasededonnee.Data.CurrentDate Date = new projetbasededonnee.Data.CurrentDate();
+                    Integer frequence = (Integer) frequTextField.getValue();
+                    Double Alpha3=(Double) Alpha3Spinner.getValue(); 
+
+                    projetbasededonnee.Data.CurrentDate Date = new projetbasededonnee.Data.CurrentDate();
 
                     con = connex.getCon();
 
@@ -629,7 +663,7 @@ public class AcceuilChercheurController implements Initializable {
                         }
                         homePageChercheur.setVisible(false);
                         ajoutExpPage.setVisible(false);
-                        DisplayLabels(nomExp,(String) TypeExpCombo.getSelectionModel().getSelectedItem(), (String)TypeAnalyseCombo.getSelectionModel().getSelectedItem(), (Integer) dureeSpinner.getValue(),"oui", (Integer) puitReplicatSpinner.getValue(), (Integer) Alpha1Spinner.getValue(), (Integer) Alpha2Spinner.getValue(), (Double) Alpha3Spinner.getValue(), (Integer) frequTextField.getValue());
+                        DisplayLabels(nomExp,TypeExp, TypeAna, dureeExp,"oui", puitReplicat, Alpha1,Alpha2, Alpha3, frequence);    
                         SolutionChoice();
                         setCellTableUplet();
                         loadDataUplet(id_exp);
@@ -764,7 +798,7 @@ public class AcceuilChercheurController implements Initializable {
      * @param Biais3
      * @param FrequExp 
      */
-    public void DisplayLabels(String nomExp, String typeExp, String typeAna, Integer dureeExp, String suiviExp, Integer puitReplicat, Integer Biais1, Integer Biais2 ,Double Biais3, Integer FrequExp){
+    public void DisplayLabels(String nomExp, String typeExp, String typeAna, Integer dureeExp, String suiviExp, Integer puitReplicat, Integer Biais1, Integer Biais2 ,Double Biais3, Integer FrequExp){        
         nomExpLableUplet.setText(nomExp);
         typeExpLabelUplet.setText(typeExp); 
         dureeLabelUplet.setText(String.valueOf(dureeExp)); 
@@ -877,7 +911,7 @@ public class AcceuilChercheurController implements Initializable {
             
             if (nb_agentbio == 0) {
                 Double prix= 3.0 * (Integer) AgentBioSpinner.getValue();
-                System.out.println(prix); 
+           
                 try{
                     stmt = con.createStatement();
                     rs=stmt.executeQuery("INSERT INTO AGENT_BIOLOGIQUE (ID_AGENT_BIO, QTEA, NOMA,PRIXA) VALUES("+ 1 +", "+ AgentBioSpinner.getValue() + ", '" + AgentBioCombo.getValue() + "', " + prix +")");    
