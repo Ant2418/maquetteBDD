@@ -312,8 +312,7 @@ public class AcceuilChercheurController implements Initializable {
         Erreur_Ajout_Uplet.setVisible(false);
         loadDataAccueilDatabase();
     }
-        
-   
+
 
     /**
      * Affichage du panel AddUpletPage, la page permettant d'ajouter des 
@@ -616,6 +615,7 @@ public class AcceuilChercheurController implements Initializable {
                             e = e.getNextException();
                         }
                     }
+                    
 
             }
             else if (OuiSuiviButton.isSelected()) {

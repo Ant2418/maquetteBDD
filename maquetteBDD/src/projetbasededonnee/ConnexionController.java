@@ -23,8 +23,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import static javafx.scene.input.KeyCode.ENTER;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -47,6 +45,7 @@ public class ConnexionController implements Initializable {
     private Connection con;
     private Connexion connexion; 
     private Personne personne; 
+    private Integer present;
 
 
     /**
@@ -70,62 +69,79 @@ public class ConnexionController implements Initializable {
        ErreurLabel.setVisible(false);
         ErreurLabel.setText("Veuillez remplir tous les champs");
         if (emailTF.getText().isEmpty() == false && mdpPF.getText().isEmpty() == false) { 
-            try {
-              
-            con = connexion.getCon();          
+            try{
+                con = connexion.getCon();          
             stmt = con.createStatement();
-            rs = stmt.executeQuery("SELECT FONCTION, PRENOM, NOM, EMAIL FROM PERSONNE WHERE email ='" + emailTF.getText() + "' AND mot_de_passe = '" + mdpPF.getText() + "'");
+            rs = stmt.executeQuery("SELECT count(*) FROM PERSONNE WHERE email ='" + emailTF.getText() + "' AND mot_de_passe = '" + mdpPF.getText() + "'");
             while (rs.next()) {
-                String res=rs.getString(1); 
-                prenom= rs.getString(2);
-                nom=rs.getString(3);
-                email=rs.getString(4);
-//                ajout le nom, prénom, email et fonction à la personne connecté
-                personne.setPrenom(prenom);
-                personne.setNom(nom);
-                personne.setEmail(email);
-                personne.setFonction(res);
-                System.out.println(res);
-                if ("chercheur".equals(res)) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Chercheur.fxml"));
-                    Parent ajoutParent = (Parent) loader.load();
-                 
-                    AcceuilChercheurController ACCo = loader.getController();
-                    Scene ajoutScene = new Scene(ajoutParent);
-                    ACCo.setConnection(connexion);
-                    ACCo.setPersonne(personne);
-                    ACCo.loadDataAccueilDatabase();
-                    
-                    //This line gets the Stage information
-                    Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+               present=rs.getInt(1);            
+            }   
+            }catch (Exception e) {
+                System.out.println(e);
+            }
+            
+            if(present>0){
+            
+                try { 
+                con = connexion.getCon();          
+                stmt = con.createStatement();
+                rs = stmt.executeQuery("SELECT FONCTION, PRENOM, NOM, EMAIL FROM PERSONNE WHERE email ='" + emailTF.getText() + "' AND mot_de_passe = '" + mdpPF.getText() + "'");
+                while (rs.next()) {
+                    String res=rs.getString(1); 
+                    prenom= rs.getString(2);
+                    nom=rs.getString(3);
+                    email=rs.getString(4);
 
-                    window.setScene(ajoutScene);
-                    window.show();
+    //              ajout le nom, prénom, email et fonction à la personne connecté
+                    personne.setPrenom(prenom);
+                    personne.setNom(nom);
+                    personne.setEmail(email);
+                    personne.setFonction(res);
+                    System.out.println(res);
+                    if ("chercheur".equals(res)) {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Chercheur.fxml"));
+                        Parent ajoutParent = (Parent) loader.load();
+
+                        AcceuilChercheurController ACCo = loader.getController();
+                        Scene ajoutScene = new Scene(ajoutParent);
+                        ACCo.setConnection(connexion);
+                        ACCo.setPersonne(personne);
+                        ACCo.loadDataAccueilDatabase();
+
+                        //This line gets the Stage information
+                        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+                        window.setScene(ajoutScene);
+                        window.show();
+                    }
+                    else if ("laborantin".equals(res)){
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Laborantin.fxml"));
+                        Parent ajoutParent = (Parent) loader.load();
+
+                        LaborantinController LCO = loader.getController();
+                        Scene ajoutScene = new Scene(ajoutParent);
+                        LCO.setConnection(connexion);
+                        LCO.setPersonne(personne);
+
+                        //This line gets the Stage information
+                        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+                        window.setScene(ajoutScene);
+                        window.show();
+                    }
+                    else
+                    {
+                    ErreurLabel.setText("Vous n'êtes pas inscrit");
+                    ErreurLabel.setVisible(true);       
+                    }     
                 }
-                else if ("laborantin".equals(res)){
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Laborantin.fxml"));
-                    Parent ajoutParent = (Parent) loader.load();
-
-                    LaborantinController LCO = loader.getController();
-                    Scene ajoutScene = new Scene(ajoutParent);
-                    LCO.setConnection(connexion);
-                    LCO.setPersonne(personne);
-                       
-                    //This line gets the Stage information
-                    Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-                    window.setScene(ajoutScene);
-                    window.show();
-                }
-                else 
-                {
-                ErreurLabel.setText("Vous n'êtes pas inscrit");
-                ErreurLabel.setVisible(true);       
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
             }
-      
-            } catch (Exception e) {
-            System.out.println(e);
+            else{
+                ErreurLabel.setText("Vous n'êtes pas inscrit");
+                ErreurLabel.setVisible(true);    
             }
         }
         else
