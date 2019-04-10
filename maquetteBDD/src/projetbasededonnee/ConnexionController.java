@@ -117,13 +117,15 @@ public class ConnexionController implements Initializable {
                         window.show();
                     }
                     else if ("laborantin".equals(res)){
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Laborantin.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Laborantin_1.fxml"));
                         Parent ajoutParent = (Parent) loader.load();
 
-                        LaborantinController LCO = loader.getController();
+                        LaborantinController1 LCO = loader.getController();
                         Scene ajoutScene = new Scene(ajoutParent);
                         LCO.setConnection(connexion);
                         LCO.setPersonne(personne);
+                        LCO.loadDataPlaque();
+                        LCO.ComboTypePlaque();
 
                         //This line gets the Stage information
                         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -191,13 +193,15 @@ public class ConnexionController implements Initializable {
                     window.show();
                 }
                 else if ("laborantin".equals(res)){
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Laborantin.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Laborantin_1.fxml"));
                     Parent ajoutParent = (Parent) loader.load();
 
-                    LaborantinController LCO = loader.getController();
+                    LaborantinController1 LCO = loader.getController();
                     Scene ajoutScene = new Scene(ajoutParent);
                     LCO.setConnection(connexion);
                     LCO.setPersonne(personne);
+                    LCO.loadDataPlaque();
+                    LCO.ComboTypePlaque();
                        
                     //This line gets the Stage information
                     Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

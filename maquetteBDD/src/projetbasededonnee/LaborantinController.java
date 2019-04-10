@@ -17,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
@@ -46,91 +47,50 @@ public class LaborantinController implements Initializable {
     @FXML    private ImageView resultat;
     
     // Page d'accueil du laborantin
-    @FXML    private AnchorPane homePageLab;
-    @FXML    private VBox titleAcceuil;
-    @FXML    private TableView<Experience> tableAccueil;
-    @FXML    private TableColumn<Experience, String> numExpCol;
-    @FXML    private TableColumn<Experience, String> nomExpCol;
-    @FXML    private TableColumn<Experience, String> etatCol;
-    @FXML    private TableColumn<Experience, String> labCol;
-    @FXML    private TableColumn<Experience, String> typeExpCol;
-    @FXML    private TableColumn<Experience, String> typeAnaCol;
-    @FXML    private TableColumn<Experience, String> dureeCol;
-    @FXML    private TableColumn<Experience, String> nupletCol;
-    @FXML    private TableColumn<Experience, String> puitCol;
-    @FXML    private TableColumn<Experience, String> totalPuitCol;
-    @FXML    private TableColumn<Experience, String> checkCol;
+private AnchorPane homePageLab;
+    private TableView<Experience> tableAccueil;
+    private TableColumn<Experience, String> numExpCol;
+    private TableColumn<Experience, String> nomExpCol;
+    private TableColumn<Experience, String> etatCol;
+    private TableColumn<Experience, String> labCol;
+    private TableColumn<Experience, String> typeExpCol;
+    private TableColumn<Experience, String> typeAnaCol;
+    private TableColumn<Experience, String> dureeCol;
+    private TableColumn<Experience, String> nupletCol;
+    private TableColumn<Experience, String> puitCol;
+    private TableColumn<Experience, String> totalPuitCol;
+    private TableColumn<Experience, String> checkCol;
     
     // Page des expériences du laborantin 
     // la page est diviser en plusieurs tab en fonction des status 
     // qui sont 'A Renouveler'(AR), 'En Attente' (EA) etc...
-    @FXML    private AnchorPane expLabPage;
-    @FXML    private VBox titleAcceuil2;
-    @FXML    private Tab tableARenouveller;
-    @FXML    private TableView<Experience> tableLabAR;
-    @FXML    private TableColumn<Experience, String> numExpLabARCol;
-    @FXML    private TableColumn<Experience, String> nomExpLabARCol;
-    @FXML    private TableColumn<Experience, String> chercheurLabARCol;
-    @FXML    private TableColumn<Experience, String> typeExpLabARCol;
-    @FXML    private TableColumn<Experience, String> typeAnaLabARCol;
-    @FXML    private TableColumn<Experience, String> dureeLabARCol;
-    @FXML    private TableColumn<Experience, String> nupletLabARCol;
-    @FXML    private TableColumn<Experience, String> puitLabARCol;
-    @FXML    private TableColumn<Experience, String> totalPuitLabARCol;
-    @FXML    private TableColumn<Experience, String> checkLabARCol;
+private AnchorPane expLabPage;
+    private TableView<Experience> tableLabAR;
+    private TableColumn<Experience, String> numExpLabARCol;
+    private TableColumn<Experience, String> nomExpLabARCol;
+    private TableColumn<Experience, String> chercheurLabARCol;
+    private TableColumn<Experience, String> typeExpLabARCol;
+    private TableColumn<Experience, String> typeAnaLabARCol;
+    private TableColumn<Experience, String> dureeLabARCol;
+    private TableColumn<Experience, String> nupletLabARCol;
+    private TableColumn<Experience, String> puitLabARCol;
+    private TableColumn<Experience, String> totalPuitLabARCol;
+    private TableColumn<Experience, String> checkLabARCol;
     
-    @FXML    private Tab tableEnAttente;
-    @FXML    private TableView<?> tableLabEA;
-    @FXML    private TableColumn<Experience, String> numExpLabEACol;
-    @FXML    private TableColumn<Experience, String> nomExpLabEACol;
-    @FXML    private TableColumn<Experience, String> chercheurLabEACol;
-    @FXML    private TableColumn<Experience, String> typeExpLabEACol;
-    @FXML    private TableColumn<Experience, String> typeAnaLabEACol;
-    @FXML    private TableColumn<Experience, String> dureeLabEACol;
-    @FXML    private TableColumn<Experience, String> nupletLabEACol;
-    @FXML    private TableColumn<Experience, String> puitLabEACol;
-    @FXML    private TableColumn<Experience, String> totalPuitLabEACol;
-    @FXML    private TableColumn<Experience, String> checkLabCol1;
-    
-    @FXML    private Tab tableEnCours;
-    @FXML    private TableView<?> tableLabEC;
-    @FXML    private TableColumn<Experience, String> numExpLabECCol;
-    @FXML    private TableColumn<Experience, String> nomExpLabECCol1;
-    @FXML    private TableColumn<Experience, String> chercheurLabECCol1;
-    @FXML    private TableColumn<Experience, String> typeExpLabECCol1;
-    @FXML    private TableColumn<Experience, String> typeAnaLabECCol1;
-    @FXML    private TableColumn<Experience, String> dureeLabECCol1;
-    @FXML    private TableColumn<Experience, String> nupletLabECCol1;
-    @FXML    private TableColumn<Experience, String> puitLabECCol1;
-    @FXML    private TableColumn<Experience, String> totalPuitLabECCol1;
-    @FXML    private Tab TableTermine;
-    @FXML    private Tab TableFacture;
     
     // Page pour lancer une expérience
-    @FXML    private AnchorPane visuExpPage;
+private AnchorPane visuExpPage;
     @FXML    private ImageView validerIV;
-    @FXML    private Label nomExpLabel;
-    @FXML    private Label typePlaqueLabel;
-    @FXML    private Label dureeLabel;
-    @FXML    private Label suiviLabel;
-    @FXML    private Label frequenceLabel;
-    @FXML    private Label nbPuitReplicatLabel;
-    @FXML    private Label typeExpLabel;
-    @FXML    private Label typeAnaLabel;
-    @FXML    private Label alpha1Label;
-    @FXML    private Label alpha2Label;
-    @FXML    private Label alpha3Label;
-    @FXML    private Label debutExpLabel;
     
     // TABLE DE VISUALISATION DES REPLICATS / N-UPLET
-    @FXML    private TableView<Experience> tableNUplet;
-    @FXML    private TableColumn<Experience, String> replicatCol;
-    @FXML    private TableColumn<Experience, String> agentBioCol;
-    @FXML    private TableColumn<Experience, String> qteAgentBioCol;
-    @FXML    private TableColumn<Experience, String> typeCellCol;
-    @FXML    private TableColumn<Experience, String> qteCellCol;
-    @FXML    private TableColumn<Experience, String> plaqueCol;
-    @FXML    private TableColumn<Experience, String> photometreCol;
+private TableView<Experience> tableNUplet;
+    private TableColumn<Experience, String> replicatCol;
+    private TableColumn<Experience, String> agentBioCol;
+    private TableColumn<Experience, String> qteAgentBioCol;
+    private TableColumn<Experience, String> typeCellCol;
+    private TableColumn<Experience, String> qteCellCol;
+    private TableColumn<Experience, String> plaqueCol;
+    private TableColumn<Experience, String> photometreCol;
     
     // Page de validation des résultats
     @FXML    private AnchorPane validationPage;
@@ -154,10 +114,32 @@ public class LaborantinController implements Initializable {
     @FXML    private TableColumn<Experience, String> sdTransCol1;
     @FXML    private TableColumn<Experience, String> resultExpCol1;
     
-    @FXML    private Button lancerExpButton;
+    private Button lancerExpButton;
     
     private Connexion connex; 
     private Personne personne; 
+    @FXML
+    private AnchorPane accueilLaboPane;
+    @FXML
+    private VBox titleAcceuil1;
+    @FXML
+    private TableView<?> tableAccueilLabo;
+    @FXML
+    private TableColumn<?, ?> colNumPlaque;
+    @FXML
+    private TableColumn<?, ?> colTypePlaque;
+    @FXML
+    private TableColumn<?, ?> colPuitsDispo;
+    @FXML
+    private TableColumn<?, ?> colButton;
+    @FXML
+    private ComboBox<?> cbTypePlaque;
+    @FXML
+    private Label labelAjoutPlaque;
+    @FXML
+    private VBox titleAcceuil111;
+    @FXML
+    private ComboBox<?> experienceCB;
     
     /**
      * Initializes the controller class.

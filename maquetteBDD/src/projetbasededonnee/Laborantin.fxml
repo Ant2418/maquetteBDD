@@ -220,7 +220,7 @@
                               </BorderPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="visuExpPage" prefHeight="600.0" prefWidth="950.0">
+                        <AnchorPane fx:id="visuExpPage" prefHeight="600.0" prefWidth="950.0" visible="false">
                            <children>
                               <BorderPane prefHeight="600.0" prefWidth="950.0">
                                  <top>
@@ -341,7 +341,7 @@
                               </BorderPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="validationPage" onMouseClicked="#validationEvent" prefHeight="600.0" prefWidth="950.0" visible="false">
+                        <AnchorPane fx:id="validationPage" onMouseClicked="#validationEvent" prefHeight="600.0" prefWidth="950.0">
                            <children>
                               <BorderPane prefHeight="600.0" prefWidth="950.0">
                                  <top>
@@ -391,6 +391,9 @@
                                        <BorderPane.margin>
                                           <Insets bottom="20.0" left="20.0" right="20.0" />
                                        </BorderPane.margin>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
                                     </TableView>
                                  </center>
                                  <bottom>
