@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -34,6 +35,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import static javafx.scene.input.KeyCode.ENTER;
 import javafx.scene.input.KeyEvent;
@@ -100,6 +102,9 @@ public class AcceuilChercheurController implements Initializable {
     @FXML    private ComboBox TypeAnalyseCombo;
     @FXML    private Label ErreurExp_Label;
     @FXML    private TextField nomExpTextField1;
+    @FXML    private Button ValiderExp;
+    @FXML    private Button ButtonPlusReplicat;
+    @FXML    private Button ButtonValideReplicat; 
   
     
     //Ajout un n_uplet
@@ -118,6 +123,7 @@ public class AcceuilChercheurController implements Initializable {
     @FXML   private Spinner AgentBioSpinner;
     @FXML   private Spinner CelluleSpinner; 
     @FXML   private Label Erreur_Ajout_Uplet;
+    @FXML   private Label ErreurReplicatValider; 
     
 
     private Integer nb_agentbio,id_agent_bio, nb_cellule, id_cellule,nb_solution,id_solution, id_uplet, quantiteAgent_bio, quantiteCellule;
@@ -130,9 +136,10 @@ public class AcceuilChercheurController implements Initializable {
     private Personne personne; 
     private Statement stmt, stmt1, stmt2,stmt3,stmt4; 
     private ResultSet rs, rs1,rs2, rs3,rs4;
-    private Integer id_pers, id_exp, nbpuit, nbReplicat,nbre,duree, puitReplicat, Alpha1, Alpha2;
+    private Integer id_pers, id_exp, nbpuit, nbReplicat,nbre,duree, puitReplicat;
     private String nom_exp, etat_exp, type_exp, type_analyse,nomAgent_bio,nomCellule,nomExp;
     private Date horo_deb, horo_fin,time;
+    private Double  Alpha1, Alpha2;
 
     
     //liste observable
@@ -305,14 +312,70 @@ public class AcceuilChercheurController implements Initializable {
      * @param event
      * @throws IOException 
      */
+    public void ValidationAddUplet(MouseEvent event) throws IOException {
+        ValidationUplet(); 
+    }
+    
+    public void keyPressedAddUpletVal(KeyEvent e) {
+        if (e.getCode() == ENTER) {
+            ValidationUplet(); 
+        }
+    }
+
+    public void ValidationUplet(){
+         ErreurReplicatValider.setVisible(false);
+        try{
+            con = connex.getCon();
+            stmt = con.createStatement();
+            rs = stmt.executeQuery("SELECT count(*) FROM N_UPLET WHERE ID_EXPERIENCE = '" + id_exp + "'");
+            while (rs.next()){
+                nbReplicat=rs.getInt(1);              
+            }
+        }catch (Exception e) {
+            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        if (nbReplicat >0) {
+            homePageChercheur.setVisible(true);
+            ajoutExpPage.setVisible(false); 
+            AddUpletPage.setVisible(false);
+            Erreur_Ajout_Uplet.setVisible(false);
+            loadDataAccueilDatabase();
+        }
+        else{
+            ErreurReplicatValider.setVisible(true);
+        }
+    }
+
+    /**
+     * Affichage du panel homePageChercheur, l'accueil du chercheur
+     * @param event
+     * @throws IOException 
+     */
     public void homeEvent(MouseEvent event) throws IOException {
+        ErreurReplicatValider.setVisible(false);
+        nomExpTextField1.clear();
+        dureeSpinner.getValueFactory().setValue(1);
+        frequTextField.getValueFactory().setValue(1);
+        puitReplicatSpinner.getValueFactory().setValue(1);
+        TypeExpCombo.getItems().clear(); 
+        TypeAnalyseCombo.getItems().clear();  
+        Alpha1Spinner.getValueFactory().setValue(1.0);
+        Alpha2Spinner.getValueFactory().setValue(1.0);
+        Alpha3Spinner.getValueFactory().setValue(0.0);
+        NonSuiviButton.setSelected(false);
+        OuiSuiviButton.setSelected(false);
+        frequTextField.setVisible(false); 
+        Alpha3Spinner.setVisible(false); 
         homePageChercheur.setVisible(true);
         ajoutExpPage.setVisible(false); 
         AddUpletPage.setVisible(false);
-        Erreur_Ajout_Uplet.setVisible(false);
-        loadDataAccueilDatabase();
+        FreqLabel.setVisible(false);
+        Alpha3Label.setVisible(false);
+       
     }
-
+    
+    
 
     /**
      * Affichage du panel AddUpletPage, la page permettant d'ajouter des 
@@ -367,8 +430,8 @@ public class AcceuilChercheurController implements Initializable {
         });
         
         // Value factory.
-        SpinnerValueFactory<Integer> Alpha1SpinnervalueFactory = //
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 1);
+        SpinnerValueFactory<Double> Alpha1SpinnervalueFactory = //
+                new SpinnerValueFactory.DoubleSpinnerValueFactory(0.5, 1000.0, 1.0,0.5);
  
         Alpha1Spinner.setValueFactory(Alpha1SpinnervalueFactory);
 
@@ -387,8 +450,8 @@ public class AcceuilChercheurController implements Initializable {
         
         
         // Value factory.
-        SpinnerValueFactory<Integer> Alpha2SpinnervalueFactory = //
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 1);
+        SpinnerValueFactory<Double> Alpha2SpinnervalueFactory = //
+                new SpinnerValueFactory.DoubleSpinnerValueFactory(0.5, 1000.0, 1.0, 0.5);
  
         Alpha2Spinner.setValueFactory(Alpha2SpinnervalueFactory);
         
@@ -408,7 +471,7 @@ public class AcceuilChercheurController implements Initializable {
 
         // Value factory.
         SpinnerValueFactory<Integer> dureeSpinnervalueFactory = //
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 1);
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 1);
  
         dureeSpinner.setValueFactory(dureeSpinnervalueFactory);
         dureeSpinner.setEditable(true);
@@ -442,6 +505,8 @@ public class AcceuilChercheurController implements Initializable {
                 puitReplicatSpinner.increment(0);
             }
         });
+        
+        ValiderExp.setGraphic(new ImageView(new Image(getClass().getResource("checked.png").toExternalForm(), 40, 40, true, true)));
        
     }
     
@@ -505,7 +570,16 @@ public class AcceuilChercheurController implements Initializable {
      * @throws IOException 
      */
     public void AddUpletEvent(MouseEvent event) throws IOException{
-
+        AddUplet(); 
+    }
+    
+    public void AddUpletKeyPressed(KeyEvent e) {
+        if (e.getCode() == ENTER) {
+            AddUplet(); 
+        }
+    }
+    
+    public void AddUplet(){
         ErreurExp_Label.setText("Veuillez remplir tous les champs");
         ErreurExp_Label.setVisible(false);
         nomExpTextField1.setStyle(null);
@@ -522,10 +596,10 @@ public class AcceuilChercheurController implements Initializable {
 
         duree=(Integer) dureeSpinner.getValue();
         puitReplicat=(Integer) puitReplicatSpinner.getValue();
-        Alpha1= (Integer) Alpha1Spinner.getValue();
-        Alpha2= (Integer) Alpha2Spinner.getValue();
+        Alpha1= (Double) Alpha1Spinner.getValue();
+        Alpha2= (Double) Alpha2Spinner.getValue();
         
-        if(nomExpTextField1.getText().isEmpty()==false && duree!=0 && dureeSpinner.getValue()!=null && puitReplicatSpinner.getValue()!=null && TypeExpCombo.getSelectionModel().getSelectedItem()!= null && TypeAnalyseCombo.getSelectionModel().getSelectedItem()!=null && Alpha1Spinner.getValue()!= null && Alpha1 != 0 && Alpha2Spinner.getValue()!=null && Alpha2!=0){
+        if(nomExpTextField1.getText().isEmpty()==false && duree!=0 && dureeSpinner.getValue()!=null && puitReplicatSpinner.getValue()!=null && TypeExpCombo.getSelectionModel().getSelectedItem()!= null && TypeAnalyseCombo.getSelectionModel().getSelectedItem()!=null && Alpha1Spinner.getValue()!= null && Alpha1 != 0.0 && Alpha2Spinner.getValue()!=null && Alpha2!=0.0){
             nomExp=nomExpTextField1.getText();
             String TypeExp=(String) TypeExpCombo.getSelectionModel().getSelectedItem(); 
             String TypeAna =(String)TypeAnalyseCombo.getSelectionModel().getSelectedItem();
@@ -586,11 +660,15 @@ public class AcceuilChercheurController implements Initializable {
                     puitReplicatSpinner.getValueFactory().setValue(1);
                     TypeExpCombo.getItems().clear(); 
                     TypeAnalyseCombo.getItems().clear();  
-                    Alpha1Spinner.getValueFactory().setValue(1);
-                    Alpha2Spinner.getValueFactory().setValue(1);
+                    Alpha1Spinner.getValueFactory().setValue(1.0);
+                    Alpha2Spinner.getValueFactory().setValue(1.0);
                     Alpha3Spinner.getValueFactory().setValue(0.0);
                     NonSuiviButton.setSelected(false);
                     OuiSuiviButton.setSelected(false);
+                    frequTextField.setVisible(false); 
+                    Alpha3Spinner.setVisible(false); 
+                    FreqLabel.setVisible(false);
+                    Alpha3Label.setVisible(false);
                     
                     }catch (SQLException e) {
                          System.out.println("Exception SQL : ");
@@ -679,6 +757,10 @@ public class AcceuilChercheurController implements Initializable {
                         Alpha3Spinner.getValueFactory().setValue(0.0);
                         NonSuiviButton.setSelected(false);
                         OuiSuiviButton.setSelected(false);
+                        frequTextField.setVisible(false); 
+                        Alpha3Spinner.setVisible(false); 
+                        FreqLabel.setVisible(false);
+                        Alpha3Label.setVisible(false);
                                                
                         
                     }catch (SQLException e) {
@@ -752,10 +834,10 @@ public class AcceuilChercheurController implements Initializable {
                 if(TypeAnalyseCombo.getSelectionModel().getSelectedItem()==null){
                     TypeAnalyseCombo.setStyle("-fx-border-color: red");
                 }
-                if(Alpha1Spinner.getValue()==null || Alpha1==0){
+                if(Alpha1Spinner.getValue()==null || Alpha1==0.0){
                     Alpha1Spinner.setStyle("-fx-border-color: red");
                 }
-                if(Alpha2Spinner.getValue()==null || Alpha2==0){
+                if(Alpha2Spinner.getValue()==null || Alpha2==0.0){
                     Alpha2Spinner.setStyle("-fx-border-color: red");
                 }
                 if(OuiSuiviButton.isSelected()==false && NonSuiviButton.isSelected()==false){
@@ -779,8 +861,6 @@ public class AcceuilChercheurController implements Initializable {
                 
                 
         }
-                      
-
     }
     
     /**
@@ -796,7 +876,7 @@ public class AcceuilChercheurController implements Initializable {
      * @param Biais3
      * @param FrequExp 
      */
-    public void DisplayLabels(String nomExp, String typeExp, String typeAna, Integer dureeExp, String suiviExp, Integer puitReplicat, Integer Biais1, Integer Biais2 ,Double Biais3, Integer FrequExp){        
+    public void DisplayLabels(String nomExp, String typeExp, String typeAna, Integer dureeExp, String suiviExp, Integer puitReplicat, Double Biais1, Double Biais2 ,Double Biais3, Integer FrequExp){        
         nomExpLableUplet.setText(nomExp);
         typeExpLabelUplet.setText(typeExp); 
         dureeLabelUplet.setText(String.valueOf(dureeExp)); 
@@ -877,13 +957,26 @@ public class AcceuilChercheurController implements Initializable {
             if(!newValue){
                 CelluleSpinner.increment(0);
             }
-        });     
+        }); 
+
+        ButtonPlusReplicat.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 30, 30, true, true)));
+        ButtonValideReplicat.setGraphic(new ImageView(new Image(getClass().getResource("checked.png").toExternalForm(), 40, 40, true, true)));
+       
     }
     
     //Quand on clique sur plus
     public void AddUpletSolution(MouseEvent event) throws IOException{
         AddUplet(id_exp);
         loadDataUplet(id_exp);
+        ErreurReplicatValider.setVisible(false);
+    }
+    
+    public void AddUpletSolPressed(KeyEvent event) {
+        if (event.getCode() == ENTER) {
+            AddUplet(id_exp);
+            loadDataUplet(id_exp);
+            ErreurReplicatValider.setVisible(false);
+        }
     }
     
     public void AddUplet(Integer id_exp){
@@ -1064,10 +1157,9 @@ public class AcceuilChercheurController implements Initializable {
         }
         
      
-        
+                
     }
               
-            
             
     /**
      * Setter pour modifier le main
