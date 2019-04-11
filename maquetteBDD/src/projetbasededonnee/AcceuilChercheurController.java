@@ -699,8 +699,8 @@ public class AcceuilChercheurController implements Initializable {
                 if (frequTextField.getValue()!=null && Alpha3Spinner.getValue()!=null){
                     
                     Integer frequence = (Integer) frequTextField.getValue();
-                    Double Alpha3=(Double) Alpha3Spinner.getValue(); 
-
+                    Double Alpha3 =(Double) Alpha3Spinner.getValue(); 
+                    System.out.println("moi je suis la " + Alpha3); 
                     projetbasededonnee.Data.CurrentDate Date = new projetbasededonnee.Data.CurrentDate();
 
                     con = connex.getCon();
@@ -743,6 +743,7 @@ public class AcceuilChercheurController implements Initializable {
                         SolutionChoice();
                         setCellTableUplet();
                         loadDataUplet(id_exp);
+                        System.out.println("c'est encore moi : "+ id_exp);
                         AddUpletPage.setVisible(true);
                     
                         //Reinitialisation
@@ -752,8 +753,8 @@ public class AcceuilChercheurController implements Initializable {
                         puitReplicatSpinner.getValueFactory().setValue(1);
                         TypeExpCombo.getItems().clear(); 
                         TypeAnalyseCombo.getItems().clear();  
-                        Alpha1Spinner.getValueFactory().setValue(1);
-                        Alpha2Spinner.getValueFactory().setValue(1);
+                        Alpha1Spinner.getValueFactory().setValue(1.0);
+                        Alpha2Spinner.getValueFactory().setValue(1.0);
                         Alpha3Spinner.getValueFactory().setValue(0.0);
                         NonSuiviButton.setSelected(false);
                         OuiSuiviButton.setSelected(false);
@@ -780,7 +781,8 @@ public class AcceuilChercheurController implements Initializable {
                                 Alpha1Spinner.setStyle("-fx-border-color: red");
                                 Alpha2Spinner.setStyle("-fx-border-color: red");
                                 }
-                                double a3 = (Double) Alpha3Spinner.getValue();
+                                Double a3 = (Double) Alpha3Spinner.getValue();
+                                System.out.println("idem " + a3);
                                 if(a3>1 || a3<0){
                                     ErreurExp_Label.setText("");
                                     ErreurExp_Label.setText("La valeur du Biais 3 doit être compris entre 0 et 1.");

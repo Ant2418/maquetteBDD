@@ -189,9 +189,9 @@
                                                             <Insets left="10.0" top="10.0" />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <HBox alignment="CENTER_LEFT" style="-fx-background-color: #000000;">
+                                                      <HBox alignment="CENTER">
                                                          <children>
-                                                            <TableView fx:id="tableExpARenouveler" minWidth="800.0">
+                                                            <TableView fx:id="tableExpARenouveler" fixedCellSize="0.0" minWidth="800.0" prefWidth="806.0">
                                                               <columns>
                                                                 <TableColumn fx:id="colNumExp" minWidth="-Infinity" prefWidth="-1.0" text="N°" />
                                                                 <TableColumn fx:id="colNomExp" minWidth="-Infinity" prefWidth="-1.0" text="Nom" />
@@ -244,7 +244,7 @@
                                                             <Insets left="10.0" top="10.0" />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <HBox alignment="CENTER_LEFT">
+                                                      <HBox alignment="CENTER">
                                                          <children>
                                                             <TableView fx:id="tableExpEnAttente" minWidth="800.0">
                                                                <columns>

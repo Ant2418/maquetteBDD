@@ -185,7 +185,7 @@ public class LaborantinController1 implements Initializable {
                         buttonAddEA.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
                         
                         // disable button
-                        home.
+                        //home.
                     });
                 }
 
