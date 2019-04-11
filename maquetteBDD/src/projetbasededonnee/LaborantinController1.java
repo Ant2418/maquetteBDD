@@ -49,7 +49,6 @@ public class LaborantinController1 implements Initializable {
     @FXML    private VBox menuVBox;
     @FXML    private ImageView deconnexionIV;
     @FXML    private ImageView home;
-    @FXML    private ImageView experience;
     @FXML    private ImageView resultat;
     @FXML    private AnchorPane accueilLaboPane;
     @FXML    private AnchorPane LancerPlaquePage;
@@ -102,6 +101,8 @@ public class LaborantinController1 implements Initializable {
     @FXML    private TableColumn<?, ?> colNbPuits2;
     
     @FXML    private Label labelInfoPlaquePuits;
+    @FXML    private Button buttonAddAR;
+    @FXML    private Button buttonAddEA;
     
     private Button lancerExpButton;
     
@@ -171,6 +172,7 @@ public class LaborantinController1 implements Initializable {
                         LancerPlaquePage.setVisible(true); 
                         EmplacementPlaquePage.setVisible(false);
                         validationPage.setVisible(false);
+                        
                         setInfoPlaque();
                         listeIdExp = new ArrayList();
                         setCellTableARenouveler();
@@ -178,7 +180,11 @@ public class LaborantinController1 implements Initializable {
                         listeIdExpEA = new ArrayList();
                         setCellTableEnAttente();
                         loadDataExpEnAttente();
+                        buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
+                        buttonAddEA.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
                         
+                        // disable button
+                        home.
                     });
                 }
 
@@ -313,7 +319,7 @@ public class LaborantinController1 implements Initializable {
             con = connex.getCon();
             stmt = con.createStatement();
             
-            rs=stmt.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where id_experience = "+ idExperience +"");
+            rs=stmt.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where id_experience = "+ idExperience +" ");
             while(rs.next()){
                 nomExp=rs.getString(1);
                 typeAna=rs.getString(2);
@@ -346,10 +352,11 @@ public class LaborantinController1 implements Initializable {
         
         nbPuits = nbPuits * nbUpletAR;
         
-        dataExpARenouveler.add(new projetbasededonnee.Data.Laborantin(idExperience, nomExp, nbUpletAR, typeAna, typeExp, nbPuits));
-        tableExpARenouveler.setItems(dataExpARenouveler);
+        if ((nbPuits/nbUpletAR) <= maPlaque.getPuits_dispo()){
+            dataExpARenouveler.add(new projetbasededonnee.Data.Laborantin(idExperience, nomExp, nbUpletAR, typeAna, typeExp, nbPuits));
+            tableExpARenouveler.setItems(dataExpARenouveler);
         }
-        
+        }
     }
     
     /**
@@ -560,6 +567,9 @@ public class LaborantinController1 implements Initializable {
         validationPage.setVisible(true);
     }
     
+    public void AddExpEvent(MouseEvent event) throws IOException {            
+        
+    }
      public void setConnection(Connexion cone)
     {
         connex = cone;

@@ -48,14 +48,6 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                   </ImageView>
-                  <ImageView fx:id="experience" fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="205.0" onMouseClicked="#experienceLabEvent" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@flask.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
-                  </ImageView>
                   <ImageView fx:id="resultat" fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="260.0" onMouseClicked="#validationEvent" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@analysis.png" />
@@ -70,7 +62,7 @@
                <center>
                   <AnchorPane BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="accueilLaboPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="accueilLaboPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
@@ -161,7 +153,7 @@
                               </BorderPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="LancerPlaquePage" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="LancerPlaquePage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
@@ -208,19 +200,9 @@
                                                             <Insets left="10.0" top="10.0" />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <GridPane minHeight="-Infinity" prefHeight="113.0">
-                                                        <columnConstraints>
-                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="845.0" minWidth="10.0" prefWidth="843.0" />
-                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.0" minWidth="10.0" prefWidth="59.0" />
-                                                        </columnConstraints>
-                                                        <rowConstraints>
-                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                        </rowConstraints>
-                                                         <VBox.margin>
-                                                            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
-                                                         </VBox.margin>
+                                                      <HBox alignment="CENTER" prefHeight="100.0">
                                                          <children>
-                                                            <TableView fx:id="tableExpARenouveler">
+                                                            <TableView fx:id="tableExpARenouveler" minWidth="-Infinity" prefWidth="850.0">
                                                               <columns>
                                                                 <TableColumn fx:id="colNumExp" prefWidth="-1.0" text="N°" />
                                                                 <TableColumn fx:id="colNomExp" prefWidth="-1.0" text="Nom" />
@@ -232,9 +214,20 @@
                                                                <columnResizePolicy>
                                                                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                                </columnResizePolicy>
+                                                               <HBox.margin>
+                                                                  <Insets />
+                                                               </HBox.margin>
                                                             </TableView>
+                                                            <Button fx:id="buttonAddAR" mnemonicParsing="false">
+                                                               <HBox.margin>
+                                                                  <Insets left="20.0" />
+                                                               </HBox.margin>
+                                                            </Button>
                                                          </children>
-                                                      </GridPane>
+                                                         <VBox.margin>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
                                                       <HBox alignment="TOP_RIGHT" fillHeight="false">
                                                          <children>
                                                             <Label alignment="CENTER_RIGHT" text="Expérience bien ajoutée" textAlignment="RIGHT">
@@ -262,19 +255,9 @@
                                                             <Insets left="10.0" top="10.0" />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <GridPane prefHeight="156.0" prefWidth="902.0">
-                                                         <columnConstraints>
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="845.0" minWidth="10.0" prefWidth="843.0" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.0" minWidth="10.0" prefWidth="59.0" />
-                                                         </columnConstraints>
-                                                         <rowConstraints>
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                         </rowConstraints>
-                                                         <VBox.margin>
-                                                            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
-                                                         </VBox.margin>
+                                                      <HBox alignment="CENTER" prefHeight="100.0">
                                                          <children>
-                                                            <TableView fx:id="tableExpEnAttente" minHeight="93.0">
+                                                            <TableView fx:id="tableExpEnAttente" minWidth="-Infinity" prefWidth="850.0">
                                                                <columns>
                                                                   <TableColumn fx:id="colNumExp2" prefWidth="50.0" text="N°" />
                                                                   <TableColumn fx:id="colNomExp2" prefWidth="120.0" text="Nom" />
@@ -287,8 +270,16 @@
                                                                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                                </columnResizePolicy>
                                                             </TableView>
+                                                            <Button fx:id="buttonAddEA" mnemonicParsing="false">
+                                                               <HBox.margin>
+                                                                  <Insets left="20.0" />
+                                                               </HBox.margin>
+                                                            </Button>
                                                          </children>
-                                                      </GridPane>
+                                                         <VBox.margin>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
                                                       <HBox alignment="TOP_RIGHT">
                                                          <children>
                                                             <Label alignment="CENTER_RIGHT" text="Expérience bien ajoutée" textAlignment="RIGHT">
