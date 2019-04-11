@@ -130,6 +130,7 @@ public class LaborantinController1 implements Initializable {
     private ArrayList<Integer> listeIdPlaque;
     private ArrayList<Integer> listeIdExp;
     private ArrayList<Integer> listeIdExpEA;
+    private ArrayList<Integer> listeIdUplet;
     
     private projetbasededonnee.Data.Laborantin maPlaque;
     
@@ -558,6 +559,175 @@ public class LaborantinController1 implements Initializable {
         LancerPlaquePage.setVisible(false); 
         EmplacementPlaquePage.setVisible(false);
         validationPage.setVisible(true);
+    }
+    
+    public void AjoutXYPlaque(projetbasededonnee.Data.Laborantin experience, projetbasededonnee.Data.Laborantin plaque){
+        listeIdUplet = new ArrayList(); 
+           
+    try{
+        con = connex.getCon();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT id_n_uplet FROM N_UPLET WHERE id_experience = " + experience.getId_exp() + " and terminee = "+ 0+ "");
+        while (rs.next()) { 
+            Integer id_uplet= rs.getInt(1);
+            listeIdUplet.add(id_uplet); 
+        }
+    }catch (Exception e) {
+        Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+    }
+        
+        if (plaque.getType_plaque() ==  "96puits"){
+            Integer nbrePuit_Uplet= experience.getNb_puits()/experience.getNb_n_uplet();
+            Integer puits_dispo=plaque.getPuits_dispo(); 
+            Integer puits_exp=experience.getNb_puits(); 
+
+            if ((puits_dispo + puits_exp) <= 96 ){
+                if (puits_dispo == 96){
+                    int X=1;
+                    int Y=1;
+
+                    for (Integer idUplet : listeIdUplet) {
+                        
+                        for (int i=1; i <= nbrePuit_Uplet; i++){
+                            try{
+                            stmt = con.createStatement();
+                            rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) = " + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+"");
+                            if (Y == 8) {
+                                X=X+1;
+                                Y=1;
+                            }
+                            else
+                            {
+                                Y=Y+1;
+                            }
+                            
+                            }catch (Exception e) {
+                                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                            }
+                        }
+                    }
+                }
+                else //Je ne peux pas mettre tous les n_uplets sur la plaque
+                {
+                    Integer nbreUpletAInserer = puits_dispo/ puits_exp;
+                    Integer nb=1;
+                    int X=0; 
+                    int Y=0; 
+                    try{
+                        stmt = con.createStatement();
+                        rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getId_plaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
+                        while (rs.next()) { 
+                            X = rs.getInt(1);
+                            Y = rs.getInt(2);
+                        }
+                        
+                    }catch (Exception e) {
+                        Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                    }
+                    while( nb <= nbreUpletAInserer){
+                        Integer idUplet=listeIdUplet.get(nb);
+                         for (int i=1; i <= nbrePuit_Uplet; i++){
+
+                            if (Y == 8) {
+                                X=X+1;
+                                Y=1;
+                            }
+                            else
+                            {
+                                Y=Y+1;
+                            }
+                            
+                            try{
+                            stmt = con.createStatement();
+                            rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) = " + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+"");
+
+                            }catch (Exception e) {
+                                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                            }
+                        } 
+                        nb=nb+1;
+                    }
+                }
+            }
+        
+        }
+        else if (plaque.getType_plaque() ==  "384puits"){
+            Integer nbrePuit_Uplet= experience.getNb_puits()/experience.getNb_n_uplet();
+            Integer puits_dispo=plaque.getPuits_dispo(); 
+            Integer puits_exp=experience.getNb_puits(); 
+
+            if ((puits_dispo + puits_exp) <= 384 ){
+                if (puits_dispo == 384){
+                    int X=1;
+                    int Y=1;
+
+                    for (Integer idUplet : listeIdUplet) {
+                        
+                        for (int i=1; i <= nbrePuit_Uplet; i++){
+                            try{
+                            stmt = con.createStatement();
+                            rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) = " + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+"");
+                            if (Y == 16) {
+                                X=X+1;
+                                Y=1;
+                            }
+                            else
+                            {
+                                Y=Y+1;
+                            }
+                            
+                            }catch (Exception e) {
+                                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                            }
+                        }
+                    }
+                }
+                else //Je ne peux pas mettre tous les n_uplets sur la plaque
+                {
+                    Integer nbreUpletAInserer = puits_dispo/ puits_exp;
+                    Integer nb=1;
+                    int X=0; 
+                    int Y=0; 
+                    try{
+                        stmt = con.createStatement();
+                        rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getId_plaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
+                        while (rs.next()) { 
+                            X = rs.getInt(1);
+                            Y = rs.getInt(2);
+                        }
+                        
+                    }catch (Exception e) {
+                        Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                    }
+                    while( nb <= nbreUpletAInserer){
+                        Integer idUplet=listeIdUplet.get(nb);
+                         for (int i=1; i <= nbrePuit_Uplet; i++){
+
+                            if (Y == 16) {
+                                X=X+1;
+                                Y=1;
+                            }
+                            else
+                            {
+                                Y=Y+1;
+                            }
+                            
+                            try{
+                            stmt = con.createStatement();
+                            rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) = " + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+"");
+
+                            }catch (Exception e) {
+                                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                            }
+                        } 
+                        nb=nb+1;
+                    }
+                }
+            }
+          
+        
+        
+        }
     }
     
      public void setConnection(Connexion cone)
