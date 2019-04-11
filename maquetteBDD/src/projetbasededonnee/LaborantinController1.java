@@ -46,83 +46,63 @@ import javafx.util.Callback;
  */
 public class LaborantinController1 implements Initializable {
 
-    @FXML
-    private VBox menuVBox;
-    @FXML
-    private ImageView deconnexionIV;
-    @FXML
-    private ImageView home;
-    @FXML
-    private ImageView experience;
-    @FXML
-    private ImageView resultat;
-    @FXML
-    private AnchorPane accueilLaboPane;
-    @FXML
-    private AnchorPane LancerPlaquePage;
-    @FXML
-    private AnchorPane EmplacementPlaquePage; 
-    @FXML
-    private AnchorPane validationPage; 
-    @FXML
-    private VBox titleAcceuil1;
-    @FXML
-    private TableView<projetbasededonnee.Data.Laborantin> tableAccueilLabo;
-    @FXML
-    private TableColumn<?, ?> colNumPlaque;
-    @FXML
-    private TableColumn<?, ?> colTypePlaque;
-    @FXML
-    private TableColumn<?, ?> colPuitsDispo;
-    @FXML
-    private ComboBox cbTypePlaque;
-    @FXML
-    private ImageView validerIV;
-    @FXML
-    private Label labelAjoutPlaque;
-    @FXML
-    private VBox titleAcceuil11;
-    @FXML
-    private VBox titleAcceuil111;
-    @FXML
-    private ComboBox experienceCB;
-    @FXML
-    private ImageView refuserIV;
-    @FXML
-    private ImageView validerResultat;
-    @FXML
-    private TableView<?> tableResultat;
-    @FXML
-    private TableColumn<?, ?> resultExpCol;
-    @FXML
-    private TableColumn<?, ?> resultatReplicatCol;
-    @FXML
-    private TableColumn<?, ?> decisionCol;
-    @FXML
-    private TableColumn<?, ?> couleurCol;
-    @FXML
-    private TableColumn<?, ?> moyCOl;
-    @FXML
-    private TableColumn<?, ?> moyRougeCol;
-    @FXML
-    private TableColumn<?, ?> moyVertCol;
-    @FXML
-    private TableColumn<?, ?> moyBleuCol;
-    @FXML
-    private TableColumn<?, ?> moyTransCol;
-    @FXML
-    private TableColumn<?, ?> sdCol;
-    @FXML
-    private TableColumn<?, ?> sdRougeCol1;
-    @FXML
-    private TableColumn<?, ?> sdVertCol1;
-    @FXML
-    private TableColumn<?, ?> sdBleuCol1;
-    @FXML
-    private TableColumn<?, ?> sdTransCol1;
-    @FXML
-    private TableColumn<?, ?> resultExpCol1;
+    @FXML    private VBox menuVBox;
+    @FXML    private ImageView deconnexionIV;
+    @FXML    private ImageView home;
+    @FXML    private ImageView experience;
+    @FXML    private ImageView resultat;
+    @FXML    private AnchorPane accueilLaboPane;
+    @FXML    private AnchorPane LancerPlaquePage;
+    @FXML    private AnchorPane EmplacementPlaquePage; 
+    @FXML    private AnchorPane validationPage; 
+    @FXML    private VBox titleAcceuil1;
+    @FXML    private TableView<projetbasededonnee.Data.Laborantin> tableAccueilLabo;
+    @FXML    private TableColumn<?, ?> colNumPlaque;
+    @FXML    private TableColumn<?, ?> colTypePlaque;
+    @FXML    private TableColumn<?, ?> colPuitsDispo;
+    @FXML    private ComboBox cbTypePlaque;
+    @FXML    private ImageView validerIV;
+    @FXML    private Label labelAjoutPlaque;
+    @FXML    private VBox titleAcceuil11;
+    @FXML    private VBox titleAcceuil111;
+    @FXML    private ComboBox experienceCB;
+    @FXML    private ImageView refuserIV;
+    @FXML    private ImageView validerResultat;
+    @FXML    private TableView<?> tableResultat;
+    @FXML    private TableColumn<?, ?> resultExpCol;
+    @FXML    private TableColumn<?, ?> resultatReplicatCol;
+    @FXML    private TableColumn<?, ?> decisionCol;
+    @FXML    private TableColumn<?, ?> couleurCol;
+    @FXML    private TableColumn<?, ?> moyCOl;
+    @FXML    private TableColumn<?, ?> moyRougeCol;
+    @FXML    private TableColumn<?, ?> moyVertCol;
+    @FXML    private TableColumn<?, ?> moyBleuCol;
+    @FXML    private TableColumn<?, ?> moyTransCol;
+    @FXML    private TableColumn<?, ?> sdCol;
+    @FXML    private TableColumn<?, ?> sdRougeCol1;
+    @FXML    private TableColumn<?, ?> sdVertCol1;
+    @FXML    private TableColumn<?, ?> sdBleuCol1;
+    @FXML    private TableColumn<?, ?> sdTransCol1;
+    @FXML    private TableColumn<?, ?> resultExpCol1;
 
+    @FXML    private TableView<projetbasededonnee.Data.Laborantin> tableExpARenouveler;
+    @FXML    private TableColumn<?, ?> colNumExp;
+    @FXML    private TableColumn<?, ?> colNomExp;
+    @FXML    private TableColumn<?, ?> colNbReplicat;
+    @FXML    private TableColumn<?, ?> colTypeAna;
+    @FXML    private TableColumn<?, ?> colTypeExp;
+    @FXML    private TableColumn<?, ?> colNbPuits;
+    
+    @FXML    private TableView<projetbasededonnee.Data.Laborantin> tableExpEnAttente;
+    @FXML    private TableColumn<?, ?> colNumExp2;
+    @FXML    private TableColumn<?, ?> colNomExp2;
+    @FXML    private TableColumn<?, ?> colNbReplicat2;
+    @FXML    private TableColumn<?, ?> colTypeAna2;
+    @FXML    private TableColumn<?, ?> colTypeExp2;
+    @FXML    private TableColumn<?, ?> colNbPuits2;
+    
+    @FXML    private Label labelInfoPlaquePuits;
+    
     private Button lancerExpButton;
     
     private Connexion connex;
@@ -133,10 +113,25 @@ public class LaborantinController1 implements Initializable {
     private Integer id_plaque,nb_puit;
     private String type_plaque;
     
+    private Integer idExp;
+    private String nomExp;
+    private String typeAna;
+    private String typeExp;
+    private Integer nbPuits;
+    private Integer nbUpletAR;
+    private Integer nbreUplet;
+    private Integer nbreUpletTraitee;
+    
+    
     //liste observable
     private ObservableList<projetbasededonnee.Data.Laborantin> dataPlaque;
-    
+    private ObservableList<projetbasededonnee.Data.Laborantin> dataExpARenouveler;
+    private ObservableList<projetbasededonnee.Data.Laborantin> dataExpEnAttente;
     private ArrayList<Integer> listeIdPlaque;
+    private ArrayList<Integer> listeIdExp;
+    private ArrayList<Integer> listeIdExpEA;
+    
+    private projetbasededonnee.Data.Laborantin maPlaque;
     
     /**
      * Initializes the controller class.
@@ -169,12 +164,20 @@ public class LaborantinController1 implements Initializable {
                 {
                     btn.setOnAction((ActionEvent event) -> {
                         
-                        projetbasededonnee.Data.Laborantin plaque = getTableView().getItems().get(getIndex());
-                        System.out.println(plaque);
+                        maPlaque = getTableView().getItems().get(getIndex());
+                        System.out.println(maPlaque);
+                        System.out.println(maPlaque);
                         accueilLaboPane.setVisible(false);
                         LancerPlaquePage.setVisible(true); 
                         EmplacementPlaquePage.setVisible(false);
                         validationPage.setVisible(false);
+                        setInfoPlaque();
+                        listeIdExp = new ArrayList();
+                        setCellTableARenouveler();
+                        loadDataExpARenouveler();
+                        listeIdExpEA = new ArrayList();
+                        setCellTableEnAttente();
+                        loadDataExpEnAttente();
                         
                     });
                 }
@@ -215,7 +218,7 @@ public class LaborantinController1 implements Initializable {
             }  
           
         } catch (Exception e) {
-            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
 
         for (Integer id_plaque : listeIdPlaque) {
@@ -231,7 +234,7 @@ public class LaborantinController1 implements Initializable {
                 }
                             
                 }catch (Exception e) {
-                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
             }
                 rs=stmt.executeQuery("SELECT count(id_puit) FROM puit WHERE id_plaque = "+ id_plaque +"");
                 while(rs.next()){
@@ -257,13 +260,184 @@ public class LaborantinController1 implements Initializable {
                     }
                 }
             }catch (Exception e) {
-                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
             }
                 
         }
     }
    
+    /**
+     * Methode qui permet d'initialiser le tableau des expériences en Attente
+     */
+    private void setCellTableARenouveler(){
+        dataExpARenouveler = FXCollections.observableArrayList();
 
+        colNumExp.setCellValueFactory(new PropertyValueFactory<>("id_exp"));
+        colNomExp.setCellValueFactory(new PropertyValueFactory<>("nom_exp"));
+        colNbReplicat.setCellValueFactory(new PropertyValueFactory<>("nb_n_uplet"));
+        colTypeAna.setCellValueFactory(new PropertyValueFactory<>("type_ana"));
+        colTypeExp.setCellValueFactory(new PropertyValueFactory<>("type_exp"));
+        colNbPuits.setCellValueFactory(new PropertyValueFactory<>("nb_puits"));
+    }
+    /**
+     * Methode qui recupere les donnees pour les mettre dans le tableau d'experiences a renouveler
+     * Les donnees sont :
+     * - numero de l'experience
+     * - nom de l'experience
+     * - nombre de replicat a renouveler
+     * - type d'analyse
+     * - type d'experience
+     * - nombre de puits total a renouveler
+     */
+    public void loadDataExpARenouveler(){
+        try{
+            con = connex.getCon();
+            stmt = con.createStatement();
+            
+            rs=stmt.executeQuery("select distinct id_experience, nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where etat_exp = '"+"A renouveler"+"' and renouveler = "+0+" and terminee = "+ 0+" order by id_experience ASC");
+            while(rs.next()){
+                idExp=rs.getInt(1);
+                nomExp=rs.getString(2);
+                typeAna=rs.getString(3);
+                typeExp=rs.getString(4);
+                nbPuits=rs.getInt(5);
+                
+                listeIdExp.add(idExp); 
+            }
+        } catch (Exception e) {
+            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        for (Integer idExperience : listeIdExp) {
+            try{
+            con = connex.getCon();
+            stmt = con.createStatement();
+            
+            rs=stmt.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where id_experience = "+ idExperience +"");
+            while(rs.next()){
+                nomExp=rs.getString(1);
+                typeAna=rs.getString(2);
+                typeExp=rs.getString(3);
+                nbPuits=rs.getInt(4);
+            }
+            } catch (Exception e) {
+                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+        }
+            try{
+                stmt = con.createStatement();
+                rs=stmt.executeQuery("select count(id_n_uplet) from N_UPLET where id_experience = "+ idExperience +"");
+                while(rs.next()){
+                    nbreUplet=rs.getInt(1);
+                }          
+            }catch (Exception e) {
+                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+            }
+            
+            try{
+                stmt = con.createStatement();
+                rs=stmt.executeQuery("select count(distinct id_n_uplet) from N_Uplet join PUIT using(id_n_uplet) where id_experience = "+ idExperience +"");
+                while(rs.next()){
+                    nbreUpletTraitee=rs.getInt(1);
+                }          
+            }catch (Exception e) {
+                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+            }
+        nbUpletAR = nbreUplet - nbreUpletTraitee; 
+        
+        nbPuits = nbPuits * nbUpletAR;
+        
+        dataExpARenouveler.add(new projetbasededonnee.Data.Laborantin(idExperience, nomExp, nbUpletAR, typeAna, typeExp, nbPuits));
+        tableExpARenouveler.setItems(dataExpARenouveler);
+        }
+        
+    }
+    
+    /**
+     * Initialisation de la table des experiences en attente
+     */
+    private void setCellTableEnAttente(){
+        dataExpEnAttente = FXCollections.observableArrayList();
+
+        colNumExp2.setCellValueFactory(new PropertyValueFactory<>("id_exp"));
+        colNomExp2.setCellValueFactory(new PropertyValueFactory<>("nom_exp"));
+        colNbReplicat2.setCellValueFactory(new PropertyValueFactory<>("nb_n_uplet"));
+        colTypeAna2.setCellValueFactory(new PropertyValueFactory<>("type_ana"));
+        colTypeExp2.setCellValueFactory(new PropertyValueFactory<>("type_exp"));
+        colNbPuits2.setCellValueFactory(new PropertyValueFactory<>("nb_puits"));
+    }
+    
+    /**
+     * Methode qui recupere les donnees pour les mettre dans le tableau d'experiences en attente
+     * Les donnees sont :
+     * - numero de l'experience
+     * - nom de l'experience
+     * - nombre de replicat en attente
+     * - type d'analyse
+     * - type d'experience
+     * - nombre de puits total en attente
+     */
+    public void loadDataExpEnAttente(){
+        try{
+            con = connex.getCon();
+            stmt = con.createStatement();
+            
+            rs=stmt.executeQuery("select distinct id_experience, nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where etat_exp = '"+"En Attente"+"' order by id_experience ASC");
+            while(rs.next()){
+                idExp=rs.getInt(1);
+                nomExp=rs.getString(2);
+                typeAna=rs.getString(3);
+                typeExp=rs.getString(4);
+                nbPuits=rs.getInt(5);
+                
+                listeIdExpEA.add(idExp); 
+            }
+        } catch (Exception e) {
+            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        for (Integer idExperience2 : listeIdExpEA) {
+            try{
+            con = connex.getCon();
+            stmt = con.createStatement();
+            
+            rs=stmt.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where id_experience = "+ idExperience2 +"");
+            while(rs.next()){
+                nomExp=rs.getString(1);
+                typeAna=rs.getString(2);
+                typeExp=rs.getString(3);
+                nbPuits=rs.getInt(4);
+            }
+            } catch (Exception e) {
+                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+        }
+            try{
+                stmt = con.createStatement();
+                rs=stmt.executeQuery("select count(id_n_uplet) from N_UPLET where id_experience = "+ idExperience2 +"");
+                while(rs.next()){
+                    nbreUplet=rs.getInt(1);
+                }          
+            }catch (Exception e) {
+                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+            }
+            
+            try{
+                stmt = con.createStatement();
+                rs=stmt.executeQuery("select count(distinct id_n_uplet) from N_Uplet join PUIT using(id_n_uplet) where id_experience = "+ idExperience2 +"");
+                while(rs.next()){
+                    nbreUpletTraitee=rs.getInt(1);
+                }          
+            }catch (Exception e) {
+                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+            }
+        nbUpletAR = nbreUplet - nbreUpletTraitee; 
+        
+        nbPuits = nbPuits * nbUpletAR;
+        
+        dataExpEnAttente.add(new projetbasededonnee.Data.Laborantin(idExperience2, nomExp, nbUpletAR, typeAna, typeExp, nbPuits));
+        tableExpEnAttente.setItems(dataExpEnAttente);
+        }
+        
+    }
    public void ComboTypePlaque(){
         //Initialisation des combo-box
         cbTypePlaque.getItems().clear();
@@ -276,7 +450,7 @@ public class LaborantinController1 implements Initializable {
                 cbTypePlaque.getItems().add(rs.getString(1));
             }
         }catch (Exception e) {
-            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
    }
     
@@ -336,19 +510,25 @@ public class LaborantinController1 implements Initializable {
             }
         
             }catch (Exception e) {
-                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
             }
 
             accueilLaboPane.setVisible(false);
             LancerPlaquePage.setVisible(true); 
             EmplacementPlaquePage.setVisible(false);
             validationPage.setVisible(false);
+//            setCellTableARenouveler();
+//            loadDataExpARenouveler();
         
         }catch (Exception e) {
-            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
         
-    } 
+    }
+    
+    public void setInfoPlaque(){ 
+        labelInfoPlaquePuits.setText("Plaque n° " +maPlaque.getId_plaque()+ ". Il reste "+maPlaque.getPuits_dispo()+" puits dans la plaque");
+    }
         
     /**
      * Affichage du panel expLabPage, la page où sont affiché les 
