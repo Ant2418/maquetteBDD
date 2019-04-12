@@ -1,5 +1,4 @@
 /*
-dfghjkl
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -55,6 +54,7 @@ public class AcceuilChercheurController implements Initializable {
     @FXML    private VBox menuVBox;
     @FXML    private ImageView deconnexionIV;
     @FXML    private ImageView home;
+    @FXML    private ImageView newExp;
     
     // Page d'accueil du chercheur
     @FXML    private AnchorPane homePageChercheur;
@@ -158,7 +158,8 @@ public class AcceuilChercheurController implements Initializable {
         ajoutExpPage.setVisible(false); 
         AddUpletPage.setVisible(false);
         dataAccueil = FXCollections.observableArrayList();
-        setCellTableAccueil();     
+        setCellTableAccueil();   
+        
     }      
 
     private void setCellTableAccueil(){
@@ -325,6 +326,9 @@ public class AcceuilChercheurController implements Initializable {
 
     public void ValidationUplet(){
          ErreurReplicatValider.setVisible(false);
+        deconnexionIV.setDisable(false);
+        home.setDisable(false);
+        newExp.setDisable(false);
         try{
             con = connex.getCon();
             stmt = con.createStatement();
@@ -576,11 +580,14 @@ public class AcceuilChercheurController implements Initializable {
     
     public void AddUpletKeyPressed(KeyEvent e) {
         if (e.getCode() == ENTER) {
-            AddUplet(); 
+            AddUplet();
         }
     }
     
     public void AddUplet(){
+        deconnexionIV.setDisable(true);
+        home.setDisable(true);
+        newExp.setDisable(true);
         ErreurExp_Label.setText("Veuillez remplir tous les champs");
         ErreurExp_Label.setVisible(false);
         nomExpTextField1.setStyle(null);
@@ -652,7 +659,7 @@ public class AcceuilChercheurController implements Initializable {
                     SolutionChoice();
                     setCellTableUplet();
                     loadDataUplet(id_exp);
-                    AddUpletPage.setVisible(true);
+                    AddUpletPage.setVisible(true);                   
                     
                    
                     nomExpTextField1.clear();
@@ -746,7 +753,8 @@ public class AcceuilChercheurController implements Initializable {
                         loadDataUplet(id_exp);
                         System.out.println("c'est encore moi : "+ id_exp);
                         AddUpletPage.setVisible(true);
-                    
+                        
+                        
                         //Reinitialisation
                         nomExpTextField1.clear();
                         dureeSpinner.getValueFactory().setValue(1);
