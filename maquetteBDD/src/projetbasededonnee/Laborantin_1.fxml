@@ -124,24 +124,25 @@
                                                             <Insets right="10.0" top="8.0" />
                                                          </HBox.margin>
                                                       </ComboBox>
-                                                      <ComboBox fx:id="cbSuiviDsTemps" layoutX="420.0" layoutY="60.0" prefWidth="200.0" promptText="-- Avec des expériences --">
+                                                      <Button fx:id="buttonAjoutPlaque" mnemonicParsing="false" onMouseClicked="#CompletePlaque">
                                                          <HBox.margin>
                                                             <Insets top="8.0" />
                                                          </HBox.margin>
-                                                      </ComboBox>
-                                                      <ImageView fx:id="validerIV" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#CompletePlaque" pickOnBounds="true" preserveRatio="true">
-                                                         <HBox.margin>
-                                                            <Insets left="20.0" top="10.0" />
-                                                         </HBox.margin>
-                                                         <image>
-                                                            <Image url="@checked.png" />
-                                                         </image>
-                                                      </ImageView>
+                                                      </Button>
                                                    </children>
                                                    <opaqueInsets>
                                                       <Insets />
                                                    </opaqueInsets>
                                                 </HBox>
+                                                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                                                   <children>
+                                                      <Label fx:id="erreurAjoutPlaque" text="Veuillez ajoutez une plaque !" textFill="RED" visible="false">
+                                                         <VBox.margin>
+                                                            <Insets top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
                                              </children>
                                              <GridPane.margin>
                                                 <Insets bottom="30.0" left="100.0" right="100.0" top="10.0" />
@@ -153,7 +154,7 @@
                               </BorderPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="LancerPlaquePage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="LancerPlaquePage" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>

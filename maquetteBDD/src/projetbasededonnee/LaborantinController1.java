@@ -100,6 +100,8 @@ public class LaborantinController1 implements Initializable {
     @FXML    private TableColumn<?, ?> colTypeExp2;
     @FXML    private TableColumn<?, ?> colNbPuits2;
     
+    @FXML    private Label erreurAjoutPlaque;
+    @FXML    private Button buttonAjoutPlaque;
     @FXML    private Label labelInfoPlaquePuits;
     @FXML    private Button buttonAddAR;
     @FXML    private Button buttonAddEA;
@@ -148,6 +150,7 @@ public class LaborantinController1 implements Initializable {
         dataPlaque = FXCollections.observableArrayList();
         listeIdPlaque= new ArrayList();
         setCellTablePlaque();
+        buttonAjoutPlaque.setGraphic(new ImageView(new Image(getClass().getResource("checked.png").toExternalForm(), 20, 20, true, true)));
         
     }    
 
@@ -515,6 +518,7 @@ public class LaborantinController1 implements Initializable {
         EmplacementPlaquePage.setVisible(false);
         validationPage.setVisible(false);
         ComboTypePlaque();
+        erreurAjoutPlaque.setVisible(false);
     } 
     
     /**
@@ -524,33 +528,36 @@ public class LaborantinController1 implements Initializable {
      */
     @FXML
     public void  CompletePlaque(MouseEvent event) throws IOException {
-        
-        try{
-            stmt = con.createStatement();
-            rs= stmt.executeQuery("INSERT INTO PLAQUE (id_plaque, type_plaque, EstRefuse)VALUES("+ 1 + ", '"+ cbTypePlaque.getSelectionModel().getSelectedItem()+ "', "+ 0 +")");
-        
+        if (cbTypePlaque.getSelectionModel().getSelectedItem()!= null) {
             try{
-            stmt = con.createStatement();
-            rs= stmt.executeQuery("SELECT MAX(id_plaque) FROM PLAQUE");
-            while(rs.next()){
-                id_plaque=rs.getInt(1); 
-            }
-        
+                stmt = con.createStatement();
+                rs= stmt.executeQuery("INSERT INTO PLAQUE (id_plaque, type_plaque, EstRefuse)VALUES("+ 1 + ", '"+ cbTypePlaque.getSelectionModel().getSelectedItem()+ "', "+ 0 +")");
+
+                try{
+                stmt = con.createStatement();
+                rs= stmt.executeQuery("SELECT MAX(id_plaque) FROM PLAQUE");
+                while(rs.next()){
+                    id_plaque=rs.getInt(1); 
+                }
+
+                }catch (Exception e) {
+                    Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+                }
+
+                accueilLaboPane.setVisible(false);
+                LancerPlaquePage.setVisible(true); 
+                EmplacementPlaquePage.setVisible(false);
+                validationPage.setVisible(false);
+    //            setCellTableARenouveler();
+    //            loadDataExpARenouveler();
+
             }catch (Exception e) {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
             }
-
-            accueilLaboPane.setVisible(false);
-            LancerPlaquePage.setVisible(true); 
-            EmplacementPlaquePage.setVisible(false);
-            validationPage.setVisible(false);
-//            setCellTableARenouveler();
-//            loadDataExpARenouveler();
-        
-        }catch (Exception e) {
-            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
-        
+        else {
+            erreurAjoutPlaque.setVisible(true);
+        }
     }
     
     public void setInfoPlaque(){ 
@@ -579,6 +586,9 @@ public class LaborantinController1 implements Initializable {
 
         validationPage.setVisible(false);
         lancerExpButton.setDisable(true);
+
+        erreurAjoutPlaque.setVisible(false);
+        
     } 
 
    /**
