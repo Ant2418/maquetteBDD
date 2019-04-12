@@ -154,7 +154,7 @@
                               </BorderPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="LancerPlaquePage" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="LancerPlaquePage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
@@ -175,6 +175,9 @@
                                              <BorderPane.margin>
                                                 <Insets left="100.0" />
                                              </BorderPane.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
                                           </Label>
                                        </top>
                                        <center>
@@ -220,7 +223,7 @@
                                                       </HBox>
                                                       <HBox alignment="TOP_RIGHT" fillHeight="false">
                                                          <children>
-                                                            <Label alignment="CENTER_RIGHT" text="Expérience bien ajoutée" textAlignment="RIGHT">
+                                                            <Label fx:id="LabelAjoutExpPlaque" alignment="CENTER_RIGHT" text="Expérience bien ajoutée" textAlignment="RIGHT" visible="false">
                                                                <font>
                                                                   <Font name="System Italic" size="13.0" />
                                                                </font>
@@ -260,7 +263,7 @@
                                                                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                                </columnResizePolicy>
                                                             </TableView>
-                                                            <Button fx:id="buttonAddEA" mnemonicParsing="false">
+                                                            <Button fx:id="buttonAddEA" mnemonicParsing="false" onAction="#AddUpletPlaqueEnAtt">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
@@ -272,7 +275,7 @@
                                                       </HBox>
                                                       <HBox alignment="TOP_RIGHT">
                                                          <children>
-                                                            <Label alignment="CENTER_RIGHT" text="Expérience bien ajoutée" textAlignment="RIGHT">
+                                                            <Label fx:id="LabelAjoutExpAttentLabel" alignment="CENTER_RIGHT" text="Expérience bien ajoutée" textAlignment="RIGHT" visible="false">
                                                                <font>
                                                                   <Font name="System Italic" size="13.0" />
                                                                </font>
@@ -289,7 +292,12 @@
                                                 </VBox>
                                                 <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="902.0">
                                                    <children>
-                                                      <Button layoutX="849.0" layoutY="15.0" mnemonicParsing="false" text="Sauvegarder">
+                                                      <Label fx:id="labelLancePlaque" prefHeight="20.0" prefWidth="426.0" text="Il n'y a plus de place sur cette plaque, veuillez lancer la plaque" textFill="RED" visible="false">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Button fx:id="sauvegardePlaque" layoutX="849.0" layoutY="15.0" mnemonicParsing="false" text="Sauvegarder">
                                                          <HBox.margin>
                                                             <Insets right="10.0" top="1.0" />
                                                          </HBox.margin>
