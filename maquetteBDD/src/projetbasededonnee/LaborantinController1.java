@@ -452,8 +452,6 @@ public class LaborantinController1 implements Initializable {
    public void ComboTypePlaque(){
         //Initialisation des combo-box
         cbTypePlaque.getItems().clear();
-        
-        
         try{
             con = connex.getCon();
             stmt = con.createStatement();
