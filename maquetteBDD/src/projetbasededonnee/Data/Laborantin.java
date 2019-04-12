@@ -23,6 +23,9 @@ public class Laborantin {
     private String type_ana;
     private String type_exp;
     private Integer nb_puits;
+
+    public Laborantin() {
+    }
     
     
     /**
