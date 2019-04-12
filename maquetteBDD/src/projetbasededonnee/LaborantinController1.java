@@ -109,7 +109,7 @@ public class LaborantinController1 implements Initializable {
     @FXML    private Label LabelAjoutExpAttentLabel; 
     @FXML    private Button sauvegardePlaque; 
     @FXML    private Label labelLancePlaque; 
-    
+    @FXML    private Button buttonLancerPlaque;
     private Button lancerExpButton;
     
     private Connexion connex;
@@ -202,7 +202,13 @@ public class LaborantinController1 implements Initializable {
                         buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
                         buttonAddEA.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
                         
-                        // disable button
+                        deconnexionIV.setDisable(true);
+                        home.setDisable(true);
+                        resultat.setDisable(true);
+                        buttonAddAR.setDisable(false);
+                        buttonAddEA.setDisable(false);
+                        sauvegardePlaque.setDisable(false);
+                        labelLancePlaque.setVisible(false);
                 
                     });
                 }
@@ -668,6 +674,13 @@ public class LaborantinController1 implements Initializable {
         loadDataExpARenouveler();
         setInfoPlaque();
         LabelAjoutExpPlaque.setVisible(true);
+        home.setDisable(true);
+        resultat.setDisable(true);
+        deconnexionIV.setDisable(true);
+        buttonAddAR.setDisable(false);
+        buttonAddEA.setDisable(false);
+        sauvegardePlaque.setDisable(false);
+        labelLancePlaque.setVisible(false);
     }
     
     public void AddUpletPlaqueEnAtt(ActionEvent event){
@@ -677,6 +690,12 @@ public class LaborantinController1 implements Initializable {
         loadDataExpEnAttente();
         setInfoPlaque();
         LabelAjoutExpAttentLabel.setVisible(true);
+        home.setDisable(true);
+        resultat.setDisable(true);
+        buttonAddAR.setDisable(false);
+        buttonAddEA.setDisable(false);
+        sauvegardePlaque.setDisable(false);
+        labelLancePlaque.setVisible(false);
     }
     
     public void AjoutXYPlaque(projetbasededonnee.Data.Laborantin experience, projetbasededonnee.Data.Laborantin plaque){
@@ -1009,10 +1028,19 @@ public class LaborantinController1 implements Initializable {
         deconnexionIV.setDisable(false);
         buttonAddAR.setDisable(false);
         buttonAddEA.setDisable(false);
-//        sauvegardePlaque.setDisable(false);
-//        labelLancePlaque.setVisible(false);
+        sauvegardePlaque.setDisable(false);
+        labelLancePlaque.setVisible(false);
        
     }
+    
+    public void clickOnSauvegarder(ActionEvent event){
+        accueilLaboPane.setVisible(true);
+        LancerPlaquePage.setVisible(false); 
+        EmplacementPlaquePage.setVisible(false);
+        validationPage.setVisible(false);
+        loadDataPlaque();
+        setCellTablePlaque();
+}
     
      public void setConnection(Connexion cone)
     {
