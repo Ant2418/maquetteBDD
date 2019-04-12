@@ -136,6 +136,10 @@ public class LaborantinController1 implements Initializable {
     private ObservableList<projetbasededonnee.Data.Laborantin> dataExpEnAttente;
     private ArrayList<Integer> listeIdPlaque;
     private ArrayList<Integer> listeIdExp;
+    private ArrayList<Integer> listExp= new ArrayList<>();
+    private ArrayList<Integer> listNbrePuitsParReplicat = new ArrayList<>();
+    private ArrayList<Integer> listNUplet= new ArrayList<>();
+    private ArrayList<Integer> listResNbPuit = new ArrayList<>();
     private ArrayList<Integer> listeIdExpEA;
     private ArrayList<Integer> listeIdUplet;
     private ArrayList<Integer> listeIdUplet1;
@@ -946,7 +950,68 @@ public class LaborantinController1 implements Initializable {
                     nb=nb+1;
                 }
             }
+        }
+    }
+    
+    public void lancerPlaque(){
+        con = connex.getCon();
+        // recuperation de chaque id_experience et le nbpuit [i.e. par replicat] de l'experience de la plaque sur laquelle je suis
+        // j'ajoute les id_exp dans la listExp et le nbpuit dans la listNbrePuitsParReplicat
+        try{
+            stmt = con.createStatement();
+            rs = stmt.executeQuery("select distinct id_experience, nbpuit from EXPERIENCE join N_UPLET using (id_experience) join PUIT using (id_n_uplet) where id_plaque = "+ maPlaque.getId_plaque());
+            while (rs.next()) { 
+                listExp.add(rs.getInt(1));
+               // listNbrePuitsParReplicat.add(rs.getInt(2));
             }
+            rs.close();
+        }catch (Exception e) {
+            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+        }
+        // je recupere le nombre de n_uplet de chaque experience et je les ajoute dans la listNUplet
+        for (int i=0; i < listExp.size(); i++) {
+            listNUplet.clear();
+            listResNbPuit.clear();
+            // recupere tous les n_uplet de l'experience
+            try{
+                rs = stmt.executeQuery("select id_n_uplet from EXPERIENCE join n_uplet using(id_experience) join PUIT using (id_n_uplet) where  id_experience = "+ listExp.get(i));
+                while (rs.next()) { 
+                    listNUplet.add(rs.getInt(1));
+                }
+                rs.close();
+            }catch (Exception e) {
+                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+            }
+            
+            // Recupere le nombre de puit dans l'uplet 
+            for (int j=0; j < listNUplet.size(); j++) {
+                try{
+                    rs = stmt.executeQuery("select count(id_puit) from PUIT where  id_n_uplet = "+ listNUplet.get(j));
+                    while (rs.next()) { 
+                        listResNbPuit.add(rs.getInt(1));
+                    }
+                    rs.close();
+                }catch (Exception e) {
+                    Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+            // si la liste contient pas 0 alors passage de l'experience a 'en cours'
+            if(!listResNbPuit.contains(0)){
+                try{
+                    rs = stmt.executeQuery("update EXPERIENCE set etat_exp = 'En Cours' where id_experience = "+ listExp.get(i));
+                    rs.close();
+                }catch (Exception e) {
+                    Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+        }        
+        resultat.setDisable(false);
+        deconnexionIV.setDisable(false);
+        buttonAddAR.setDisable(false);
+        buttonAddEA.setDisable(false);
+//        sauvegardePlaque.setDisable(false);
+//        labelLancePlaque.setVisible(false);
+       
     }
     
      public void setConnection(Connexion cone)
