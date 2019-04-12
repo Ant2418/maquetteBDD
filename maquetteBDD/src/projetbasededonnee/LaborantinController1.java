@@ -105,6 +105,10 @@ public class LaborantinController1 implements Initializable {
     @FXML    private Label labelInfoPlaquePuits;
     @FXML    private Button buttonAddAR;
     @FXML    private Button buttonAddEA;
+    @FXML    private Label LabelAjoutExpPlaque;
+    @FXML    private Label LabelAjoutExpAttentLabel; 
+    @FXML    private Button sauvegardePlaque; 
+    @FXML    private Label labelLancePlaque; 
     
     private Button lancerExpButton;
     
@@ -138,7 +142,10 @@ public class LaborantinController1 implements Initializable {
     private ArrayList<Integer> listResNbPuit = new ArrayList<>();
     private ArrayList<Integer> listeIdExpEA;
     private ArrayList<Integer> listeIdUplet;
+    private ArrayList<Integer> listeIdUplet1;
     private ArrayList<Integer> listeIdExpValid;
+    private ArrayList<Integer> listeIdUpletValid;
+    private ArrayList<Integer> listeIdExpValidA;
     private projetbasededonnee.Data.Laborantin maPlaque;
     
     /**
@@ -182,9 +189,14 @@ public class LaborantinController1 implements Initializable {
                         setInfoPlaque();
                         listeIdExp = new ArrayList();
                         listeIdExpValid = new ArrayList(); 
+                        listeIdUpletValid = new ArrayList();
+                        listeIdUplet = new ArrayList(); 
+                        listeIdUplet1 = new ArrayList();
                         setCellTableARenouveler();
                         loadDataExpARenouveler();
                         listeIdExpEA = new ArrayList();
+                        listeIdExpValidA = new ArrayList(); 
+                        
                         setCellTableEnAttente();
                         loadDataExpEnAttente();
                         buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
@@ -237,18 +249,17 @@ public class LaborantinController1 implements Initializable {
         for (Integer id_plaque : listeIdPlaque) {
  
 
-            try{
-                stmt = con.createStatement();
-                
+            try{                
                 try{
                     rs=stmt.executeQuery("SELECT type_plaque FROM plaque WHERE id_plaque = "+ id_plaque +"");
                 while(rs.next()){
                     type_plaque=rs.getString(1);
                 }
+                rs.close();
                             
                 }catch (Exception e) {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
-            }
+                }
                 rs=stmt.executeQuery("SELECT count(id_puit) FROM puit WHERE id_plaque = "+ id_plaque +"");
                 while(rs.next()){
                     nb_puit=rs.getInt(1);
@@ -272,6 +283,7 @@ public class LaborantinController1 implements Initializable {
                         }
                     }
                 }
+                rs.close();
             }catch (Exception e) {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -303,10 +315,15 @@ public class LaborantinController1 implements Initializable {
      * - nombre de puits total a renouveler
      */
     public void loadDataExpARenouveler(){
-        try{
+        LabelAjoutExpPlaque.setVisible(false);
+       
+           try{
             listeIdExp.clear(); 
             listeIdExpValid.clear(); 
+            listeIdUplet.clear();
             dataExpARenouveler.clear();
+            listeIdUpletValid.clear();
+            tableExpARenouveler.getItems().clear();
             
             con = connex.getCon();
             stmt = con.createStatement();
@@ -322,59 +339,59 @@ public class LaborantinController1 implements Initializable {
         
         try{
         stmt1 = con.createStatement();
+        System.out.println(listeIdExp + "LISTE DES EXPERIENCES");
         for (Integer idExpValid : listeIdExp){
+           listeIdUplet.clear(); 
+           listeIdUpletValid.clear(); 
            
-            rs1=stmt1.executeQuery("select count(*) from N_UPLET JOIN PUIT USING(ID_N_UPLET) WHERE RENOUVELER=0 and TERMINEE=0 and ID_EXPERIENCE = " + idExpValid+"");
+            rs1=stmt1.executeQuery("select id_n_uplet from N_UPLET WHERE RENOUVELER=0 and TERMINEE=0 and ID_EXPERIENCE = " + idExpValid+"");
             while(rs1.next()){
-                int nbExpVALID=rs1.getInt(1);
-               
-                if (nbExpVALID == 0){
-                    listeIdExpValid.add(idExpValid);
-                }
+                int idUplet=rs1.getInt(1);
+
+                    listeIdUplet.add(idUplet);
             } 
+            System.out.println(listeIdUplet + " La liste de n_uplet");
+            for(Integer idU : listeIdUplet){
+                try{
+                    rs=stmt.executeQuery("SELECT count(*) FROM PUIT WHERE ID_N_UPLET = "+ idU +"");
+                    rs.next();
+                    if (rs.getInt(1) ==0){
+                        listeIdUpletValid.add(idU);
+                    }
+                } catch (Exception e) {
+                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+            System.out.println(listeIdUpletValid + " Mes id uplets sont correcte");
+            System.out.println(listeIdUpletValid.size() + " Mes id uplets sont correcte taille");
+            if(!listeIdUpletValid.isEmpty()){
+                rs1=stmt1.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE where id_experience = "+ idExpValid +" ");
+                while(rs1.next()){
+                    System.out.println("Ca rentre");
+                    nomExp=rs1.getString(1);
+                    typeAna=rs1.getString(2);
+                    typeExp=rs1.getString(3);
+                    nbPuits=rs1.getInt(4);
+                    System.out.println(nbPuits +"nbre de puit");
+                }
+                Integer nbrePuitUplet = listeIdUpletValid.size()*nbPuits;
+                System.out.println(maPlaque.getPuits_dispo() + "plaque");
+                System.out.println(nbrePuitUplet + "nbe puit uplet");
+                if (nbrePuitUplet <= maPlaque.getPuits_dispo()){
+                    System.out.println("PASSE DANS LE IF ");
+                    dataExpARenouveler.add(new projetbasededonnee.Data.Laborantin(idExpValid, nomExp, listeIdUpletValid.size(), typeAna, typeExp, nbrePuitUplet));
+                    tableExpARenouveler.setItems(dataExpARenouveler);
+                    System.out.println(dataExpARenouveler + " LA LISTE OBSERVABLE");
+                }
+            }
         
         }      
                 
         }catch (Exception e) {
         Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
-        
-        try{
-        con = connex.getCon();
-        stmt1 = con.createStatement();
-        stmt2 = con.createStatement();
-        stmt3 = con.createStatement();
-        for (Integer idExperience : listeIdExpValid) {
-            
-            rs1=stmt1.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where id_experience = "+ idExperience +" ");
-            while(rs1.next()){
-                nomExp=rs1.getString(1);
-                typeAna=rs1.getString(2);
-                typeExp=rs1.getString(3);
-                nbPuits=rs1.getInt(4);
-            }
-
-            try{
-                
-                rs2=stmt2.executeQuery("select count(*) from N_UPLET where id_experience = "+ idExperience +" and renouveler = "+0+" and terminee = "+ 0 +" ");
-                while(rs2.next()){
-                    nbreUplet=rs2.getInt(1);
-                }   
-            }catch (Exception e) {
-                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
-            }
-                    
-        nbPuits = nbPuits * nbreUplet;
-        
-        if ((nbPuits/nbreUplet) <= maPlaque.getPuits_dispo()){
-            dataExpARenouveler.add(new projetbasededonnee.Data.Laborantin(idExperience, nomExp, nbreUplet, typeAna, typeExp, nbPuits));
-            tableExpARenouveler.setItems(dataExpARenouveler);
-        }
-        }
-    } catch (Exception e) {
-        Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
     }
-    }
+    
     
     /**
      * Initialisation de la table des experiences en attente
@@ -401,16 +418,20 @@ public class LaborantinController1 implements Initializable {
      * - nombre de puits total en attente
      */
     public void loadDataExpEnAttente(){
-        
+        LabelAjoutExpAttentLabel.setVisible(true); 
         con = connex.getCon(); 
         listeIdExpEA.clear();
+        listeIdExpValidA.clear(); 
+        listeIdUplet.clear();
         dataExpEnAttente.clear();
+        listeIdUpletValid.clear();
+        tableExpEnAttente.getItems().clear();
         try{
             stmt = con.createStatement();
             rs=stmt.executeQuery("select distinct(id_experience) from EXPERIENCE join N_UPLET using (id_experience) where etat_exp = '"+"En Attente"+"'order by id_experience ASC");
             while(rs.next()){
                 idExp=rs.getInt(1);
-                
+                System.out.println(idExp + "IDEXPERIENCE");
                 listeIdExpEA.add(idExp); 
             }
         } catch (Exception e) {
@@ -419,70 +440,55 @@ public class LaborantinController1 implements Initializable {
         try{
         stmt1 = con.createStatement();
         for (Integer idExpValid : listeIdExpEA){
-           
-            rs1=stmt1.executeQuery("select count(*) from N_UPLET JOIN PUIT USING(ID_N_UPLET) WHERE TERMINEE=0 and ID_EXPERIENCE = " + idExpValid+"");
-            while(rs1.next()){
-                int nbExpVALID=rs1.getInt(1);
-               
-                if (nbExpVALID == 0){
-                    listeIdExpValid.add(idExpValid);
-                }
-            } 
-        
-        }      
-                
-        }catch (Exception e) {
-        Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
-        }
-        
-        
-        try{
-            con = connex.getCon();
-            stmt = con.createStatement();
-            stmt1 = con.createStatement();
-            stmt2 = con.createStatement();
-        
-        for (Integer idExperience2 : listeIdExpEA) {
-      
-            rs=stmt.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where id_experience = "+ idExperience2 +"");
-            while(rs.next()){
-                nomExp=rs.getString(1);
-                typeAna=rs.getString(2);
-                typeExp=rs.getString(3);
-                nbPuits=rs.getInt(4);
-            }
-           
-            try{
-                
-                rs1=stmt1.executeQuery("select count(id_n_uplet) from N_UPLET where id_experience = "+ idExperience2 +"");
-                while(rs1.next()){
-                    nbreUplet=rs1.getInt(1);
-                }          
-            }catch (Exception e) {
-                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
-            }
+            listeIdUplet.clear(); 
+            listeIdUpletValid.clear();
             
-            try{
-                
-                rs2=stmt2.executeQuery("select count(distinct id_n_uplet) from N_Uplet join PUIT using(id_n_uplet) where id_experience = "+ idExperience2 +"");
-                while(rs2.next()){
-                    nbreUpletTraitee=rs2.getInt(1);
-                }          
-            }catch (Exception e) {
-                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+            rs1=stmt1.executeQuery("select id_n_uplet from N_UPLET WHERE TERMINEE=0 and ID_EXPERIENCE = " + idExpValid+"");
+            while(rs1.next()){
+                int idUplet=rs1.getInt(1);
+
+                    listeIdUplet.add(idUplet);
+            }
+            for(Integer idU : listeIdUplet){
+                try{
+                    rs=stmt.executeQuery("SELECT count(*) FROM PUIT WHERE ID_N_UPLET = "+ idU +"");
+                    rs.next();
+                    if (rs.getInt(1) ==0){
+                        listeIdUpletValid.add(idU);
+                    }
+                } catch (Exception e) {
+                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+            if(!listeIdUpletValid.isEmpty()){
+       
+                rs1=stmt1.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE where id_experience = "+ idExpValid +" ");
+                while(rs1.next()){
+                    System.out.println("Ca rentre");
+                    nomExp=rs1.getString(1);
+                    typeAna=rs1.getString(2);
+                    typeExp=rs1.getString(3);
+                    nbPuits=rs1.getInt(4);
+                    System.out.println(nbPuits +"nbre de puit");
+                }
+                Integer nbrePuitUplet = listeIdUpletValid.size()*nbPuits;
+                System.out.println(maPlaque.getPuits_dispo() + "plaque");
+                System.out.println(nbrePuitUplet + "nbe puit uplet");
+                if (nbrePuitUplet <= maPlaque.getPuits_dispo()){
+                    System.out.println("PASSE DANS LE IF ");
+                    dataExpEnAttente.add(new projetbasededonnee.Data.Laborantin(idExpValid, nomExp, listeIdUpletValid.size(), typeAna, typeExp, nbrePuitUplet));
+                    tableExpEnAttente.setItems(dataExpEnAttente);
+                    System.out.println(dataExpARenouveler + " LA LISTE OBSERVABLE");
+                }
             }
         
-        nbUpletAR = nbreUplet - nbreUpletTraitee; 
-        nbPuits = nbPuits * nbUpletAR;
-        
-        dataExpEnAttente.add(new projetbasededonnee.Data.Laborantin(idExperience2, nomExp, nbUpletAR, typeAna, typeExp, nbPuits));
-        tableExpEnAttente.setItems(dataExpEnAttente);
         }
-        } catch (Exception e) {
+        }catch (SQLException e) {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
-        
     }
+                 
+   
    public void ComboTypePlaque(){
         //Initialisation des combo-box
         cbTypePlaque.getItems().clear();
@@ -497,9 +503,7 @@ public class LaborantinController1 implements Initializable {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
    }
-    
-  
-            
+        
             
     @FXML
     public void deconnexionEvent(MouseEvent event) throws IOException, SQLException {
@@ -532,6 +536,7 @@ public class LaborantinController1 implements Initializable {
         EmplacementPlaquePage.setVisible(false);
         validationPage.setVisible(false);
         ComboTypePlaque();
+        loadDataPlaque();
         erreurAjoutPlaque.setVisible(false);
     } 
     
@@ -562,8 +567,6 @@ public class LaborantinController1 implements Initializable {
                 LancerPlaquePage.setVisible(true); 
                 EmplacementPlaquePage.setVisible(false);
                 validationPage.setVisible(false);
-    //            setCellTableARenouveler();
-    //            loadDataExpARenouveler();
 
             }catch (Exception e) {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
@@ -582,11 +585,27 @@ public class LaborantinController1 implements Initializable {
             while(rs.next()){
                 nb_puits_plaque=rs.getInt(1); 
             }
-            maPlaque.setPuits_dispo(nb_puits_plaque);
-        }catch (Exception e) {
+            if ("96puits".equals(maPlaque.getType_plaque())){
+                maPlaque.setPuits_dispo(96-nb_puits_plaque);    
+            }
+            else
+            {
+                maPlaque.setPuits_dispo(384-nb_puits_plaque); 
+            }
+        }catch (SQLException e) {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
         labelInfoPlaquePuits.setText("Plaque n° " +maPlaque.getId_plaque()+ ". Il reste "+maPlaque.getPuits_dispo()+" puits dans la plaque");
+        if(maPlaque.getPuits_dispo()==0){
+            home.setDisable(true);
+            resultat.setDisable(true);
+            deconnexionIV.setDisable(true);
+            buttonAddAR.setDisable(true);
+            buttonAddEA.setDisable(true);
+            sauvegardePlaque.setDisable(true);
+            labelLancePlaque.setVisible(true);
+        }
+    
     }
         
     /**
@@ -624,6 +643,16 @@ public class LaborantinController1 implements Initializable {
         setCellTableARenouveler();
         loadDataExpARenouveler();
         setInfoPlaque();
+        LabelAjoutExpPlaque.setVisible(true);
+    }
+    
+    public void AddUpletPlaqueEnAtt(ActionEvent event){
+      
+        AjoutXYPlaque(tableExpEnAttente.getSelectionModel().getSelectedItem(),maPlaque);
+        setCellTableEnAttente();
+        loadDataExpEnAttente();
+        setInfoPlaque();
+        LabelAjoutExpAttentLabel.setVisible(true);
     }
     
     public void AjoutXYPlaque(projetbasededonnee.Data.Laborantin experience, projetbasededonnee.Data.Laborantin plaque){
@@ -631,6 +660,7 @@ public class LaborantinController1 implements Initializable {
         con = connex.getCon();      
     try{
         stmt4 = con.createStatement();
+        stmt = con.createStatement();
         rs4 = stmt4.executeQuery("SELECT id_n_uplet FROM N_UPLET WHERE id_experience = " + experience.getId_exp() + " and terminee = "+ 0 + "");
         while (rs4.next()) { 
             
@@ -658,8 +688,8 @@ public class LaborantinController1 implements Initializable {
                         System.out.println(idUplet);
                         for (int i=1; i <= nbrePuit_Uplet; i++){
                             try{
-                            stmt = con.createStatement();
-                            rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
+                            rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");   
+                            maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);    
                             if (Y == 8) {
                                 X=X+1;
                                 Y=1;
@@ -678,9 +708,9 @@ public class LaborantinController1 implements Initializable {
                 else //Si la plaque n'est pas vide
                 {   int X=0; 
                     int Y=0; 
-//                    System.out.println(nbreUpletAInserer);
+                   
                     try{
-                        stmt = con.createStatement();
+                       
                         rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getId_plaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
                         while (rs.next()) { 
                             X = rs.getInt(1);
@@ -710,9 +740,9 @@ public class LaborantinController1 implements Initializable {
                             }
                             
                             try{
-                            stmt = con.createStatement();
+                          
                             rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
-
+                            maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
                             }catch (Exception e) {
                                 Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                             }
@@ -757,8 +787,8 @@ public class LaborantinController1 implements Initializable {
                         System.out.println(X);
                         System.out.println(Y);
                         try{
-                        stmt = con.createStatement();
                         rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
+                        maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
                         System.out.println("INSERTION DANS UN PUIT SUR PLAQUE MAIS PAS TOUTE EXPERIENCE");
                         }catch (Exception e) {
                             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
@@ -783,12 +813,14 @@ public class LaborantinController1 implements Initializable {
                     int X=1;
                     int Y=1;
 
+                   
                     for (Integer idUplet : listeIdUplet) {
                         System.out.println(idUplet);
                         for (int i=1; i <= nbrePuit_Uplet; i++){
                             try{
                             stmt = con.createStatement();
                             rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
+                            maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
                             if (Y == 16) {
                                 X=X+1;
                                 Y=1;
@@ -808,7 +840,7 @@ public class LaborantinController1 implements Initializable {
                 {   int X=0; 
                     int Y=0; 
                     try{
-                        stmt = con.createStatement();
+                      
                         rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getId_plaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
                         while (rs.next()) { 
                             X = rs.getInt(1);
@@ -836,9 +868,9 @@ public class LaborantinController1 implements Initializable {
                             }
                             
                             try{
-                            stmt = con.createStatement();
+                            
                             rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
-
+                            maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
                             }catch (Exception e) {
                                 Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                             }
@@ -855,7 +887,7 @@ public class LaborantinController1 implements Initializable {
                 int X=0; 
                 int Y=0; 
                 try{
-                    stmt = con.createStatement();
+                    
                     rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getId_plaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
                     while (rs.next()) { 
                         X = rs.getInt(1);
@@ -883,8 +915,9 @@ public class LaborantinController1 implements Initializable {
                         System.out.println(X);
                         System.out.println(Y);
                         try{
-                        stmt = con.createStatement();
+                    
                         rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
+                        maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
                         System.out.println("INSERTION DANS UN PUIT SUR PLAQUE MAIS PAS TOUTE EXPERIENCE");
                         }catch (Exception e) {
                             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
