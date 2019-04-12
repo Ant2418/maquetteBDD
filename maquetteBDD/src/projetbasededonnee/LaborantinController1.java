@@ -108,8 +108,8 @@ public class LaborantinController1 implements Initializable {
     
     private Connexion connex;
     private Connection con;
-    private Statement stmt; 
-    private ResultSet rs; 
+    private Statement stmt, stmt1, stmt2, stmt3, stmt4; 
+    private ResultSet rs, rs1, rs2, rs3, rs4; 
     private Personne personne; 
     private Integer id_plaque,nb_puit;
     private String type_plaque;
@@ -167,8 +167,6 @@ public class LaborantinController1 implements Initializable {
                     btn.setOnAction((ActionEvent event) -> {
                         
                         maPlaque = getTableView().getItems().get(getIndex());
-                        System.out.println(maPlaque);
-                        System.out.println(maPlaque);
                         accueilLaboPane.setVisible(false);
                         LancerPlaquePage.setVisible(true); 
                         EmplacementPlaquePage.setVisible(false);
@@ -185,7 +183,7 @@ public class LaborantinController1 implements Initializable {
                         buttonAddEA.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
                         
                         // disable button
-                        //home.
+                
                     });
                 }
 
@@ -298,53 +296,51 @@ public class LaborantinController1 implements Initializable {
      */
     public void loadDataExpARenouveler(){
         try{
+            listeIdExp.clear(); 
+            dataExpARenouveler.clear();
+            
             con = connex.getCon();
             stmt = con.createStatement();
             
-            rs=stmt.executeQuery("select distinct id_experience, nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where etat_exp = '"+"A renouveler"+"' and renouveler = "+0+" and terminee = "+ 0+" order by id_experience ASC");
+            rs=stmt.executeQuery("select distinct id_experience from EXPERIENCE join N_UPLET using (id_experience) where etat_exp = '"+"A renouveler"+"' and renouveler = "+0+" and terminee = "+ 0+" order by id_experience ASC");
             while(rs.next()){
                 idExp=rs.getInt(1);
-                nomExp=rs.getString(2);
-                typeAna=rs.getString(3);
-                typeExp=rs.getString(4);
-                nbPuits=rs.getInt(5);
-                
                 listeIdExp.add(idExp); 
             }
         } catch (Exception e) {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
         
+        try{
+        con = connex.getCon();
+        stmt1 = con.createStatement();
+        stmt2 = con.createStatement();
+        stmt3 = con.createStatement();
         for (Integer idExperience : listeIdExp) {
-            try{
-            con = connex.getCon();
-            stmt = con.createStatement();
             
-            rs=stmt.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where id_experience = "+ idExperience +" ");
-            while(rs.next()){
-                nomExp=rs.getString(1);
-                typeAna=rs.getString(2);
-                typeExp=rs.getString(3);
-                nbPuits=rs.getInt(4);
+            rs1=stmt1.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where id_experience = "+ idExperience +" ");
+            while(rs1.next()){
+                nomExp=rs1.getString(1);
+                typeAna=rs1.getString(2);
+                typeExp=rs1.getString(3);
+                nbPuits=rs1.getInt(4);
             }
-            } catch (Exception e) {
-                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
-        }
+
             try{
-                stmt = con.createStatement();
-                rs=stmt.executeQuery("select count(id_n_uplet) from N_UPLET where id_experience = "+ idExperience +"");
-                while(rs.next()){
-                    nbreUplet=rs.getInt(1);
-                }          
+                
+                rs2=stmt2.executeQuery("select count(*) from N_UPLET where id_experience = "+ idExperience +"");
+                while(rs2.next()){
+                    nbreUplet=rs2.getInt(1);
+                }   
             }catch (Exception e) {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
             }
             
             try{
-                stmt = con.createStatement();
-                rs=stmt.executeQuery("select count(distinct id_n_uplet) from N_Uplet join PUIT using(id_n_uplet) where id_experience = "+ idExperience +"");
-                while(rs.next()){
-                    nbreUpletTraitee=rs.getInt(1);
+               
+                rs3=stmt3.executeQuery("select count(distinct id_n_uplet) as nbreUplet from N_Uplet join PUIT using(id_n_uplet) where id_experience = "+ idExperience +"");
+                while(rs3.next()){
+                    nbreUpletTraitee=rs3.getInt("nbreUplet");
                 }          
             }catch (Exception e) {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
@@ -358,6 +354,9 @@ public class LaborantinController1 implements Initializable {
             tableExpARenouveler.setItems(dataExpARenouveler);
         }
         }
+    } catch (Exception e) {
+        Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+    }
     }
     
     /**
@@ -385,11 +384,13 @@ public class LaborantinController1 implements Initializable {
      * - nombre de puits total en attente
      */
     public void loadDataExpEnAttente(){
+        
+        con = connex.getCon(); 
+        listeIdExpEA.clear();
+        dataExpEnAttente.clear();
         try{
-            con = connex.getCon();
             stmt = con.createStatement();
-            
-            rs=stmt.executeQuery("select distinct id_experience, nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where etat_exp = '"+"En Attente"+"' order by id_experience ASC");
+            rs=stmt.executeQuery("select distinct(id_experience), nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where etat_exp = '"+"En Attente"+"'order by id_experience ASC");
             while(rs.next()){
                 idExp=rs.getInt(1);
                 nomExp=rs.getString(2);
@@ -403,11 +404,13 @@ public class LaborantinController1 implements Initializable {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
         
-        for (Integer idExperience2 : listeIdExpEA) {
-            try{
+        try{
             con = connex.getCon();
             stmt = con.createStatement();
-            
+            stmt1 = con.createStatement();
+            stmt2 = con.createStatement();
+        for (Integer idExperience2 : listeIdExpEA) {
+      
             rs=stmt.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where id_experience = "+ idExperience2 +"");
             while(rs.next()){
                 nomExp=rs.getString(1);
@@ -415,24 +418,22 @@ public class LaborantinController1 implements Initializable {
                 typeExp=rs.getString(3);
                 nbPuits=rs.getInt(4);
             }
-            } catch (Exception e) {
-                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
-        }
+           
             try{
-                stmt = con.createStatement();
-                rs=stmt.executeQuery("select count(id_n_uplet) from N_UPLET where id_experience = "+ idExperience2 +"");
-                while(rs.next()){
-                    nbreUplet=rs.getInt(1);
+                
+                rs1=stmt1.executeQuery("select count(id_n_uplet) from N_UPLET where id_experience = "+ idExperience2 +"");
+                while(rs1.next()){
+                    nbreUplet=rs1.getInt(1);
                 }          
             }catch (Exception e) {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
             }
             
             try{
-                stmt = con.createStatement();
-                rs=stmt.executeQuery("select count(distinct id_n_uplet) from N_Uplet join PUIT using(id_n_uplet) where id_experience = "+ idExperience2 +"");
-                while(rs.next()){
-                    nbreUpletTraitee=rs.getInt(1);
+                
+                rs2=stmt2.executeQuery("select count(distinct id_n_uplet) from N_Uplet join PUIT using(id_n_uplet) where id_experience = "+ idExperience2 +"");
+                while(rs2.next()){
+                    nbreUpletTraitee=rs2.getInt(1);
                 }          
             }catch (Exception e) {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
@@ -444,6 +445,9 @@ public class LaborantinController1 implements Initializable {
         dataExpEnAttente.add(new projetbasededonnee.Data.Laborantin(idExperience2, nomExp, nbUpletAR, typeAna, typeExp, nbPuits));
         tableExpEnAttente.setItems(dataExpEnAttente);
         }
+        } catch (Exception e) {
+            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+        }
         
     }
    public void ComboTypePlaque(){
@@ -454,7 +458,6 @@ public class LaborantinController1 implements Initializable {
             stmt = con.createStatement();
             rs = stmt.executeQuery("SELECT type_plaque FROM TYPE_PLAQUE");
             while (rs.next()) { 
-                System.out.println(rs.getString(1));
                 cbTypePlaque.getItems().add(rs.getString(1));
             }
         }catch (Exception e) {
@@ -548,7 +551,6 @@ public class LaborantinController1 implements Initializable {
     public void experienceLabEvent(MouseEvent event) throws IOException {
 
         validationPage.setVisible(false);
-        
         lancerExpButton.setDisable(true);
 
         
@@ -568,15 +570,26 @@ public class LaborantinController1 implements Initializable {
         validationPage.setVisible(true);
     }
     
+    public void AddUpletPlaque(ActionEvent event){
+      
+        AjoutXYPlaque(tableExpARenouveler.getSelectionModel().getSelectedItem(),maPlaque);
+ 
+        setCellTableARenouveler();
+        loadDataExpARenouveler();;
+        setCellTableEnAttente();
+        loadDataExpEnAttente();           
+    }
+    
     public void AjoutXYPlaque(projetbasededonnee.Data.Laborantin experience, projetbasededonnee.Data.Laborantin plaque){
         listeIdUplet = new ArrayList(); 
-           
+        con = connex.getCon();      
     try{
-        con = connex.getCon();
-        stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT id_n_uplet FROM N_UPLET WHERE id_experience = " + experience.getId_exp() + " and terminee = "+ 0+ "");
-        while (rs.next()) { 
-            Integer id_uplet= rs.getInt(1);
+        stmt4 = con.createStatement();
+        rs4 = stmt4.executeQuery("SELECT id_n_uplet FROM N_UPLET WHERE id_experience = " + experience.getId_exp() + " and terminee = "+ 0+ "");
+        while (rs4.next()) { 
+            
+            Integer id_uplet= rs4.getInt(1);
+            
             listeIdUplet.add(id_uplet); 
         }
     }catch (Exception e) {
