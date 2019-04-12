@@ -133,6 +133,7 @@ public class LaborantinController1 implements Initializable {
     private ArrayList<Integer> listeIdExpEA;
     private ArrayList<Integer> listeIdUplet;
     private ArrayList<Integer> listeIdExpValid;
+    private ArrayList<Integer> listeIdExpValidA;
     private projetbasededonnee.Data.Laborantin maPlaque;
     
     /**
@@ -178,6 +179,7 @@ public class LaborantinController1 implements Initializable {
                         setCellTableARenouveler();
                         loadDataExpARenouveler();
                         listeIdExpEA = new ArrayList();
+                        listeIdExpValidA = new ArrayList(); 
                         setCellTableEnAttente();
                         loadDataExpEnAttente();
                         buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
@@ -397,6 +399,7 @@ public class LaborantinController1 implements Initializable {
         
         con = connex.getCon(); 
         listeIdExpEA.clear();
+        listeIdExpValidA.clear(); 
         dataExpEnAttente.clear();
         try{
             stmt = con.createStatement();
@@ -418,7 +421,7 @@ public class LaborantinController1 implements Initializable {
                 int nbExpVALID=rs1.getInt(1);
                
                 if (nbExpVALID == 0){
-                    listeIdExpValid.add(idExpValid);
+                    listeIdExpValidA.add(idExpValid);
                 }
             } 
         
@@ -435,7 +438,7 @@ public class LaborantinController1 implements Initializable {
             stmt1 = con.createStatement();
             stmt2 = con.createStatement();
         
-        for (Integer idExperience2 : listeIdExpEA) {
+        for (Integer idExperience2 : listeIdExpValidA) {
       
             rs=stmt.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE join N_UPLET using (id_experience) where id_experience = "+ idExperience2 +"");
             while(rs.next()){
@@ -447,7 +450,7 @@ public class LaborantinController1 implements Initializable {
            
             try{
                 
-                rs1=stmt1.executeQuery("select count(id_n_uplet) from N_UPLET where id_experience = "+ idExperience2 +"");
+                rs1=stmt1.executeQuery("select count(*) from N_UPLET where id_experience = "+ idExperience2 +" and terminee = "+ 0+"");
                 while(rs1.next()){
                     nbreUplet=rs1.getInt(1);
                 }          
@@ -455,20 +458,9 @@ public class LaborantinController1 implements Initializable {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
             }
             
-            try{
-                
-                rs2=stmt2.executeQuery("select count(distinct id_n_uplet) from N_Uplet join PUIT using(id_n_uplet) where id_experience = "+ idExperience2 +"");
-                while(rs2.next()){
-                    nbreUpletTraitee=rs2.getInt(1);
-                }          
-            }catch (Exception e) {
-                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
-            }
+        nbPuits = nbPuits * nbreUplet;
         
-        nbUpletAR = nbreUplet - nbreUpletTraitee; 
-        nbPuits = nbPuits * nbUpletAR;
-        
-        dataExpEnAttente.add(new projetbasededonnee.Data.Laborantin(idExperience2, nomExp, nbUpletAR, typeAna, typeExp, nbPuits));
+        dataExpEnAttente.add(new projetbasededonnee.Data.Laborantin(idExperience2, nomExp, nbreUplet, typeAna, typeExp, nbPuits));
         tableExpEnAttente.setItems(dataExpEnAttente);
         }
         } catch (Exception e) {
@@ -490,9 +482,7 @@ public class LaborantinController1 implements Initializable {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
    }
-    
-  
-            
+        
             
     @FXML
     public void deconnexionEvent(MouseEvent event) throws IOException, SQLException {
@@ -612,6 +602,14 @@ public class LaborantinController1 implements Initializable {
         setInfoPlaque();
     }
     
+    public void AddUpletPlaque384(ActionEvent event){
+      
+        AjoutXYPlaque(tableExpEnAttente.getSelectionModel().getSelectedItem(),maPlaque);
+        setCellTableEnAttente();
+        loadDataExpEnAttente();
+        setInfoPlaque();
+    }
+    
     public void AjoutXYPlaque(projetbasededonnee.Data.Laborantin experience, projetbasededonnee.Data.Laborantin plaque){
         listeIdUplet = new ArrayList(); 
         con = connex.getCon();      
@@ -664,7 +662,7 @@ public class LaborantinController1 implements Initializable {
                 else //Si la plaque n'est pas vide
                 {   int X=0; 
                     int Y=0; 
-                    System.out.println(nbreUpletAInserer);
+                   
                     try{
                         stmt = con.createStatement();
                         rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getId_plaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
