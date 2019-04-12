@@ -464,8 +464,8 @@ public class LaborantinController1 implements Initializable {
             }catch (Exception e) {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
             }
-        nbUpletAR = nbreUplet - nbreUpletTraitee; 
         
+        nbUpletAR = nbreUplet - nbreUpletTraitee; 
         nbPuits = nbPuits * nbUpletAR;
         
         dataExpEnAttente.add(new projetbasededonnee.Data.Laborantin(idExperience2, nomExp, nbUpletAR, typeAna, typeExp, nbPuits));
@@ -617,7 +617,7 @@ public class LaborantinController1 implements Initializable {
         con = connex.getCon();      
     try{
         stmt4 = con.createStatement();
-        rs4 = stmt4.executeQuery("SELECT id_n_uplet FROM N_UPLET WHERE id_experience = " + experience.getId_exp() + " and terminee = "+ 0+ "");
+        rs4 = stmt4.executeQuery("SELECT id_n_uplet FROM N_UPLET WHERE id_experience = " + experience.getId_exp() + " and terminee = "+ 0 + "");
         while (rs4.next()) { 
             
             Integer id_uplet= rs4.getInt(1);
@@ -639,7 +639,7 @@ public class LaborantinController1 implements Initializable {
                 if (puits_dispo == 96){
                     int X=1;
                     int Y=1;
-
+                    System.out.println("plaque vide");
                     for (Integer idUplet : listeIdUplet) {
                         System.out.println(idUplet);
                         for (int i=1; i <= nbrePuit_Uplet; i++){
@@ -664,12 +664,15 @@ public class LaborantinController1 implements Initializable {
                 else //Si la plaque n'est pas vide
                 {   int X=0; 
                     int Y=0; 
+                    System.out.println(nbreUpletAInserer);
                     try{
                         stmt = con.createStatement();
                         rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getId_plaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
                         while (rs.next()) { 
                             X = rs.getInt(1);
                             Y = rs.getInt(2);
+                            System.out.println(rs.getInt(1));
+                            System.out.println(rs.getInt(2));
                         }
                         System.out.println(X);
                         System.out.println(Y);
