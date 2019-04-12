@@ -563,10 +563,35 @@ public class LaborantinController1 implements Initializable {
                 LancerPlaquePage.setVisible(true); 
                 EmplacementPlaquePage.setVisible(false);
                 validationPage.setVisible(false);
+                setInfoPlaque();
+                setCellTableARenouveler();
+                loadDataExpARenouveler();
+                listeIdExpEA = new ArrayList();
+                listeIdExpValidA = new ArrayList(); 
+                setCellTableEnAttente();
+                loadDataExpEnAttente();
+                maPlaque.setId_plaque(id_plaque);
+                maPlaque.setType_plaque((String) cbTypePlaque.getSelectionModel().getSelectedItem());
+                if (cbTypePlaque.getValue() == "96puits"){
+                    maPlaque.setPuits_dispo(96);
+                }
+                else
+                {   
+                    maPlaque.setPuits_dispo(96);
+                }
+                labelInfoPlaquePuits.setText("Plaque n° " +maPlaque.getId_plaque()+ ". Il reste "+maPlaque.getPuits_dispo()+" puits dans la plaque");
+                home.setDisable(true);
+                resultat.setDisable(true);
+                deconnexionIV.setDisable(true);
+                sauvegardePlaque.setDisable(true);
+                buttonLancerPlaque.setDisable(true); 
+                
 
             }catch (Exception e) {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
             }
+            
+            
         }
         else {
             erreurAjoutPlaque.setVisible(true);
@@ -615,7 +640,6 @@ public class LaborantinController1 implements Initializable {
 
         validationPage.setVisible(false);
         lancerExpButton.setDisable(true);
-
         erreurAjoutPlaque.setVisible(false);
         
     } 
