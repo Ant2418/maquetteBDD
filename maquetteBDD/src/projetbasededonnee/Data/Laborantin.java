@@ -29,6 +29,54 @@ public class Laborantin {
     private String agent_bio; 
     private Integer qte_agent_bio; 
     private String cellule; 
+
+    public Integer getX() {
+        return x;
+    }
+
+    public void setX(Integer x) {
+        this.x = x;
+    }
+
+    public Integer getY() {
+        return y;
+    }
+
+    public void setY(Integer y) {
+        this.y = y;
+    }
+
+    public String getAgent_bio() {
+        return agent_bio;
+    }
+
+    public void setAgent_bio(String agent_bio) {
+        this.agent_bio = agent_bio;
+    }
+
+    public Integer getQte_agent_bio() {
+        return qte_agent_bio;
+    }
+
+    public void setQte_agent_bio(Integer qte_agent_bio) {
+        this.qte_agent_bio = qte_agent_bio;
+    }
+
+    public String getCellule() {
+        return cellule;
+    }
+
+    public void setCellule(String cellule) {
+        this.cellule = cellule;
+    }
+
+    public Integer getQte_cellule() {
+        return qte_cellule;
+    }
+
+    public void setQte_cellule(Integer qte_cellule) {
+        this.qte_cellule = qte_cellule;
+    }
     private Integer qte_cellule; 
 
     public Laborantin(Integer x, Integer y, String agent_bio, Integer qte_agent_bio, String cellule, Integer qte_cellule) {

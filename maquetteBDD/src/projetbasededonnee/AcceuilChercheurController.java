@@ -162,6 +162,10 @@ public class AcceuilChercheurController implements Initializable {
         
     }      
 
+    /**
+     * Initialisation du tableau de la page d'accueil, avec toutes les expériences
+     * du chercheur
+     */
     private void setCellTableAccueil(){
        
         numExpCol.setCellValueFactory(new PropertyValueFactory<>("id_exp"));
@@ -177,6 +181,9 @@ public class AcceuilChercheurController implements Initializable {
         
     }
     
+    /**
+     * Initialisation du tableau pour ajouter les n_uplets à une expérience
+     */
     private void setCellTableUplet(){
         
         dataUplet = FXCollections.observableArrayList();
@@ -188,6 +195,10 @@ public class AcceuilChercheurController implements Initializable {
         qteCellCol.setCellValueFactory(new PropertyValueFactory<>("qte_cellule"));
     }
     
+    /**
+     * Initialisation du tableau pour les n_uplets, remplir le tableau avec la base de données
+     * @param id_exp 
+     */
     public void loadDataUplet(Integer id_exp){
         dataUplet.clear();
         try{
@@ -210,6 +221,9 @@ public class AcceuilChercheurController implements Initializable {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+    /**
+     * Remplir le tableau de la page d'accueil avec la base de données
+     */
     public void loadDataAccueilDatabase(){
         dataAccueil.clear();
         try{
@@ -318,14 +332,21 @@ public class AcceuilChercheurController implements Initializable {
         ValidationUplet(); 
     }
     
+    /**
+     * Evenement quand on clique sur le bouton pour ajouter un n_uplet
+     * @param e 
+     */
     public void keyPressedAddUpletVal(KeyEvent e) {
         if (e.getCode() == ENTER) {
             ValidationUplet(); 
         }
     }
 
+    /**
+     * Methode qui permet de valider une expérience si ils ont au moins ajouter un n_uplet
+     */
     public void ValidationUplet(){
-         ErreurReplicatValider.setVisible(false);
+        ErreurReplicatValider.setVisible(false);
         deconnexionIV.setDisable(false);
         home.setDisable(false);
         newExp.setDisable(false);
@@ -528,7 +549,7 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * 
+     * Evenement quand on clique sur le bouton oui avec le clavier
      * @param e 
      */
     public void keyPressedOuiSuivi(KeyEvent e) {
@@ -555,7 +576,7 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * 
+     * Evenemet quand on clique sur le bouton non avec le clavier
      * @param e 
      */
     public void keyPressedNonSuivi(KeyEvent e) {
@@ -578,12 +599,19 @@ public class AcceuilChercheurController implements Initializable {
         AddUplet(); 
     }
     
+    /**
+     * Evenemtn quand on clique sur ajouter un uplet avec le clavier
+     * @param e 
+     */
     public void AddUpletKeyPressed(KeyEvent e) {
         if (e.getCode() == ENTER) {
             AddUplet();
         }
     }
     
+    /**
+     * Methode qui permet d'ajouter une nouvelle expérience
+     */
     public void AddUplet(){
         deconnexionIV.setDisable(true);
         home.setDisable(true);
@@ -875,7 +903,7 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * 
+     * Methode qui affiche des labels pour récapituler l'expérience avant d'ajouter les n_uplets
      * @param nomExp
      * @param typeExp
      * @param typeAna
@@ -904,7 +932,7 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * 
+     * Methode qui permet d'initialiser les combo box pour le type d'agent bio et le type de cellules
      */
     public void SolutionChoice(){
         
@@ -975,6 +1003,12 @@ public class AcceuilChercheurController implements Initializable {
        
     }
     
+    /**
+     * Methode qui permet d'ajouter un n_uplet à l'expérience et de mettre à jour
+     * le tableau n_uplet quand on clique sur le bouton + pour ajouter un n_uplet
+     * @param event
+     * @throws IOException 
+     */
     //Quand on clique sur plus
     public void AddUpletSolution(MouseEvent event) throws IOException{
         AddUplet(id_exp);
@@ -982,6 +1016,12 @@ public class AcceuilChercheurController implements Initializable {
         ErreurReplicatValider.setVisible(false);
     }
     
+    /**
+     * Methode qui permet d'ajouter un n_uplet à l'expérience et de mettre à jour
+     * le tableau n_uplet quand on clique avec le clavier
+     * sur le bouton + pour ajouter un n_uplet
+     * @param event 
+     */
     public void AddUpletSolPressed(KeyEvent event) {
         if (event.getCode() == ENTER) {
             AddUplet(id_exp);
@@ -990,6 +1030,10 @@ public class AcceuilChercheurController implements Initializable {
         }
     }
     
+    /**
+     * Methode qui permet d'ajouter un n_uplet à l'expérience dans la base de données
+     * @param id_exp 
+     */
     public void AddUplet(Integer id_exp){
         
         Erreur_Ajout_Uplet.setVisible(false);
@@ -1181,11 +1225,19 @@ public class AcceuilChercheurController implements Initializable {
         this.main = mainPBD;
     }
     
+    /**
+     * Setter pour la connexion
+     * @param cone 
+     */
     public void setConnection(Connexion cone)
     {
         connex = cone;
     }
     
+    /**
+     * Setter pour la personne qui est connectée
+     * @param personneE 
+     */
     public void setPersonne(Personne personneE){
         personne=personneE; 
     }

@@ -155,6 +155,10 @@ public class ConnexionController implements Initializable {
         }
     }
     
+    /**
+     * Evenement quand on clique avec le clavier sur ENTER sur connexion
+     * @param event 
+     */
     public void keyPressed(KeyEvent event) {
         if (event.getCode() == ENTER) {
             ErreurLabel.setVisible(false);
@@ -228,11 +232,19 @@ public class ConnexionController implements Initializable {
         }
     }
 
+    /**
+     * Setter pour la connexion
+     * @param conect 
+     */
     public void setConnexion(Connexion conect){
         connexion = conect; 
    
     }
     
+    /**
+     * Setter pour la personne
+     * @param personneE 
+     */
     public void setPersonne(Personne personneE){
         personne=personneE;
     }

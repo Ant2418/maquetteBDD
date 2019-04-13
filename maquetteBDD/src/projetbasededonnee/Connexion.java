@@ -39,7 +39,7 @@ public class Connexion {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             //step2 create  the connection object  
             con = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@192.168.254.3:1521:PFPBS", "Groupe_35", "GROUPE_35");
+                    "jdbc:oracle:thin:@192.168.254.3:1521:PFPBS", "Groupe_29", "GROUPE_29");
             //step3 create the statement object  
             Statement stmt = con.createStatement();
             

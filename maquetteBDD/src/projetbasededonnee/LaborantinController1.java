@@ -175,6 +175,10 @@ public class LaborantinController1 implements Initializable {
         
     }    
 
+    /**
+     * Initialisation des colonnes pour le tableau de la plaque accueil labo
+     * Creation du bouton editer et des autres colonnes
+     */
     private void setCellTablePlaque(){
   
         tableAccueilLabo.getColumns().clear();
@@ -217,16 +221,11 @@ public class LaborantinController1 implements Initializable {
                         
                         setCellTableEnAttente();
                         loadDataExpEnAttente();
+                        LabelAjoutExpAttentLabel.setVisible(false);
+                        LabelAjoutExpPlaque.setVisible(false);
                         buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
                         buttonAddEA.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
                         setInfoPlaque(maPlaque);
-                        deconnexionIV.setDisable(true);
-                        home.setDisable(true);
-                        resultat.setDisable(true);
-                        buttonAddAR.setDisable(false);
-                        buttonAddEA.setDisable(false);
-                        sauvegardePlaque.setDisable(false);
-                        buttonLancerPlaque.setDisable(true);
                         labelLancePlaque.setVisible(false);
                 
                     });
@@ -252,7 +251,9 @@ public class LaborantinController1 implements Initializable {
   
     }
 
-    
+    /**
+     * Initialisation du tableau des plaques dans l'accueil
+     */
     public void loadDataPlaque(){
         dataPlaque.clear();
         listeIdPlaque.clear();
@@ -280,7 +281,7 @@ public class LaborantinController1 implements Initializable {
                 while(rs.next()){
                     type_plaque=rs.getString(1);
                 }
-                rs.close();
+               
                             
                 }catch (Exception e) {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
@@ -514,6 +515,9 @@ public class LaborantinController1 implements Initializable {
     }
                  
    
+    /**
+     * Creer la combobox pour le choix du type de plaque pour l'accueil
+     */
    public void ComboTypePlaque(){
         //Initialisation des combo-box
         cbTypePlaque.getItems().clear();
@@ -529,7 +533,13 @@ public class LaborantinController1 implements Initializable {
         }
    }
         
-            
+    /**
+     * Evenement quand on clique sur le bouton deconnexion
+     * Retour à la page de connexion
+     * @param event
+     * @throws IOException
+     * @throws SQLException 
+     */        
     @FXML
     public void deconnexionEvent(MouseEvent event) throws IOException, SQLException {
         
@@ -573,6 +583,7 @@ public class LaborantinController1 implements Initializable {
     @FXML
     public void  CompletePlaque(MouseEvent event) throws IOException {
         if (cbTypePlaque.getSelectionModel().getSelectedItem()!= null) {
+            
             try{
                 stmt = con.createStatement();
                 rs= stmt.executeQuery("INSERT INTO PLAQUE (id_plaque, type_plaque, EstRefuse)VALUES("+ 1 + ", '"+ cbTypePlaque.getSelectionModel().getSelectedItem()+ "', "+ 0 +")");
@@ -619,9 +630,13 @@ public class LaborantinController1 implements Initializable {
                 listeIdExpValidA = new ArrayList();
                 setCellTableEnAttente();
                 loadDataExpEnAttente();
+                LabelAjoutExpAttentLabel.setVisible(false);
+                LabelAjoutExpPlaque.setVisible(false);
                 buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
                 buttonAddEA.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
-                        
+
+                buttonAddAR.setDisable(false);
+                buttonAddEA.setDisable(false);
                 home.setDisable(true);
                 resultat.setDisable(true);
                 deconnexionIV.setDisable(true);
@@ -640,6 +655,10 @@ public class LaborantinController1 implements Initializable {
         }
     }
     
+    /**
+     * Affiche le label du numéro de la plaque et du nombre de puits restants mis à jour
+     * @param maPlaque 
+     */
     public void setInfoPlaque(projetbasededonnee.Data.Laborantin maPlaque){ 
         Integer nb_puits_plaque=0;
         try{
@@ -668,6 +687,16 @@ public class LaborantinController1 implements Initializable {
             sauvegardePlaque.setDisable(true);
             labelLancePlaque.setVisible(true);
             buttonLancerPlaque.setDisable(false); 
+        }
+        else{
+            home.setDisable(true);
+            resultat.setDisable(true);
+            deconnexionIV.setDisable(true);
+            buttonAddAR.setDisable(false);
+            buttonAddEA.setDisable(false);
+            sauvegardePlaque.setDisable(false);
+            buttonLancerPlaque.setDisable(false); 
+            labelLancePlaque.setVisible(false);
         }
     }
         
@@ -699,6 +728,12 @@ public class LaborantinController1 implements Initializable {
         validationPage.setVisible(true);
     }
     
+    /**
+     * Evenement quand on clique sur l'icone + et que une expérience est selectionnée
+     * dans le tableau
+     * ajoute l'expérience a la plaque
+     * @param event 
+     */
     public void AddUpletPlaque(ActionEvent event){
       
         if (tableExpARenouveler.getSelectionModel().getSelectedItem()!=null){
@@ -709,29 +744,20 @@ public class LaborantinController1 implements Initializable {
             LabelAjoutExpPlaque.setText("Expérience bien ajoutée");
             LabelAjoutExpPlaque.setVisible(true);
             home.setDisable(true);
-            resultat.setDisable(true);
-            deconnexionIV.setDisable(true);
-            buttonAddAR.setDisable(false);
-            buttonAddEA.setDisable(false);
-            sauvegardePlaque.setDisable(false);
-            labelLancePlaque.setVisible(false);
+          
         }
         else{
             LabelAjoutExpPlaque.setText("Veuillez selectionner une ligne");
             LabelAjoutExpPlaque.setVisible(true);
         }
-        
-        
-//        tableExpARenouveler.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-//            if (newSelection != null) {
-//                tableExpEnAttente.getSelectionModel().clearSelection();
-//                buttonAddEA.setDisable(true);
-//            }
-//        });
-
-
     }
     
+    /**
+     * Evenement quand on clique sur l'icone +  et que l'on a selectionnner sur 
+     * une ligne du tableau des expériences en attente
+     * ajoute les n_uplets de l'expérience sur la plaque
+     * @param event 
+     */
     public void AddUpletPlaqueEnAtt(ActionEvent event){
       
         if(tableExpEnAttente.getSelectionModel().getSelectedItem() != null){
@@ -741,29 +767,24 @@ public class LaborantinController1 implements Initializable {
             setInfoPlaque(maPlaque);
             LabelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
             LabelAjoutExpAttentLabel.setVisible(true);
-            home.setDisable(true);
-            resultat.setDisable(true);
-            buttonAddAR.setDisable(false);
-            buttonAddEA.setDisable(false);
-            sauvegardePlaque.setDisable(false);
-            labelLancePlaque.setVisible(false);
         }
         else{
             LabelAjoutExpAttentLabel.setText("Veuillez selectionner une ligne");
             LabelAjoutExpAttentLabel.setVisible(true);
         }
         
-        
-//        tableExpEnAttente.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-//            if (newSelection != null) {
-//                tableExpARenouveler.getSelectionModel().clearSelection();
-//                buttonAddAR.setDisable(true);
-//            }
-//        });
     }
     
+    /**
+     * Methode qui creer les puits de l'expérience avec les X et les Y
+     * @param experience
+     * @param plaque 
+     */
     public void AjoutXYPlaque(projetbasededonnee.Data.Laborantin experience, projetbasededonnee.Data.Laborantin plaque){
         listeIdUplet = new ArrayList(); 
+        listeIdUpletValid = new ArrayList();
+        listeIdUplet.clear();
+        listeIdUpletValid.clear(); 
         con = connex.getCon();      
     try{
         stmt4 = con.createStatement();
@@ -775,10 +796,23 @@ public class LaborantinController1 implements Initializable {
             System.out.println(id_uplet);
             listeIdUplet.add(id_uplet); 
         }
-    }catch (Exception e) {
+    }catch (SQLException e) {
         Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
     }
-        
+
+    for(Integer idU : listeIdUplet){
+        try{
+            rs=stmt.executeQuery("SELECT count(*) FROM PUIT WHERE ID_N_UPLET = "+ idU +"");
+            rs.next();
+            if (rs.getInt(1) ==0){
+                listeIdUpletValid.add(idU);
+            }
+            
+        } catch (Exception e) {
+             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+ 
         if ("96puits".equals(plaque.getType_plaque())){
             Integer nbrePuit_Uplet= experience.getNb_puits()/experience.getNb_n_uplet();
             Integer puits_dispo=plaque.getPuits_dispo(); 
@@ -791,7 +825,7 @@ public class LaborantinController1 implements Initializable {
                     int X=1;
                     int Y=1;
                     System.out.println("plaque vide");
-                    for (Integer idUplet : listeIdUplet) {
+                    for (Integer idUplet : listeIdUpletValid) {
                         System.out.println(idUplet);
                         for (int i=1; i <= nbrePuit_Uplet; i++){
                             try{
@@ -832,7 +866,7 @@ public class LaborantinController1 implements Initializable {
                         Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                     }
                     
-                    for (Integer idUplet : listeIdUplet) {
+                    for (Integer idUplet : listeIdUpletValid) {
                         System.out.println(idUplet);
                         for (int i=1; i <= nbrePuit_Uplet; i++){
                             System.out.println(nbrePuit_Uplet);
@@ -880,7 +914,7 @@ public class LaborantinController1 implements Initializable {
                 }
                 while( nb <= nbreUpletAInserer){
                     System.out.println(nb + " nb");
-                    Integer idUplet=listeIdUplet.get(nb);
+                    Integer idUplet=listeIdUpletValid.get(nb);
                      for (int i=1; i <= nbrePuit_Uplet; i++){
                         System.out.println(i);
                         if (Y == 8) {
@@ -921,7 +955,7 @@ public class LaborantinController1 implements Initializable {
                     int Y=1;
 
                    
-                    for (Integer idUplet : listeIdUplet) {
+                    for (Integer idUplet : listeIdUpletValid) {
                         System.out.println(idUplet);
                         for (int i=1; i <= nbrePuit_Uplet; i++){
                             try{
@@ -960,7 +994,7 @@ public class LaborantinController1 implements Initializable {
                         Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                     }
                     
-                    for (Integer idUplet : listeIdUplet) {
+                    for (Integer idUplet : listeIdUpletValid) {
                         System.out.println(idUplet);
                         for (int i=1; i <= nbrePuit_Uplet; i++){
                             System.out.println(nbrePuit_Uplet);
@@ -1008,7 +1042,7 @@ public class LaborantinController1 implements Initializable {
                 }
                 while( nb <= nbreUpletAInserer){
                     System.out.println(nb + " nb");
-                    Integer idUplet=listeIdUplet.get(nb);
+                    Integer idUplet=listeIdUpletValid.get(nb);
                      for (int i=1; i <= nbrePuit_Uplet; i++){
                         System.out.println(i);
                         if (Y == 16) {
@@ -1036,6 +1070,7 @@ public class LaborantinController1 implements Initializable {
         }
     }
     
+
     public void lancerPlaque(){
         con = connex.getCon();
         // recuperation de chaque id_experience et le nbpuit [i.e. par replicat] de l'experience de la plaque sur laquelle je suis
@@ -1097,6 +1132,11 @@ public class LaborantinController1 implements Initializable {
        
     }
     
+    /**
+     * Evenement quand on clique sur sauvegarder dans l'anchor pane lancer plaque
+     * (retourne sur page d'accueil)
+     * @param event 
+     */
     public void clickOnSauvegarder(ActionEvent event){
         accueilLaboPane.setVisible(true);
         LancerPlaquePage.setVisible(false); 
@@ -1108,6 +1148,11 @@ public class LaborantinController1 implements Initializable {
         setCellTablePlaque();
     }
     
+    /**
+     * Evenement quand on clique sur le bouton voir la plaque
+     * (affiche le tableau avec les X et Y de tous les puits)
+     * @param event 
+     */
     public void clickOnButtonPlaque(ActionEvent event){
         accueilLaboPane.setVisible(false);
         LancerPlaquePage.setVisible(false); 
@@ -1118,6 +1163,9 @@ public class LaborantinController1 implements Initializable {
         
     }
     
+    /**
+     * Ajoute les colonnes pour le tableau emplacement plaque
+     */
     private void setCellEmplacementPlaque(){
         dataEmplacementPlaque = FXCollections.observableArrayList();
 
@@ -1130,6 +1178,10 @@ public class LaborantinController1 implements Initializable {
 
     }
     
+    /**
+     * Initialise le tableau pour l'emplacement des plaques
+     * @param plaque 
+     */
     public void loadDataEmplacementPlaque( projetbasededonnee.Data.Laborantin plaque){
         dataEmplacementPlaque.clear();
         try{
@@ -1137,7 +1189,7 @@ public class LaborantinController1 implements Initializable {
             stmt = con.createStatement();
             
             rs=stmt.executeQuery("SELECT x,y, qteA, nomA, qteC, nomC FROM PUIT JOIN N_UPLET USING(id_n_uplet) JOIN SOLUTION USING(id_solution) JOIN AGENT_BIOLOGIQUE USING(id_agent_bio) JOIN CELLULE USING(id_cell_cancereuse) where id_plaque = "+ plaque.getId_plaque()+"");
-            while(rs.next()){
+            while(rs.next()){ 
                 dataEmplacementPlaque.add(new projetbasededonnee.Data.Laborantin(rs.getInt(1),rs.getInt(2), rs.getString(4), rs.getInt(3), rs.getString(6), rs.getInt(5)));
                 
             } 
@@ -1150,6 +1202,11 @@ public class LaborantinController1 implements Initializable {
          
     }
     
+    /**
+     * Action Event quand on clique sur le bouton retour quand on affiche 
+     * emplacement plaque
+     * @param event 
+     */
     public void clickOnRetour(ActionEvent event){
         accueilLaboPane.setVisible(false);
         LancerPlaquePage.setVisible(true); 
@@ -1161,20 +1218,23 @@ public class LaborantinController1 implements Initializable {
         loadDataExpARenouveler();
         setCellTableEnAttente();
         loadDataExpEnAttente();
-
-        deconnexionIV.setDisable(true);
-        home.setDisable(true);
-        resultat.setDisable(true);
-        sauvegardePlaque.setDisable(false);
         labelLancePlaque.setVisible(false);
     }
     
 
+    /**
+     * Setter pour la connexion
+     * @param cone 
+     */
     public void setConnection(Connexion cone)
     {
         connex = cone;
     } 
     
+    /**
+     * Setter pour la personne connectée
+     * @param personneE 
+     */
     public void setPersonne(Personne personneE){
         personne=personneE; 
     }
