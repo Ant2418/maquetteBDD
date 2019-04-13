@@ -33,6 +33,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import static javafx.scene.input.KeyCode.ENTER;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -577,6 +579,7 @@ public class LaborantinController1 implements Initializable {
     
     /**
      * Affichage du panel homePageLab, l'accueil du laborantin
+     * Ajout d'une nouvelle plaque
      * @param event
      * @throws IOException 
      */
@@ -652,6 +655,87 @@ public class LaborantinController1 implements Initializable {
         }
         else {
             erreurAjoutPlaque.setVisible(true);
+        }
+    }
+    
+    /**
+     * Ajout d'une nouvelle plaque quand on clique sur la valider avec le clavier
+     * @param event 
+     */
+    public void ajoutPlaqueKeyPresse(KeyEvent event){
+        
+        if (event.getCode() == ENTER) {
+            if (cbTypePlaque.getSelectionModel().getSelectedItem()!= null) {
+
+                try{
+                    stmt = con.createStatement();
+                    rs= stmt.executeQuery("INSERT INTO PLAQUE (id_plaque, type_plaque, EstRefuse)VALUES("+ 1 + ", '"+ cbTypePlaque.getSelectionModel().getSelectedItem()+ "', "+ 0 +")");
+
+                    try{
+                    stmt = con.createStatement();
+                    rs= stmt.executeQuery("SELECT MAX(id_plaque) FROM PLAQUE");
+                    while(rs.next()){
+                        id_plaque=rs.getInt(1); 
+                    }
+
+                    }catch (SQLException e) {
+                        Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+                    }
+
+                    accueilLaboPane.setVisible(false);
+                    LancerPlaquePage.setVisible(true); 
+                    EmplacementPlaquePage.setVisible(false);
+                    validationPage.setVisible(false);
+                    //maPlaque.setId_plaque(id_plaque);
+                    //maPlaque.setType_plaque((String) cbTypePlaque.getSelectionModel().getSelectedItem());
+                    if ("96puits".equals((String)cbTypePlaque.getValue())){
+                        //martin.cmaPlaque.setPuits_dispo(96);
+                        maPlaque = new projetbasededonnee.Data.Laborantin(id_plaque,(String) cbTypePlaque.getSelectionModel().getSelectedItem(),96);
+                        System.out.println("96 plaque");
+                    }
+                    else if ("384puits".equals((String) cbTypePlaque.getSelectionModel().getSelectedItem()))
+                    {   
+                        //maPlaque.setPuits_dispo(384);
+                        maPlaque = new projetbasededonnee.Data.Laborantin(id_plaque,(String) cbTypePlaque.getSelectionModel().getSelectedItem(),384);
+                        System.out.println("384 plaque");
+                    }
+                    //Creer une nouvelle plaque
+                   //labelInfoPlaquePuits.setText("Plaque n° " +maPlaque.getId_plaque()+ ". Il reste "+maPlaque.getPuits_dispo()+" puits dans la plaque");
+                    setInfoPlaque(maPlaque);
+                    listeIdExp = new ArrayList();
+                    listeIdExpValid = new ArrayList(); 
+                    listeIdUpletValid = new ArrayList();
+                    listeIdUplet = new ArrayList(); 
+                    listeIdUplet1 = new ArrayList();
+                    setCellTableARenouveler();
+                    loadDataExpARenouveler();
+                    listeIdExpEA = new ArrayList();
+                    listeIdExpValidA = new ArrayList();
+                    setCellTableEnAttente();
+                    loadDataExpEnAttente();
+                    LabelAjoutExpAttentLabel.setVisible(false);
+                    LabelAjoutExpPlaque.setVisible(false);
+                    buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
+                    buttonAddEA.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
+
+                    buttonAddAR.setDisable(false);
+                    buttonAddEA.setDisable(false);
+                    home.setDisable(true);
+                    resultat.setDisable(true);
+                    deconnexionIV.setDisable(true);
+                    sauvegardePlaque.setDisable(true);
+                    buttonLancerPlaque.setDisable(true); 
+
+
+                }catch (SQLException e) {
+                    Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+                }
+
+
+            }
+            else {
+                erreurAjoutPlaque.setVisible(true);
+            }
         }
     }
     
@@ -753,6 +837,31 @@ public class LaborantinController1 implements Initializable {
     }
     
     /**
+     * Evenement quand on clique avec ENTER sur le clavier 
+     * sur l'icone + et que une expérience est selectionnée
+     * dans le tableau
+     * @param event 
+     */
+    public void AddUpletPlaqueKeyPress(KeyEvent event){
+        if (event.getCode()==ENTER){
+            if (tableExpARenouveler.getSelectionModel().getSelectedItem()!=null){
+            AjoutXYPlaque(tableExpARenouveler.getSelectionModel().getSelectedItem(),maPlaque);
+            setCellTableARenouveler();
+            loadDataExpARenouveler();
+            setInfoPlaque(maPlaque);
+            LabelAjoutExpPlaque.setText("Expérience bien ajoutée");
+            LabelAjoutExpPlaque.setVisible(true);
+            home.setDisable(true);
+
+            }
+            else{
+                LabelAjoutExpPlaque.setText("Veuillez selectionner une ligne");
+                LabelAjoutExpPlaque.setVisible(true);
+            }
+        }
+    }
+    
+    /**
      * Evenement quand on clique sur l'icone +  et que l'on a selectionnner sur 
      * une ligne du tableau des expériences en attente
      * ajoute les n_uplets de l'expérience sur la plaque
@@ -775,6 +884,22 @@ public class LaborantinController1 implements Initializable {
         
     }
     
+    public void addUpletPlaqueEnAttKeyPress(KeyEvent event){
+        if(event.getCode()==ENTER){
+            if(tableExpEnAttente.getSelectionModel().getSelectedItem() != null){
+                AjoutXYPlaque(tableExpEnAttente.getSelectionModel().getSelectedItem(),maPlaque);
+                setCellTableEnAttente();
+                loadDataExpEnAttente();
+                setInfoPlaque(maPlaque);
+                LabelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
+                LabelAjoutExpAttentLabel.setVisible(true);
+            }
+            else{
+                LabelAjoutExpAttentLabel.setText("Veuillez selectionner une ligne");
+                LabelAjoutExpAttentLabel.setVisible(true);
+            }
+        }
+    }
     /**
      * Methode qui creer les puits de l'expérience avec les X et les Y
      * @param experience
@@ -1149,6 +1274,24 @@ public class LaborantinController1 implements Initializable {
     }
     
     /**
+     * Evenement quand on clique sur le ENTER sur le clavier sur sauvegarder dans l'anchor pane lancer plaque
+     * (retourne sur page d'accueil)
+     * @param event 
+     */
+    public void clickOnSauvegarderPressed(KeyEvent event){
+        if(event.getCode()==ENTER){
+            accueilLaboPane.setVisible(true);
+            LancerPlaquePage.setVisible(false); 
+            EmplacementPlaquePage.setVisible(false);
+            validationPage.setVisible(false);
+            resultat.setDisable(false);
+            deconnexionIV.setDisable(false);
+            loadDataPlaque();
+            setCellTablePlaque(); 
+        }
+    }
+    
+    /**
      * Evenement quand on clique sur le bouton voir la plaque
      * (affiche le tableau avec les X et Y de tous les puits)
      * @param event 
@@ -1161,6 +1304,22 @@ public class LaborantinController1 implements Initializable {
         setCellEmplacementPlaque();
         loadDataEmplacementPlaque(maPlaque);
         
+    }
+    
+    /**
+     * Evenement quand on clique sur entrer avec le clavier sur le bouton voir la plaque
+     * (affiche le tableau avec les X et Y de tous les puits)
+     * @param event 
+     */
+    public void clickOnButtonPlaquePressed(KeyEvent event){
+        if(event.getCode()==ENTER){
+            accueilLaboPane.setVisible(false);
+            LancerPlaquePage.setVisible(false); 
+            EmplacementPlaquePage.setVisible(true);
+            validationPage.setVisible(false);
+            setCellEmplacementPlaque();
+            loadDataEmplacementPlaque(maPlaque);
+        }
     }
     
     /**
@@ -1221,7 +1380,27 @@ public class LaborantinController1 implements Initializable {
         labelLancePlaque.setVisible(false);
     }
     
+    /**
+     * Action Event quand on clique sur ENTER sur le bouton retour quand on affiche 
+     * emplacement plaque
+     * @param event 
+     */
+    public void clickOnRetourKeyPress(KeyEvent event){
+        if (event.getCode()==ENTER){
+            accueilLaboPane.setVisible(false);
+            LancerPlaquePage.setVisible(true); 
+            EmplacementPlaquePage.setVisible(false);
+            validationPage.setVisible(false);
 
+            setInfoPlaque(maPlaque);
+            setCellTableARenouveler();
+            loadDataExpARenouveler();
+            setCellTableEnAttente();
+            loadDataExpEnAttente();
+            labelLancePlaque.setVisible(false);
+        }
+    }
+    
     /**
      * Setter pour la connexion
      * @param cone 
