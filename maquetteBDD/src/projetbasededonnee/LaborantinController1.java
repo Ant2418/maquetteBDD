@@ -1194,8 +1194,9 @@ public class LaborantinController1 implements Initializable {
             }
         }
     }
-    
-
+    /**
+     * permet de lancer une plaque #COMMENTAIRE A MODIFIER
+     */
     public void lancerPlaque(){
         con = connex.getCon();
         // recuperation de chaque id_experience et le nbpuit [i.e. par replicat] de l'experience de la plaque sur laquelle je suis
