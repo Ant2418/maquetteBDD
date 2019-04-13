@@ -1217,7 +1217,7 @@ public class LaborantinController1 implements Initializable {
             listResNbPuit.clear();
             // recupere tous les n_uplet de l'experience
             try{
-                rs = stmt.executeQuery("select id_n_uplet from EXPERIENCE join n_uplet using(id_experience) join PUIT using (id_n_uplet) where  id_experience = "+ listExp.get(i));
+                rs = stmt.executeQuery("select id_n_uplet from N_UPLET where  id_experience = "+ listExp.get(i));
                 while (rs.next()) { 
                     listNUplet.add(rs.getInt(1));
                 }
@@ -1238,8 +1238,11 @@ public class LaborantinController1 implements Initializable {
                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
+            System.out.println("Exp "+listExp.get(i)+" listResNbPuit "+listResNbPuit);
             // si la liste contient pas 0 alors passage de l'experience a 'en cours'
-            if(!listResNbPuit.contains(0)){
+            if (listResNbPuit.contains(0)){
+                // nothing
+            }else{
                 try{
                     rs = stmt.executeQuery("update EXPERIENCE set etat_exp = 'En Cours' where id_experience = "+ listExp.get(i));
                     rs.close();
