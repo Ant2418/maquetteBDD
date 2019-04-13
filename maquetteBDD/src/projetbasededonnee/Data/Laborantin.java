@@ -23,9 +23,23 @@ public class Laborantin {
     private String type_ana;
     private String type_exp;
     private Integer nb_puits;
+    
+    private Integer x; 
+    private Integer y; 
+    private String agent_bio; 
+    private Integer qte_agent_bio; 
+    private String cellule; 
+    private Integer qte_cellule; 
 
-    public Laborantin() {
+    public Laborantin(Integer x, Integer y, String agent_bio, Integer qte_agent_bio, String cellule, Integer qte_cellule) {
+        this.x = x;
+        this.y = y;
+        this.agent_bio = agent_bio;
+        this.qte_agent_bio = qte_agent_bio;
+        this.cellule = cellule;
+        this.qte_cellule = qte_cellule;
     }
+
     
     
     /**

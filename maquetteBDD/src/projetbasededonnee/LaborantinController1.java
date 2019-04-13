@@ -108,6 +108,7 @@ public class LaborantinController1 implements Initializable {
     @FXML    private Label LabelAjoutExpPlaque;
     @FXML    private Label LabelAjoutExpAttentLabel; 
     @FXML    private Button sauvegardePlaque; 
+    @FXML    private Button ButtonPlaque;
     @FXML    private Label labelLancePlaque; 
     @FXML    private Button buttonLancerPlaque;
     private Button lancerExpButton;
@@ -129,11 +130,21 @@ public class LaborantinController1 implements Initializable {
     private Integer nbreUplet;
     private Integer nbreUpletTraitee;
     
+    //Pour la tableau emplacement plaque
+    @FXML    private TableView<projetbasededonnee.Data.Laborantin> tableEmplacementPlaque;
+    @FXML    private TableColumn<?, ?> colX;
+    @FXML    private TableColumn<?, ?> colY;
+    @FXML    private TableColumn<?, ?> colAgentBio;
+    @FXML    private TableColumn<?, ?> colQteBio;
+    @FXML    private TableColumn<?, ?> colCellule;
+    @FXML    private TableColumn<?, ?> colQteCellule;
+    @FXML    private Button ButtonRetourComplPlaque;
     
     //liste observable
     private ObservableList<projetbasededonnee.Data.Laborantin> dataPlaque;
     private ObservableList<projetbasededonnee.Data.Laborantin> dataExpARenouveler;
     private ObservableList<projetbasededonnee.Data.Laborantin> dataExpEnAttente;
+    private ObservableList<projetbasededonnee.Data.Laborantin> dataEmplacementPlaque;
     private ArrayList<Integer> listeIdPlaque;
     private ArrayList<Integer> listeIdExp;
     private ArrayList<Integer> listExp= new ArrayList<>();
@@ -164,13 +175,21 @@ public class LaborantinController1 implements Initializable {
         
     }    
 
-   
     private void setCellTablePlaque(){
-       
+  
+        tableAccueilLabo.getColumns().clear();
+        
+        
+        TableColumn<projetbasededonnee.Data.Laborantin, ?> colNumPlaque = new TableColumn<>("id_plaque");
         colNumPlaque.setCellValueFactory(new PropertyValueFactory<>("id_plaque"));
+        
+        TableColumn<projetbasededonnee.Data.Laborantin, ?> colTypePlaque = new TableColumn<>("Type_plaque");
         colTypePlaque.setCellValueFactory(new PropertyValueFactory<>("Type_plaque"));
+        
+        TableColumn<projetbasededonnee.Data.Laborantin, ?> colPuitsDispo = new TableColumn<>("puits_dispo");
         colPuitsDispo.setCellValueFactory(new PropertyValueFactory<>("puits_dispo"));
-           
+       
+        
         //Set Edit button column
         TableColumn<projetbasededonnee.Data.Laborantin, Void> editerColonne = new TableColumn("Editer");
         
@@ -185,8 +204,7 @@ public class LaborantinController1 implements Initializable {
                         LancerPlaquePage.setVisible(true); 
                         EmplacementPlaquePage.setVisible(false);
                         validationPage.setVisible(false);
-                        
-                        setInfoPlaque();
+
                         listeIdExp = new ArrayList();
                         listeIdExpValid = new ArrayList(); 
                         listeIdUpletValid = new ArrayList();
@@ -201,13 +219,14 @@ public class LaborantinController1 implements Initializable {
                         loadDataExpEnAttente();
                         buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
                         buttonAddEA.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
-                        
+                        setInfoPlaque(maPlaque);
                         deconnexionIV.setDisable(true);
                         home.setDisable(true);
                         resultat.setDisable(true);
                         buttonAddAR.setDisable(false);
                         buttonAddEA.setDisable(false);
                         sauvegardePlaque.setDisable(false);
+                        buttonLancerPlaque.setDisable(true);
                         labelLancePlaque.setVisible(false);
                 
                     });
@@ -228,7 +247,7 @@ public class LaborantinController1 implements Initializable {
             return cell;
         };
         editerColonne.setCellFactory(cellFactory);
-        tableAccueilLabo.getColumns().add(editerColonne);
+        tableAccueilLabo.getColumns().addAll(colNumPlaque,colTypePlaque,colPuitsDispo,editerColonne);
     
   
     }
@@ -565,7 +584,7 @@ public class LaborantinController1 implements Initializable {
                     id_plaque=rs.getInt(1); 
                 }
 
-                }catch (Exception e) {
+                }catch (SQLException e) {
                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
 
@@ -573,23 +592,36 @@ public class LaborantinController1 implements Initializable {
                 LancerPlaquePage.setVisible(true); 
                 EmplacementPlaquePage.setVisible(false);
                 validationPage.setVisible(false);
-                setInfoPlaque();
+                //maPlaque.setId_plaque(id_plaque);
+                //maPlaque.setType_plaque((String) cbTypePlaque.getSelectionModel().getSelectedItem());
+                if ("96puits".equals((String)cbTypePlaque.getValue())){
+                    //martin.cmaPlaque.setPuits_dispo(96);
+                    maPlaque = new projetbasededonnee.Data.Laborantin(id_plaque,(String) cbTypePlaque.getSelectionModel().getSelectedItem(),96);
+                    System.out.println("96 plaque");
+                }
+                else if ("384puits".equals((String) cbTypePlaque.getSelectionModel().getSelectedItem()))
+                {   
+                    //maPlaque.setPuits_dispo(384);
+                    maPlaque = new projetbasededonnee.Data.Laborantin(id_plaque,(String) cbTypePlaque.getSelectionModel().getSelectedItem(),384);
+                    System.out.println("384 plaque");
+                }
+                //Creer une nouvelle plaque
+               //labelInfoPlaquePuits.setText("Plaque n° " +maPlaque.getId_plaque()+ ". Il reste "+maPlaque.getPuits_dispo()+" puits dans la plaque");
+                setInfoPlaque(maPlaque);
+                listeIdExp = new ArrayList();
+                listeIdExpValid = new ArrayList(); 
+                listeIdUpletValid = new ArrayList();
+                listeIdUplet = new ArrayList(); 
+                listeIdUplet1 = new ArrayList();
                 setCellTableARenouveler();
                 loadDataExpARenouveler();
                 listeIdExpEA = new ArrayList();
-                listeIdExpValidA = new ArrayList(); 
+                listeIdExpValidA = new ArrayList();
                 setCellTableEnAttente();
                 loadDataExpEnAttente();
-                maPlaque.setId_plaque(id_plaque);
-                maPlaque.setType_plaque((String) cbTypePlaque.getSelectionModel().getSelectedItem());
-                if (cbTypePlaque.getValue() == "96puits"){
-                    maPlaque.setPuits_dispo(96);
-                }
-                else
-                {   
-                    maPlaque.setPuits_dispo(96);
-                }
-                labelInfoPlaquePuits.setText("Plaque n° " +maPlaque.getId_plaque()+ ". Il reste "+maPlaque.getPuits_dispo()+" puits dans la plaque");
+                buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
+                buttonAddEA.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
+                        
                 home.setDisable(true);
                 resultat.setDisable(true);
                 deconnexionIV.setDisable(true);
@@ -597,7 +629,7 @@ public class LaborantinController1 implements Initializable {
                 buttonLancerPlaque.setDisable(true); 
                 
 
-            }catch (Exception e) {
+            }catch (SQLException e) {
                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
             }
             
@@ -608,7 +640,7 @@ public class LaborantinController1 implements Initializable {
         }
     }
     
-    public void setInfoPlaque(){ 
+    public void setInfoPlaque(projetbasededonnee.Data.Laborantin maPlaque){ 
         Integer nb_puits_plaque=0;
         try{
             stmt = con.createStatement();
@@ -635,8 +667,8 @@ public class LaborantinController1 implements Initializable {
             buttonAddEA.setDisable(true);
             sauvegardePlaque.setDisable(true);
             labelLancePlaque.setVisible(true);
+            buttonLancerPlaque.setDisable(false); 
         }
-    
     }
         
     /**
@@ -669,33 +701,65 @@ public class LaborantinController1 implements Initializable {
     
     public void AddUpletPlaque(ActionEvent event){
       
-        AjoutXYPlaque(tableExpARenouveler.getSelectionModel().getSelectedItem(),maPlaque);
-        setCellTableARenouveler();
-        loadDataExpARenouveler();
-        setInfoPlaque();
-        LabelAjoutExpPlaque.setVisible(true);
-        home.setDisable(true);
-        resultat.setDisable(true);
-        deconnexionIV.setDisable(true);
-        buttonAddAR.setDisable(false);
-        buttonAddEA.setDisable(false);
-        sauvegardePlaque.setDisable(false);
-        labelLancePlaque.setVisible(false);
+        if (tableExpARenouveler.getSelectionModel().getSelectedItem()!=null){
+            AjoutXYPlaque(tableExpARenouveler.getSelectionModel().getSelectedItem(),maPlaque);
+            setCellTableARenouveler();
+            loadDataExpARenouveler();
+            setInfoPlaque(maPlaque);
+            LabelAjoutExpPlaque.setText("Expérience bien ajoutée");
+            LabelAjoutExpPlaque.setVisible(true);
+            home.setDisable(true);
+            resultat.setDisable(true);
+            deconnexionIV.setDisable(true);
+            buttonAddAR.setDisable(false);
+            buttonAddEA.setDisable(false);
+            sauvegardePlaque.setDisable(false);
+            labelLancePlaque.setVisible(false);
+        }
+        else{
+            LabelAjoutExpPlaque.setText("Veuillez selectionner une ligne");
+            LabelAjoutExpPlaque.setVisible(true);
+        }
+        
+        
+//        tableExpARenouveler.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+//            if (newSelection != null) {
+//                tableExpEnAttente.getSelectionModel().clearSelection();
+//                buttonAddEA.setDisable(true);
+//            }
+//        });
+
+
     }
     
     public void AddUpletPlaqueEnAtt(ActionEvent event){
       
-        AjoutXYPlaque(tableExpEnAttente.getSelectionModel().getSelectedItem(),maPlaque);
-        setCellTableEnAttente();
-        loadDataExpEnAttente();
-        setInfoPlaque();
-        LabelAjoutExpAttentLabel.setVisible(true);
-        home.setDisable(true);
-        resultat.setDisable(true);
-        buttonAddAR.setDisable(false);
-        buttonAddEA.setDisable(false);
-        sauvegardePlaque.setDisable(false);
-        labelLancePlaque.setVisible(false);
+        if(tableExpEnAttente.getSelectionModel().getSelectedItem() != null){
+            AjoutXYPlaque(tableExpEnAttente.getSelectionModel().getSelectedItem(),maPlaque);
+            setCellTableEnAttente();
+            loadDataExpEnAttente();
+            setInfoPlaque(maPlaque);
+            LabelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
+            LabelAjoutExpAttentLabel.setVisible(true);
+            home.setDisable(true);
+            resultat.setDisable(true);
+            buttonAddAR.setDisable(false);
+            buttonAddEA.setDisable(false);
+            sauvegardePlaque.setDisable(false);
+            labelLancePlaque.setVisible(false);
+        }
+        else{
+            LabelAjoutExpAttentLabel.setText("Veuillez selectionner une ligne");
+            LabelAjoutExpAttentLabel.setVisible(true);
+        }
+        
+        
+//        tableExpEnAttente.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+//            if (newSelection != null) {
+//                tableExpARenouveler.getSelectionModel().clearSelection();
+//                buttonAddAR.setDisable(true);
+//            }
+//        });
     }
     
     public void AjoutXYPlaque(projetbasededonnee.Data.Laborantin experience, projetbasededonnee.Data.Laborantin plaque){
@@ -1038,11 +1102,75 @@ public class LaborantinController1 implements Initializable {
         LancerPlaquePage.setVisible(false); 
         EmplacementPlaquePage.setVisible(false);
         validationPage.setVisible(false);
+        resultat.setDisable(false);
+        deconnexionIV.setDisable(false);
         loadDataPlaque();
         setCellTablePlaque();
-}
+    }
     
-     public void setConnection(Connexion cone)
+    public void clickOnButtonPlaque(ActionEvent event){
+        accueilLaboPane.setVisible(false);
+        LancerPlaquePage.setVisible(false); 
+        EmplacementPlaquePage.setVisible(true);
+        validationPage.setVisible(false);
+        setCellEmplacementPlaque();
+        loadDataEmplacementPlaque(maPlaque);
+        
+    }
+    
+    private void setCellEmplacementPlaque(){
+        dataEmplacementPlaque = FXCollections.observableArrayList();
+
+        colX.setCellValueFactory(new PropertyValueFactory<>("x"));
+        colY.setCellValueFactory(new PropertyValueFactory<>("y"));
+        colAgentBio.setCellValueFactory(new PropertyValueFactory<>("agent_bio"));
+        colQteBio.setCellValueFactory(new PropertyValueFactory<>("qte_agent_bio"));
+        colCellule.setCellValueFactory(new PropertyValueFactory<>("cellule"));
+        colQteCellule.setCellValueFactory(new PropertyValueFactory<>("qte_cellule"));
+
+    }
+    
+    public void loadDataEmplacementPlaque( projetbasededonnee.Data.Laborantin plaque){
+        dataEmplacementPlaque.clear();
+        try{
+            con = connex.getCon();
+            stmt = con.createStatement();
+            
+            rs=stmt.executeQuery("SELECT x,y, qteA, nomA, qteC, nomC FROM PUIT JOIN N_UPLET USING(id_n_uplet) JOIN SOLUTION USING(id_solution) JOIN AGENT_BIOLOGIQUE USING(id_agent_bio) JOIN CELLULE USING(id_cell_cancereuse) where id_plaque = "+ plaque.getId_plaque()+"");
+            while(rs.next()){
+                dataEmplacementPlaque.add(new projetbasededonnee.Data.Laborantin(rs.getInt(1),rs.getInt(2), rs.getString(4), rs.getInt(3), rs.getString(6), rs.getInt(5)));
+                
+            } 
+            tableEmplacementPlaque.setItems(dataEmplacementPlaque);
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+        }
+         
+    }
+    
+    public void clickOnRetour(ActionEvent event){
+        accueilLaboPane.setVisible(false);
+        LancerPlaquePage.setVisible(true); 
+        EmplacementPlaquePage.setVisible(false);
+        validationPage.setVisible(false);
+        
+        setInfoPlaque(maPlaque);
+        setCellTableARenouveler();
+        loadDataExpARenouveler();
+        setCellTableEnAttente();
+        loadDataExpEnAttente();
+
+        deconnexionIV.setDisable(true);
+        home.setDisable(true);
+        resultat.setDisable(true);
+        sauvegardePlaque.setDisable(false);
+        labelLancePlaque.setVisible(false);
+    }
+    
+
+    public void setConnection(Connexion cone)
     {
         connex = cone;
     } 
