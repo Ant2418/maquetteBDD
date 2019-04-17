@@ -239,7 +239,7 @@ public class AcceuilChercheurController implements Initializable {
             while (rs1.next()) {
                 id_pers = rs1.getInt(1); 
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
         }
          try{
@@ -303,6 +303,7 @@ public class AcceuilChercheurController implements Initializable {
      * Affichage de la page de connexion (connexion.fxml)
      * @param event
      * @throws IOException 
+     * @throws java.sql.SQLException 
      */
     public void deconnexionEvent(MouseEvent event) throws IOException, SQLException {
         
@@ -357,7 +358,7 @@ public class AcceuilChercheurController implements Initializable {
             while (rs.next()){
                 nbReplicat=rs.getInt(1);              
             }
-        }catch (Exception e) {
+        }catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
         }
         
@@ -660,7 +661,7 @@ public class AcceuilChercheurController implements Initializable {
                         while (rs1.next()) { 
                             id_exp = rs1.getInt(1);
                         }
-                    }catch (Exception e) {
+                    }catch (SQLException e) {
                         Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                     }
 
@@ -670,14 +671,14 @@ public class AcceuilChercheurController implements Initializable {
                         while (rs2.next()) { 
                             id_pers = rs2.getInt(1);
                         }
-                    }catch (Exception e) {
+                    }catch (SQLException e) {
                         Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                     }
 
                     try{           
                         stmt3 = con.createStatement();
                         rs3 = stmt3.executeQuery("INSERT INTO FAIT VALUES("+ id_pers + ", " + id_exp  + ")");
-                    }catch (Exception e) {
+                    }catch (SQLException e) {
                         Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                     }
                     
@@ -763,14 +764,14 @@ public class AcceuilChercheurController implements Initializable {
                                 try{           
                                     stmt3 = con.createStatement();
                                     rs3 = stmt3.executeQuery("INSERT INTO FAIT VALUES("+ id_pers + ", " + id_exp  + ")");
-                                }catch (Exception e) {
+                                }catch (SQLException e) {
                                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                                 }   
-                            }catch (Exception e) {
+                            }catch (SQLException e) {
                             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                             }
                         
-                        }catch (Exception e) {
+                        }catch (SQLException e) {
                         Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                         }
                         homePageChercheur.setVisible(false);
@@ -925,7 +926,7 @@ public class AcceuilChercheurController implements Initializable {
         alpha1LabelUplet.setText(String.valueOf(Biais1)); 
         alpha2LabelUplet.setText(String.valueOf(Biais2)); 
         
-        if (suiviExp=="oui"){
+        if ("oui".equals(suiviExp)){
             frequenceLabelUplet.setText(String.valueOf(FrequExp)); 
             alpha3LabelUplet.setText(String.valueOf(Biais3));
         }        
@@ -944,7 +945,7 @@ public class AcceuilChercheurController implements Initializable {
             while (rs2.next()) { 
                 AgentBioCombo.getItems().add(rs2.getString(1));
             }
-        }catch (Exception e) {
+        }catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
         }
         CelluleCombo.getItems().clear();
@@ -954,7 +955,7 @@ public class AcceuilChercheurController implements Initializable {
             while (rs3.next()) { 
                 CelluleCombo.getItems().add(rs3.getString(1)+ " - " + rs3.getString(2));
             }
-        }catch (Exception e) {
+        }catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
         }
         
@@ -1061,7 +1062,7 @@ public class AcceuilChercheurController implements Initializable {
                 try{
                     stmt = con.createStatement();
                     rs=stmt.executeQuery("INSERT INTO AGENT_BIOLOGIQUE (ID_AGENT_BIO, QTEA, NOMA,PRIXA) VALUES("+ 1 +", "+ AgentBioSpinner.getValue() + ", '" + AgentBioCombo.getValue() + "', " + prix +")");    
-                }catch (Exception e){
+                }catch (SQLException e){
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                 }
                 try{
@@ -1070,7 +1071,7 @@ public class AcceuilChercheurController implements Initializable {
                     while (rs.next()){
                         id_agent_bio=rs.getInt(1);
                     }
-                }catch (Exception e) {
+                }catch (SQLException e) {
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
@@ -1082,11 +1083,11 @@ public class AcceuilChercheurController implements Initializable {
                     while (rs.next()) { 
                     id_agent_bio =rs.getInt(1);
                     }
-                }catch (Exception e) {
+                }catch (SQLException e) {
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
-            }catch (Exception e) {
+            }catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
             }
             
@@ -1103,7 +1104,7 @@ public class AcceuilChercheurController implements Initializable {
                 try{
                     stmt = con.createStatement();
                     rs=stmt.executeQuery("INSERT INTO CELLULE VALUES("+ 1 +",'" + (CelluleCombo.getValue() + "").split(" - ")[1] + "',  "+ CelluleSpinner.getValue() + ",'" + (CelluleCombo.getValue() + "").split(" - ")[0] + "', " + prix +")");    
-                }catch (Exception e) {
+                }catch (SQLException e) {
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                 }
                 try{
@@ -1112,7 +1113,7 @@ public class AcceuilChercheurController implements Initializable {
                     while (rs.next()){
                         id_cellule=rs.getInt(1);
                     }
-                }catch (Exception e) {
+                }catch (SQLException e) {
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
@@ -1124,11 +1125,11 @@ public class AcceuilChercheurController implements Initializable {
                     while (rs.next()) { 
                     id_cellule =rs.getInt(1);
                     }
-                }catch (Exception e) {
+                }catch (SQLException e) {
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
-            }catch (Exception e) {
+            }catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
             }
             
@@ -1145,7 +1146,7 @@ public class AcceuilChercheurController implements Initializable {
                     try{
                     stmt=con.createStatement();
                     rs=stmt.executeQuery("INSERT INTO SOLUTION (id_solution, id_cell_cancereuse, id_agent_bio) VALUES(" + 1 +", " + id_cellule + ", "+ id_agent_bio +")");
-                    }catch (Exception e) {
+                    }catch (SQLException e) {
                         Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                     }
                     try{
@@ -1154,7 +1155,7 @@ public class AcceuilChercheurController implements Initializable {
                     while (rs.next()){
                         id_solution=rs.getInt(1);
                     }
-                    }catch (Exception e) {
+                    }catch (SQLException e) {
                         Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
@@ -1165,11 +1166,11 @@ public class AcceuilChercheurController implements Initializable {
                     while(rs.next()){
                         id_solution=rs.getInt(1);
                     }
-                    }catch (Exception e) {
+                    }catch (SQLException e) {
                         Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
-            }catch (Exception e) {
+            }catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
             }
             
@@ -1188,7 +1189,7 @@ public class AcceuilChercheurController implements Initializable {
                 SolutionChoice();
                 loadDataUplet(id_exp); 
 
-            }catch (Exception e) {
+            }catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
             }
             

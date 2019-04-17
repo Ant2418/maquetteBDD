@@ -129,6 +129,7 @@ public class LaborantinController1 implements Initializable {
     private Integer nbUpletAR;
     private Integer nbreUplet;
     private Integer nbreUpletTraitee;
+    private Integer id_pers; 
     
     //Pour la tableau emplacement plaque
     @FXML    private TableView<projetbasededonnee.Data.Laborantin> tableEmplacementPlaque;
@@ -158,6 +159,7 @@ public class LaborantinController1 implements Initializable {
     private ArrayList<Integer> listeIdUpletValid;
     private ArrayList<Integer> listeIdExpValidA;
     private projetbasededonnee.Data.Laborantin maPlaque;
+    
     
     /**
      * Initializes the controller class.
@@ -920,7 +922,7 @@ public class LaborantinController1 implements Initializable {
             listeIdUplet.add(id_uplet); 
         }
     }catch (SQLException e) {
-        Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+        Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
     }
 
     for(Integer idU : listeIdUplet){
@@ -963,8 +965,8 @@ public class LaborantinController1 implements Initializable {
                                 Y=Y+1;
                             }
                             
-                            }catch (Exception e) {
-                                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                            }catch (SQLException e) {
+                                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                             }
                         }
                     }
@@ -985,8 +987,8 @@ public class LaborantinController1 implements Initializable {
                         System.out.println(X);
                         System.out.println(Y);
                         
-                    }catch (Exception e) {
-                        Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                    }catch (SQLException e) {
+                        Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                     }
                     
                     for (Integer idUplet : listeIdUpletValid) {
@@ -1007,8 +1009,8 @@ public class LaborantinController1 implements Initializable {
                           
                             rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
                             maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
-                            }catch (Exception e) {
-                                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                            }catch (SQLException e) {
+                                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                             }
                         }
                     }     
@@ -1032,8 +1034,8 @@ public class LaborantinController1 implements Initializable {
                     System.out.println(X);
                     System.out.println(Y);
 
-                }catch (Exception e) {
-                    Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                }catch (SQLException e) {
+                    Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
                 while( nb <= nbreUpletAInserer){
                     System.out.println(nb + " nb");
@@ -1054,8 +1056,8 @@ public class LaborantinController1 implements Initializable {
                         rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
                         maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
                         System.out.println("INSERTION DANS UN PUIT SUR PLAQUE MAIS PAS TOUTE EXPERIENCE");
-                        }catch (Exception e) {
-                            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                        }catch (SQLException e) {
+                            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                         }
                     } 
                     nb=nb+1;
@@ -1094,8 +1096,8 @@ public class LaborantinController1 implements Initializable {
                                 Y=Y+1;
                             }
                             
-                            }catch (Exception e) {
-                                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                            }catch (SQLException e) {
+                                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                             }
                         }
                     }
@@ -1113,8 +1115,8 @@ public class LaborantinController1 implements Initializable {
                         System.out.println(X);
                         System.out.println(Y);
                         
-                    }catch (Exception e) {
-                        Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                    }catch (SQLException e) {
+                        Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                     }
                     
                     for (Integer idUplet : listeIdUpletValid) {
@@ -1135,8 +1137,8 @@ public class LaborantinController1 implements Initializable {
                             
                             rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
                             maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
-                            }catch (Exception e) {
-                                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                            }catch (SQLException e) {
+                                Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                             }
                         }
                     }     
@@ -1160,8 +1162,8 @@ public class LaborantinController1 implements Initializable {
                     System.out.println(X);
                     System.out.println(Y);
 
-                }catch (Exception e) {
-                    Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                }catch (SQLException e) {
+                    Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
                 while( nb <= nbreUpletAInserer){
                     System.out.println(nb + " nb");
@@ -1183,8 +1185,8 @@ public class LaborantinController1 implements Initializable {
                         rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
                         maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
                         System.out.println("INSERTION DANS UN PUIT SUR PLAQUE MAIS PAS TOUTE EXPERIENCE");
-                        }catch (Exception e) {
-                            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                        }catch (SQLException e) {
+                            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                         }
                     } 
                     nb=nb+1;
@@ -1197,6 +1199,7 @@ public class LaborantinController1 implements Initializable {
      */
     public void lancerPlaque(){
         con = connex.getCon();
+        projetbasededonnee.Data.CurrentDate Date = new projetbasededonnee.Data.CurrentDate();
         // recuperation de chaque id_experience et le nbpuit [i.e. par replicat] de l'experience de la plaque sur laquelle je suis
         // j'ajoute les id_exp dans la listExp et le nbpuit dans la listNbrePuitsParReplicat
         try{
@@ -1207,7 +1210,7 @@ public class LaborantinController1 implements Initializable {
                // listNbrePuitsParReplicat.add(rs.getInt(2));
             }
             rs.close();
-        }catch (Exception e) {
+        }catch (SQLException e) {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
         // je recupere le nombre de n_uplet de chaque experience et je les ajoute dans la listNUplet
@@ -1233,7 +1236,7 @@ public class LaborantinController1 implements Initializable {
                         listResNbPuit.add(rs.getInt(1));
                     }
                     rs.close();
-                }catch (Exception e) {
+                }catch (SQLException e) {
                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
@@ -1243,11 +1246,27 @@ public class LaborantinController1 implements Initializable {
                 // nothing
             }else{
                 try{
-                    rs = stmt.executeQuery("update EXPERIENCE set etat_exp = 'En Cours' where id_experience = "+ listExp.get(i));
+                    rs = stmt.executeQuery("update EXPERIENCE set etat_exp = 'En Cours', horodatage_deb = " + Date.getdateFormat().format(Date.getDate())+" where id_experience = "+ listExp.get(i));
                     rs.close();
-                }catch (Exception e) {
+                }catch (SQLException e) {
                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
+                //A VERIFIER
+                try{
+                    stmt2 = con.createStatement();
+                    rs2 = stmt2.executeQuery("SELECT ID_PERSONNE FROM PERSONNE WHERE EMAIL = '" + personne.getEmail() + "'");
+                    while (rs2.next()) { 
+                        id_pers = rs2.getInt(1);
+                    }
+                }catch (SQLException e) {
+                    Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+                }
+                try{
+                    rs=stmt.executeQuery("INSERT INTO FAIT VALUES("+id_pers +", "+ idExp+")");
+                }catch (SQLException e) {
+                    Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+                }
+                
             }
         }        
         resultat.setDisable(false);
@@ -1357,7 +1376,7 @@ public class LaborantinController1 implements Initializable {
             tableEmplacementPlaque.setItems(dataEmplacementPlaque);
             rs.close();
             stmt.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
          
