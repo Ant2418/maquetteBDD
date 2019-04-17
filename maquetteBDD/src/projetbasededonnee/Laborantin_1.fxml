@@ -303,7 +303,7 @@
                                                             <Insets right="10.0" top="1.0" />
                                                          </HBox.margin>
                                                       </Button>
-                                                      <Button fx:id="buttonLancerPlaque" mnemonicParsing="false" text="Lancer la plaque">
+                                                      <Button fx:id="buttonLancerPlaque" mnemonicParsing="false" onMouseClicked="#lancerPlaque" text="Lancer la plaque">
                                                          <HBox.margin>
                                                             <Insets top="1.0" />
                                                          </HBox.margin>
