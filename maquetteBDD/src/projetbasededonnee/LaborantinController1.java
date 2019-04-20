@@ -148,10 +148,10 @@ public class LaborantinController1 implements Initializable {
     private ObservableList<projetbasededonnee.Data.Laborantin> dataEmplacementPlaque;
     private ArrayList<Integer> listeIdPlaque;
     private ArrayList<Integer> listeIdExp;
-    private ArrayList<Integer> listExp= new ArrayList<>();
-    private ArrayList<Integer> listNbrePuitsParReplicat = new ArrayList<>();
-    private ArrayList<Integer> listNUplet= new ArrayList<>();
-    private ArrayList<Integer> listResNbPuit = new ArrayList<>();
+    private final ArrayList<Integer> listExp= new ArrayList<>();
+    private final ArrayList<Integer> listNbrePuitsParReplicat = new ArrayList<>();
+    private final ArrayList<Integer> listNUplet= new ArrayList<>();
+    private final ArrayList<Integer> listResNbPuit = new ArrayList<>();
     private ArrayList<Integer> listeIdExpEA;
     private ArrayList<Integer> listeIdUplet;
     private ArrayList<Integer> listeIdUplet1;
@@ -264,7 +264,8 @@ public class LaborantinController1 implements Initializable {
             con = connex.getCon();
             stmt = con.createStatement();
             
-            rs=stmt.executeQuery("SELECT id_plaque FROM PLAQUE");
+//A VERIFIER QUAND ON LANCE UNE PLAQUE QUE LA PLAQUE NE SOIT PLUS DANS LE TABLEAU            
+            rs=stmt.executeQuery("SELECT distinct id_plaque FROM PLAQUE JOIN PUIT USING(id_plaque) join N_UPLET using(id_n_uplet) join experience using(id_experience) where etat_exp is not '"+"En Cours"+"' ");
             while(rs.next()){
                 id_plaque=rs.getInt(1);          
                 listeIdPlaque.add(id_plaque);
@@ -1268,7 +1269,19 @@ public class LaborantinController1 implements Initializable {
                 }
                 
             }
-        }        
+        } 
+        
+       //dataPlaque.remove(maPlaque);
+       
+        //Mettre à jour le tableau de la page d'accueil
+        loadDataPlaque();
+        
+        accueilLaboPane.setVisible(true);
+        LancerPlaquePage.setVisible(false); 
+        EmplacementPlaquePage.setVisible(false);
+        validationPage.setVisible(false);
+        
+        //Remet les setDisable à false pour la page completer plaque
         resultat.setDisable(false);
         deconnexionIV.setDisable(false);
         buttonAddAR.setDisable(false);
@@ -1277,6 +1290,22 @@ public class LaborantinController1 implements Initializable {
         labelLancePlaque.setVisible(false);
        
     }
+    
+    /**
+     * 
+     * @param event 
+     */
+    public void clickOnLancerPlaque(ActionEvent event){
+        lancerPlaque();
+    }
+    
+    public void clickOnLancerPlaquePressed(KeyEvent event){
+        if(event.getCode()==ENTER){
+            lancerPlaque();
+        }
+    }
+    
+    
     
     /**
      * Evenement quand on clique sur sauvegarder dans l'anchor pane lancer plaque

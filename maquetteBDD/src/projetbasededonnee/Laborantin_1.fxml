@@ -154,7 +154,7 @@
                               </BorderPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="LancerPlaquePage" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="LancerPlaquePage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
@@ -303,7 +303,7 @@
                                                             <Insets right="10.0" top="1.0" />
                                                          </HBox.margin>
                                                       </Button>
-                                                      <Button fx:id="buttonLancerPlaque" mnemonicParsing="false" onMouseClicked="#lancerPlaque" text="Lancer la plaque">
+                                                      <Button fx:id="buttonLancerPlaque" mnemonicParsing="false" onAction="#clickOnLancerPlaque" onKeyPressed="#clickOnLancerPlaquePressed" text="Lancer la plaque">
                                                          <HBox.margin>
                                                             <Insets top="1.0" />
                                                          </HBox.margin>
@@ -344,7 +344,7 @@
                               <Button fx:id="ButtonRetourComplPlaque" layoutX="813.0" layoutY="559.0" mnemonicParsing="false" onAction="#clickOnRetour" onKeyPressed="#clickOnRetourKeyPress" text="Retour" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="813.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="559.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="validationPage" onMouseClicked="#validationEvent" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="validationPage" onMouseClicked="#validationEvent" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane prefHeight="600.0" prefWidth="950.0">
                                  <top>
