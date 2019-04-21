@@ -597,7 +597,7 @@ public class AcceuilChercheurController implements Initializable {
      * @throws IOException 
      */
     public void AddUpletEvent(MouseEvent event) throws IOException{
-        AddUplet(); 
+        AddUpletExp(); 
     }
     
     /**
@@ -606,14 +606,14 @@ public class AcceuilChercheurController implements Initializable {
      */
     public void AddUpletKeyPressed(KeyEvent e) {
         if (e.getCode() == ENTER) {
-            AddUplet();
+            AddUpletExp();
         }
     }
     
     /**
      * Methode qui permet d'ajouter une nouvelle expérience
      */
-    public void AddUplet(){
+    public void AddUpletExp(){
         deconnexionIV.setDisable(true);
         home.setDisable(true);
         newExp.setDisable(true);

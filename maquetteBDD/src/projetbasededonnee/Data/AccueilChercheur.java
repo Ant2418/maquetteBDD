@@ -51,6 +51,14 @@ public class AccueilChercheur {
         
     }
 
+    public AccueilChercheur(Integer id_exp, String nom_exp, String etat_exp, String type_exp, String type_analyse) {
+        this.id_exp = id_exp;
+        this.nom_exp = nom_exp;
+        this.etat_exp = etat_exp;
+        this.type_exp = type_exp;
+        this.type_analyse = type_analyse;
+    }
+    
     public void setNom_agent_bio(String nom_agent_bio) {
         this.nom_agent_bio = nom_agent_bio;
     }

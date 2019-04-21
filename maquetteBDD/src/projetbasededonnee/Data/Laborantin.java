@@ -5,11 +5,9 @@
  */
 package projetbasededonnee.Data;
 
-import javafx.scene.control.Button;
-
 /**
  *
- * @author Antoine
+ * @author Antoine et Ludivine
  */
 public class Laborantin {
     
@@ -92,8 +90,10 @@ public class Laborantin {
     
     /**
      * 
+     * @param id_plaque
+     * @param Type_plaque
+     * @param puits_dispo
      */
-    
     public Laborantin(Integer id_plaque, String Type_plaque, Integer puits_dispo) {
         this.id_plaque = id_plaque;
         this.Type_plaque = Type_plaque;
