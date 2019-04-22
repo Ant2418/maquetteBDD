@@ -344,7 +344,7 @@
                               <Button fx:id="ButtonRetourComplPlaque" layoutX="813.0" layoutY="559.0" mnemonicParsing="false" onAction="#clickOnRetour" onKeyPressed="#clickOnRetourKeyPress" text="Retour" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="813.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="559.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="resultatExp" visible="false">
+                        <AnchorPane fx:id="resultatExp">
                            <children>
                               <TableView fx:id="tableResult" layoutX="72.0" layoutY="100.0" prefHeight="400.0" prefWidth="801.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="100.0">
                                  <columns>
@@ -365,7 +365,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="validationPage1" onMouseClicked="#validationEvent">
+                        <AnchorPane fx:id="validationPage1" onMouseClicked="#validationEvent" visible="false">
                            <children>
                               <BorderPane prefHeight="600.0" prefWidth="950.0">
                                  <top>

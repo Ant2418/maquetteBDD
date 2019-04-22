@@ -380,26 +380,11 @@ public class AcceuilChercheurController implements Initializable {
      * @throws IOException 
      */
     public void homeEvent(MouseEvent event) throws IOException {
-        ErreurReplicatValider.setVisible(false);
-        nomExpTextField1.clear();
-        dureeSpinner.getValueFactory().setValue(1);
-        frequTextField.getValueFactory().setValue(1);
-        puitReplicatSpinner.getValueFactory().setValue(1);
-        TypeExpCombo.getItems().clear(); 
-        TypeAnalyseCombo.getItems().clear();  
-        Alpha1Spinner.getValueFactory().setValue(1.0);
-        Alpha2Spinner.getValueFactory().setValue(1.0);
-        Alpha3Spinner.getValueFactory().setValue(0.0);
-        NonSuiviButton.setSelected(false);
-        OuiSuiviButton.setSelected(false);
-        frequTextField.setVisible(false); 
-        Alpha3Spinner.setVisible(false); 
+        
         homePageChercheur.setVisible(true);
         ajoutExpPage.setVisible(false); 
         AddUpletPage.setVisible(false);
-        FreqLabel.setVisible(false);
-        Alpha3Label.setVisible(false);
-       
+        
     }
     
     
@@ -689,8 +674,8 @@ public class AcceuilChercheurController implements Initializable {
                     setCellTableUplet();
                     loadDataUplet(id_exp);
                     AddUpletPage.setVisible(true);                   
-                    
                    
+                    ErreurReplicatValider.setVisible(false);
                     nomExpTextField1.clear();
                     dureeSpinner.getValueFactory().setValue(1);
                     frequTextField.getValueFactory().setValue(1);
@@ -785,6 +770,7 @@ public class AcceuilChercheurController implements Initializable {
                         
                         
                         //Reinitialisation
+                        ErreurReplicatValider.setVisible(false);
                         nomExpTextField1.clear();
                         dureeSpinner.getValueFactory().setValue(1);
                         frequTextField.getValueFactory().setValue(1);
