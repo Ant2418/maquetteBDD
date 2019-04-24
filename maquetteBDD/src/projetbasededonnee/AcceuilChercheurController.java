@@ -41,7 +41,6 @@ import static javafx.scene.input.KeyCode.ENTER;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 /**
@@ -1261,7 +1260,7 @@ public class AcceuilChercheurController implements Initializable {
                     }
                 }
             }catch (SQLException e) {
-            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
             }
             
             //On a l'id_solution On peut creer le n_uplet

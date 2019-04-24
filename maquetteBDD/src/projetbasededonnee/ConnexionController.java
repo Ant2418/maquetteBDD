@@ -78,7 +78,7 @@ public class ConnexionController implements Initializable {
             while (rs.next()) {
                present=rs.getInt(1);            
             }   
-            }catch (Exception e) {
+            }catch (SQLException e) {
                 System.out.println(e);
             }
             
@@ -139,7 +139,7 @@ public class ConnexionController implements Initializable {
                     ErreurLabel.setVisible(true);       
                     }     
                 }
-                } catch (Exception e) {
+                } catch (IOException | SQLException e) {
                     System.out.println(e);
                 }
             }
@@ -220,8 +220,8 @@ public class ConnexionController implements Initializable {
                 }
             }
       
-            } catch (Exception e) {
-            System.out.println(e);
+            } catch (IOException | SQLException e) {
+                System.out.println(e);
             }
         }
         else
