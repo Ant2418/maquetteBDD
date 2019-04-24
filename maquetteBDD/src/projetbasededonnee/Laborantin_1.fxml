@@ -365,7 +365,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="validationPage1" onMouseClicked="#validationEvent" visible="false">
+                        <AnchorPane fx:id="validationPage" onMouseClicked="#validationEvent" visible="false">
                            <children>
                               <BorderPane prefHeight="600.0" prefWidth="950.0">
                                  <top>

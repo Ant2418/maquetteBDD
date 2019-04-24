@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.AcceuilChercheurController">
+<AnchorPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.AcceuilChercheurController">
    <children>
       <SplitPane dividerPositions="0.05" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -280,7 +280,7 @@
                                                 <Label fx:id="typeAnaLabelUplet" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <Label text="Suivi dans le temps : " GridPane.rowIndex="3" />
                                                 <Label fx:id="suiviLabelUplet" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <Label text="Fréquence : " visible="false" GridPane.rowIndex="4" />
+                                                <Label fx:id="labelFrequence" text="Fréquence : " visible="false" GridPane.rowIndex="4" />
                                                 <Label fx:id="frequenceLabelUplet" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <Label text="Durée de l'expérience : " GridPane.columnIndex="2" />
                                                 <Label fx:id="dureeLabelUplet" text="Label" GridPane.columnIndex="3" />
@@ -290,7 +290,7 @@
                                                 <Label fx:id="alpha1LabelUplet" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                                 <Label text="Biais 2 : " GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                                 <Label fx:id="alpha2LabelUplet" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                                <Label text="Biais 3 : " visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                                <Label fx:id="labelBiais3" text="Biais 3 : " visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                                 <Label fx:id="alpha3LabelUplet" text="Label" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                              </children>
                                              <opaqueInsets>

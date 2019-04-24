@@ -73,7 +73,9 @@ public class AcceuilChercheurController implements Initializable {
      // Page pour ajouter une experience ---------------------------------------
     @FXML    private AnchorPane ajoutExpPage;
     @FXML    private Label FreqLabel;
+    @FXML    private Label labelBiais3;
     @FXML    private Label Alpha3Label;
+    @FXML    private Label labelFrequence;
     @FXML    private Spinner frequTextField; 
     @FXML    private Spinner Alpha3Spinner; 
     @FXML    private Spinner Alpha1Spinner; 
@@ -980,6 +982,13 @@ public class AcceuilChercheurController implements Initializable {
      * (exemple si freqExp = 2 et duree = 10 alors l'experience est analysee 10/2 = 5 fois)
      */
     public void DisplayLabels(String nomExp, String typeExp, String typeAna, Integer dureeExp, String suiviExp, Integer puitReplicat, Double biais1, Double biais2 ,Double biais3, Integer frequExp){        
+        // initialise l'affichage dans le cas ou l'experience n'est pas suivi dans le temps
+        labelBiais3.setVisible(false);
+        labelFrequence.setVisible(false);
+        frequenceLabelUplet.setVisible(false);
+        alpha3LabelUplet.setVisible(false);
+        
+        
         nomExpLableUplet.setText(nomExp);
         typeExpLabelUplet.setText(typeExp); 
         dureeLabelUplet.setText(String.valueOf(dureeExp)); 
@@ -990,6 +999,10 @@ public class AcceuilChercheurController implements Initializable {
         alpha2LabelUplet.setText(String.valueOf(biais2)); 
         
         if ("oui".equals(suiviExp)){
+            labelBiais3.setVisible(true);
+            labelFrequence.setVisible(true);
+            frequenceLabelUplet.setVisible(true);
+            alpha3LabelUplet.setVisible(true);
             frequenceLabelUplet.setText(String.valueOf(frequExp)); 
             alpha3LabelUplet.setText(String.valueOf(biais3));
         }        

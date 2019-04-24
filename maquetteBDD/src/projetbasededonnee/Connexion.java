@@ -7,16 +7,9 @@ package projetbasededonnee;
 
 //import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.dateTime;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
 
 
 
@@ -47,7 +40,7 @@ public class Connexion {
             //step4 execute query  
             ResultSet rs = stmt.executeQuery("select * from EXPERIENCE");
             while (rs.next()) {
-//                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
             }
           
         } catch (Exception e) {

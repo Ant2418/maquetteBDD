@@ -299,7 +299,7 @@ public class LaborantinController1 implements Initializable {
             
     //A VERIFIER QUAND ON LANCE UNE PLAQUE QUE LA PLAQUE NE SOIT PLUS DANS LE TABLEAU 
             //Selectionne les id_plaque qui n'ont pas d'expérience en cours
-            rs=stmt.executeQuery("SELECT distinct id_plaque FROM PLAQUE JOIN PUIT USING(id_plaque) join N_UPLET using(id_n_uplet) join experience using(id_experience) where etat_exp is not '"+"En Cours"+"' ");
+            rs=stmt.executeQuery("SELECT distinct id_plaque FROM PLAQUE JOIN PUIT USING(id_plaque) join N_UPLET using(id_n_uplet) join experience using(id_experience) where etat_exp != '"+"En Cours"+"' and etat_exp != '"+"Terminee"+"'");
             while(rs.next()){
                 id_plaque=rs.getInt(1);          
                 listeIdPlaque.add(id_plaque);
@@ -364,7 +364,7 @@ public class LaborantinController1 implements Initializable {
     public void setCellTableResult(){
         tableResult.getColumns().clear();
         
-        colIdExpResult.setCellValueFactory(new PropertyValueFactory<>("id_exp"));
+        colIdExpResult.setCellValueFactory(new PropertyValueFactory<>("idExp"));
         
         colNomResult.setCellValueFactory(new PropertyValueFactory<>("nom_exp"));
         
@@ -985,6 +985,9 @@ public class LaborantinController1 implements Initializable {
             LabelAjoutExpPlaque.setText("Expérience bien ajoutée");
             LabelAjoutExpPlaque.setVisible(true);
             home.setDisable(true);
+            
+            setCellTableEnAttente();
+            loadDataExpEnAttente();
           
         }
         else{
@@ -1009,6 +1012,9 @@ public class LaborantinController1 implements Initializable {
             LabelAjoutExpPlaque.setText("Expérience bien ajoutée");
             LabelAjoutExpPlaque.setVisible(true);
             home.setDisable(true);
+            
+            setCellTableEnAttente();
+            loadDataExpEnAttente();
 
             }
             else{
@@ -1033,6 +1039,9 @@ public class LaborantinController1 implements Initializable {
             setInfoPlaque(maPlaque);
             LabelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
             LabelAjoutExpAttentLabel.setVisible(true);
+            
+            setCellTableARenouveler();
+            loadDataExpARenouveler();
         }
         else{
             LabelAjoutExpAttentLabel.setText("Veuillez selectionner une ligne");
@@ -1056,6 +1065,9 @@ public class LaborantinController1 implements Initializable {
                 setInfoPlaque(maPlaque);
                 LabelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
                 LabelAjoutExpAttentLabel.setVisible(true);
+                
+                setCellTableARenouveler();
+                loadDataExpARenouveler();
             }
             else{
                 LabelAjoutExpAttentLabel.setText("Veuillez selectionner une ligne");
@@ -1378,13 +1390,24 @@ public class LaborantinController1 implements Initializable {
         }catch (SQLException e) {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
+        //A VERIFIER
+        try{
+            stmt2 = con.createStatement();
+            rs2 = stmt2.executeQuery("SELECT ID_PERSONNE FROM PERSONNE WHERE EMAIL = '" + personne.getEmail() + "'");
+            while (rs2.next()) { 
+                id_pers = rs2.getInt(1);
+            }
+        }catch (SQLException e) {
+            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+        }
         // je recupere le nombre de n_uplet de chaque experience et je les ajoute dans la listNUplet
         for (int i=0; i < listExp.size(); i++) {
+            Integer nbFait = null;
             listNUplet.clear();
             listResNbPuit.clear();
             // recupere tous les n_uplet de l'experience
             try{
-                rs = stmt.executeQuery("select id_n_uplet from N_UPLET where  id_experience = "+ listExp.get(i));
+                rs = stmt.executeQuery("select id_n_uplet from N_UPLET where id_experience = "+ listExp.get(i));
                 while (rs.next()) { 
                     listNUplet.add(rs.getInt(1));
                 }
@@ -1411,25 +1434,27 @@ public class LaborantinController1 implements Initializable {
                 // nothing
             }else{
                 try{
-                    rs = stmt.executeQuery("update EXPERIENCE set etat_exp = 'En Cours', horodatage_deb = " + Date.getdateFormat().format(Date.getDate())+" where id_experience = "+ listExp.get(i));
+                    rs = stmt.executeQuery("update EXPERIENCE set etat_exp = 'En Cours', HD_TRANSMISSION_CHERCHEUR= "+null+",  horodatage_deb = '" + Date.getdateFormat().format(Date.getDate())+"' where id_experience = "+ listExp.get(i));
                     rs.close();
                 }catch (SQLException e) {
                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
-                //A VERIFIER
+                
                 try{
-                    stmt2 = con.createStatement();
-                    rs2 = stmt2.executeQuery("SELECT ID_PERSONNE FROM PERSONNE WHERE EMAIL = '" + personne.getEmail() + "'");
-                    while (rs2.next()) { 
-                        id_pers = rs2.getInt(1);
-                    }
+                    
+                    rs=stmt.executeQuery("SELECT count(*) FROM FAIT WHERE ID_PERSONNE= "+id_pers+" and ID_EXPERIENCE = "+listExp.get(i)+"");
+                    rs.next();
+                        nbFait = rs.getInt(1);
                 }catch (SQLException e) {
                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
-                try{
-                    rs=stmt.executeQuery("INSERT INTO FAIT VALUES("+id_pers +", "+ idExp+")");
-                }catch (SQLException e) {
-                    Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+                if (nbFait==0){
+                    try{
+                        rs=stmt.executeQuery("INSERT INTO FAIT VALUES("+id_pers +", "+ listExp.get(i)+")");
+                        rs.close();
+                    }catch (SQLException e) {
+                        Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+                    }
                 }
                 
             }
