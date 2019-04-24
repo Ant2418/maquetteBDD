@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projetbasededonnee;
 
 import java.io.IOException;
@@ -13,21 +8,22 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Classe principale du projet BDD IHM, gestion d'un laboratoire. Un chercheur ou
- * un laborantin peut se connecter.
- * @verison 28/03/2019
- * @author Antoine and Ludivine
+ * Classe principale du projet BDD IHM, gestion de plaque de laboratoire. </br>
+ * Un chercheur ou un laborantin peut se connecter.
+ * @verison 26/04/2019
+ * @author Antoine et Ludivine
  */
 public class ProjetBaseDeDonnee extends Application {
-    
-//    private String nom; 
-//    private String prenom;
-//    private String email; 
-//    private String fonction; 
 
-      private Personne pers;
-      private Connexion maCo; 
+    private Personne pers;
+    private Connexion maCo; 
     
+    /**
+     * Methode qui permet de lancer la page de connexion (connexion.fxml) </br>
+     * Creation de la personne et de sa connexion
+     * @param primaryStage fenetre principale de taille minimale 1020x610
+     * @throws IOException 
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("connexion.fxml"));
@@ -46,6 +42,9 @@ public class ProjetBaseDeDonnee extends Application {
         pers= new Personne("0", "0", "0", "0");
         coCo.setPersonne(pers); 
         
+        primaryStage.setTitle("Gestions de plaque de laboratoire");
+        primaryStage.setMinWidth(1020);
+        primaryStage.setMinHeight(610);
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -58,14 +57,20 @@ public class ProjetBaseDeDonnee extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-        public Personne getPersonne(){
+    
+    /**
+     * Getter de la personne qui est connecte
+     * @return 
+     */
+    public Personne getPersonne(){
         return pers; 
     }
     
+    /**
+     * Getter de la connexion
+     * @return 
+     */
     public Connexion getConnect(){
         return maCo; 
     }
-
-    
-
 }
