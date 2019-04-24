@@ -51,15 +51,14 @@ import javafx.util.StringConverter;
  */
 public class AcceuilChercheurController implements Initializable {
 
-    @FXML    private VBox menuVBox;
+    // Menu -------------------------------------------------------------------
     @FXML    private ImageView deconnexionIV;
     @FXML    private ImageView home;
     @FXML    private ImageView newExp;
     
-    // Page d'accueil du chercheur
+    // Page d'accueil du chercheur --------------------------------------------
     @FXML    private AnchorPane homePageChercheur;
     @FXML    private TableView<projetbasededonnee.Data.AccueilChercheur> tableViewAccueil; 
-    @FXML    private VBox titleAcceuil;
     @FXML    private TableColumn<?, ?> numExpCol;
     @FXML    private TableColumn<?, ?> nomExpCol;
     @FXML    private TableColumn<?, ?> etatCol;
@@ -71,26 +70,10 @@ public class AcceuilChercheurController implements Initializable {
     @FXML    private TableColumn<?, ?> debCol;
     @FXML    private TableColumn<?, ?> finCol;
     
+     // Page pour ajouter une experience ---------------------------------------
     @FXML    private AnchorPane ajoutExpPage;
-    
-    //¨Page pour ajouter des Uplets à une expérience
-    @FXML    private AnchorPane AddUpletPage;
-    @FXML    private Label dureeLabel;
-    @FXML    private Label suiviLabel;
     @FXML    private Label FreqLabel;
-    @FXML    private Label nbPuitReplicatLabel;
-    @FXML    private Label typeExpLabel;
-    @FXML    private Label typeAnaLabel;
-    @FXML    private Label alpha1Label;
-    @FXML    private Label alpha2Label;
     @FXML    private Label Alpha3Label;
-    @FXML    private Label debutExpLabel;
-    @FXML    private TableView<projetbasededonnee.Data.AccueilChercheur> tableNUplet;
-    @FXML    private TableColumn<?, ?> replicatCol;
-    @FXML    private TableColumn<?, ?> agentBioCol;
-    @FXML    private TableColumn<?, ?> qteAgentBioCol;
-    @FXML    private TableColumn<?, ?> typeCellCol;
-    @FXML    private TableColumn<?, ?> qteCellCol;
     @FXML    private Spinner frequTextField; 
     @FXML    private Spinner Alpha3Spinner; 
     @FXML    private Spinner Alpha1Spinner; 
@@ -108,7 +91,9 @@ public class AcceuilChercheurController implements Initializable {
     @FXML    private Button ButtonValideReplicat; 
   
     
-    //Ajout un n_uplet
+    // Page pour ajouter des Uplets à une experience --------------------------
+    @FXML    private AnchorPane AddUpletPage;
+    // * partie information*
     @FXML   private Label nomExpLableUplet; 
     @FXML   private Label typeExpLabelUplet; 
     @FXML   private Label dureeLabelUplet; 
@@ -119,6 +104,8 @@ public class AcceuilChercheurController implements Initializable {
     @FXML   private Label alpha2LabelUplet; 
     @FXML   private Label frequenceLabelUplet; 
     @FXML   private Label alpha3LabelUplet; 
+    
+    // * Partie ajout d'un nuplet *
     @FXML   private ComboBox AgentBioCombo;
     @FXML   private ComboBox CelluleCombo;
     @FXML   private Spinner AgentBioSpinner;
@@ -126,13 +113,20 @@ public class AcceuilChercheurController implements Initializable {
     @FXML   private Label Erreur_Ajout_Uplet;
     @FXML   private Label ErreurReplicatValider; 
     
-
+    // * Partie visualisation *
+    @FXML    private TableView<projetbasededonnee.Data.AccueilChercheur> tableNUplet;
+    @FXML    private TableColumn<?, ?> replicatCol;
+    @FXML    private TableColumn<?, ?> agentBioCol;
+    @FXML    private TableColumn<?, ?> qteAgentBioCol;
+    @FXML    private TableColumn<?, ?> typeCellCol;
+    @FXML    private TableColumn<?, ?> qteCellCol;
+    
+    // Attributs interne a la classe ------------------------------------------
     private Integer nb_agentbio,id_agent_bio, nb_cellule, id_cellule,nb_solution,id_solution, id_uplet, quantiteAgent_bio, quantiteCellule;
     private Connection con;
     private ConnexionController maCo;
     private String prenom; 
     private String nom,nomPrenom; 
-    private ProjetBaseDeDonnee main;
     private Connexion connex; 
     private Personne personne; 
     private Statement stmt, stmt1, stmt2,stmt3,stmt4; 
@@ -143,12 +137,22 @@ public class AcceuilChercheurController implements Initializable {
     private Double  Alpha1, Alpha2;
 
     
-    //liste observable
+    //liste observable -------------------------------------------------------
+    /**
+     * liste des experiences pour le tableAccueilChercheur depuis projetbasededonnee.Data.AccueilChercheur
+     */
     private ObservableList<projetbasededonnee.Data.AccueilChercheur> dataAccueil;
+    /**
+     * liste des uplets d'une experience depuis projetbasededonnee.Data.AccueilChercheur
+     */
     private ObservableList<projetbasededonnee.Data.AccueilChercheur> dataUplet;
    
-    /**I
-     * Initializes the controller class.
+    /**
+     * Initialisation de la classe controlleur </br>
+     *  - Page d'accueil du chercheur est visible </br>
+     *  - Page pour ajouter une experience, ajouter des nuplet sont invisibles </br>
+     *  - instantiation de l'observableList dataUplet </br>
+     *  - instantiation d'une ArrayList dataUpletTotal </br>
      * @param url
      * @param rb
      */
@@ -163,12 +167,25 @@ public class AcceuilChercheurController implements Initializable {
     }      
 
     /**
-     * Initialisation du tableau de la page d'accueil, avec toutes les expériences
-     * du chercheur
+     * Instantiation du tableau tableAccueilChercheur de la page d'accueil 
+     * avec toutes les experiences du chercheur </br>
+     * Les colonnes sont : </br>
+     * <ul>
+     *  <li> numero de l'experience </li>
+     *  <li> nom de l'experience </li>
+     *  <li> etat de l'experience </li>
+     *  <li> nom et prenom du laborantin (peut etre <code>null</code>) </li>
+     *  <li> type de l'experience </li>
+     *  <li> type d'analyse </li>
+     *  <li> nombre de replicat (appeles aussi nuplet) </li>
+     *  <li> nombre de puits par replicat </li>
+     *  <li> date de debut </li>
+     *  <li> date de fin </li>
+     * </ul>
      */
     private void setCellTableAccueil(){
        
-        numExpCol.setCellValueFactory(new PropertyValueFactory<>("id_exp"));
+        numExpCol.setCellValueFactory(new PropertyValueFactory<>("idExp"));
         nomExpCol.setCellValueFactory(new PropertyValueFactory<>("nom_exp"));
         etatCol.setCellValueFactory(new PropertyValueFactory<>("etat_exp"));
         labCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -182,7 +199,14 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Initialisation du tableau pour ajouter les n_uplets à une expérience
+     * Instantiation du tableau tableNUplet pour ajouter les n_uplets a une experience </br>
+     * <ul>
+     *  <li> numero du replicat </li>
+     *  <li> nom de l'agent biologique </li>
+     *  <li> quantite d'agent biologique </li>
+     *  <li> nom de la cellule et son type </li>
+     *  <li> quantite de cellule </li>
+     * </ul>
      */
     private void setCellTableUplet(){
         
@@ -196,16 +220,16 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Initialisation du tableau pour les n_uplets, remplir le tableau avec la base de données
-     * @param id_exp 
+     * Initialisation du tableau tableNUplet pour les n_uplets, remplissage du tableau avec la liste dataUplet
+     * @param idExpL identifiant de l'experience
      */
-    public void loadDataUplet(Integer id_exp){
+    public void loadDataUplet(Integer idExpL){
         dataUplet.clear();
         try{
             con = connex.getCon();
             stmt = con.createStatement();
             
-            rs=stmt.executeQuery("SELECT id_n_uplet, nomA, nomC, QteA, qteC FROM N_UPLET JOIN SOLUTION USING(id_solution) JOIN AGENT_BIOLOGIQUE USING(id_agent_bio) JOIN CELLULE USING(id_cell_cancereuse) WHERE id_experience = "+ id_exp +"");
+            rs=stmt.executeQuery("SELECT id_n_uplet, nomA, nomC, QteA, qteC FROM N_UPLET JOIN SOLUTION USING(id_solution) JOIN AGENT_BIOLOGIQUE USING(id_agent_bio) JOIN CELLULE USING(id_cell_cancereuse) WHERE id_experience = "+ idExpL +"");
             while(rs.next()){
                 id_uplet=rs.getInt(1);
                 nomAgent_bio=rs.getString(2);
@@ -217,12 +241,14 @@ public class AcceuilChercheurController implements Initializable {
                 
             }  
             tableNUplet.setItems(dataUplet);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+    
+    
     /**
-     * Remplir le tableau de la page d'accueil avec la base de données
+     * Permet de remplir le tableau tableAccueilChercheur du pane pageHomeChercheur avec la liste dataAccueil
      */
     public void loadDataAccueilDatabase(){
         dataAccueil.clear();
@@ -235,6 +261,7 @@ public class AcceuilChercheurController implements Initializable {
             stmt3 = con.createStatement();
             stmt4 = con.createStatement();
               
+            //Trouve l'id de la personne qui est connectée
             rs1 = stmt.executeQuery("SELECT ID_PERSONNE FROM PERSONNE WHERE nom ='" + personne.getNom() + "' and prenom = '" + personne.getPrenom() + "'and email = '" + personne.getEmail() + "'"); 
             while (rs1.next()) {
                 id_pers = rs1.getInt(1); 
@@ -243,7 +270,7 @@ public class AcceuilChercheurController implements Initializable {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
         }
          try{
-            
+            //Selectionne les expériences qui appartiennent au chercheur connecté
             rs = stmt1.executeQuery("SELECT ID_EXPERIENCE, NOMEXP, ETAT_EXP, TYPE_EXP, TYPE_ANALYSE, NBPUIT, HORODATAGE_DEB, HD_TRANSMISSION_CHERCHEUR FROM EXPERIENCE JOIN Fait using(id_experience) JOIN PERSONNE USING(id_personne) where id_personne= '" + id_pers + "'");
             
             while (rs.next()) {      
@@ -259,55 +286,60 @@ public class AcceuilChercheurController implements Initializable {
 
                 
                 try{
+                    //Selectionne le nombre de uplet pour l'expérience
                     rs2 = stmt2.executeQuery("SELECT count(*) FROM N_UPLET WHERE ID_EXPERIENCE = '" + id_exp + "'");
                     while (rs2.next()){
                         nbReplicat=rs2.getInt(1);              
                     }
-                }catch (Exception e) {
+                }catch (SQLException e) {
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                 }
         
                 try{
+                    //regarde si un laborantin est associé à l'expérience
                     rs4=stmt4.executeQuery("SELECT count(*) FROM FAIT JOIN PERSONNE using(id_personne) WHERE ID_EXPERIENCE = '" + id_exp + "' and FONCTION = 'laborantin' ");
                     while(rs4.next()){
                         nbre=rs4.getInt(1);
                     }
                     
                     if (nbre==1){
+                        //Trouve le nom et la personne de laborantin en charge de l'expérience
                         rs3 = stmt3.executeQuery("SELECT NOM, PRENOM FROM FAIT JOIN PERSONNE using(id_personne) WHERE ID_EXPERIENCE = '" + id_exp + "' and FONCTION = 'laborantin' ");
                         while (rs3.next()){
                             nom=rs3.getString(1);
                             prenom=rs3.getString(2);             
-                    }
-                
+                    }  
                     nomPrenom= nom +" " + prenom;
                     }
                     else
                     {
                         nomPrenom="-";
                     }
-                }catch (Exception e) {
+                }catch (SQLException e) {
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                 }
                 
+                //Ajoute à l'observable liste l'expérience
                 dataAccueil.add(new projetbasededonnee.Data.AccueilChercheur(id_exp, nom_exp,etat_exp,nomPrenom,type_exp, type_analyse, nbReplicat, nbpuit, horo_deb, horo_fin));
-                tableViewAccueil.setItems(dataAccueil);
-                } 
+            } 
+            //Ajotue à la table la liste d'expérience
+            tableViewAccueil.setItems(dataAccueil);
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
         }
               
-        }
+    }
+    
     /**
-     * Affichage de la page de connexion (connexion.fxml)
-     * @param event
+     * Methode qui permet de deconnecter la personne. 
+     * Renvoie sur la page de connexion (connexion.fxml)
+     * @param event onClicked buttonDeconnexion
      * @throws IOException 
      * @throws java.sql.SQLException 
      */
     public void deconnexionEvent(MouseEvent event) throws IOException, SQLException {
-        
-        
+          
         FXMLLoader loader = new FXMLLoader(getClass().getResource("connexion.fxml"));
         Parent ajoutParent = (Parent) loader.load();
 
@@ -315,6 +347,7 @@ public class AcceuilChercheurController implements Initializable {
         
         Scene ajoutSceneConn = new Scene(ajoutParent);
         
+        //envoie à la connexionController la connexion et la personne connectée
         CCO.setConnexion(connex);
         CCO.setPersonne(personne); 
 
@@ -325,8 +358,9 @@ public class AcceuilChercheurController implements Initializable {
     }
 
     /**
-     * Affichage du panel homePageChercheur, l'accueil du chercheur
-     * @param event
+     * Methode qui appelle la methode de validation d'uplet
+     * @see #validationUplet()
+     * @param event onClicked "buttonValiderReplicat"
      * @throws IOException 
      */
     public void ValidationAddUplet(MouseEvent event) throws IOException {
@@ -335,7 +369,8 @@ public class AcceuilChercheurController implements Initializable {
     
     /**
      * Evenement quand on clique sur le bouton pour ajouter un n_uplet
-     * @param e 
+     * @see #validationUplet() 
+     * @param e event on key pressed "enter"
      */
     public void keyPressedAddUpletVal(KeyEvent e) {
         if (e.getCode() == ENTER) {
@@ -344,7 +379,17 @@ public class AcceuilChercheurController implements Initializable {
     }
 
     /**
-     * Methode qui permet de valider une expérience si ils ont au moins ajouter un n_uplet
+     * Methode qui permet de valider une experience s'il y a au moins un ajout d'un un n_uplet.
+     * Les boutons de deconnexion, home et d'ajout d'une nouvelle experience sont inutilisable. </br>
+     * Le label d'erreur du replicat valider n'est plus visible
+     * Colorisation de paneHome en <code>#A1102A</code> et de paneNewExp en <code>#f4f4f4</code> </br>
+     * Remise a zero du formulaire de l'experience </br>
+     * @see #addExpEvent(javafx.scene.input.MouseEvent) 
+     * Renvoie d'un message d'erreur dans le cas contraire </br>
+     * @see #labelErreurReplicatValider
+     * @see #buttonDeconnexion
+     * @see #buttonHome
+     * @see #buttonNewExp
      */
     public void ValidationUplet(){
         ErreurReplicatValider.setVisible(false);
@@ -354,6 +399,7 @@ public class AcceuilChercheurController implements Initializable {
         try{
             con = connex.getCon();
             stmt = con.createStatement();
+            //Compte le nombre de uplet pour l'expérience
             rs = stmt.executeQuery("SELECT count(*) FROM N_UPLET WHERE ID_EXPERIENCE = '" + id_exp + "'");
             while (rs.next()){
                 nbReplicat=rs.getInt(1);              
@@ -363,6 +409,7 @@ public class AcceuilChercheurController implements Initializable {
         }
         
         if (nbReplicat >0) {
+            //Si supérieur à 0 alors on retourne à la page d'accueil
             homePageChercheur.setVisible(true);
             ajoutExpPage.setVisible(false); 
             AddUpletPage.setVisible(false);
@@ -370,13 +417,16 @@ public class AcceuilChercheurController implements Initializable {
             loadDataAccueilDatabase();
         }
         else{
+            
             ErreurReplicatValider.setVisible(true);
         }
     }
 
     /**
-     * Affichage du panel homePageChercheur, l'accueil du chercheur
-     * @param event
+     * Affichage du panel pageHomeChercheur, l'accueil du chercheur. </br>
+     * Les panel pageAjoutExp et pageAddUplet sont invisible. </br>
+     * paneHome est colorise avec <code>#A1102A</code>
+     * @param event onClicked buttonHome
      * @throws IOException 
      */
     public void homeEvent(MouseEvent event) throws IOException {
@@ -390,9 +440,10 @@ public class AcceuilChercheurController implements Initializable {
     
 
     /**
-     * Affichage du panel AddUpletPage, la page permettant d'ajouter des 
-     * réplicats (uplet) à une expérience
-     * @param event
+     * Methode qui permet de créer l'expérience saisie. </br>
+     * Affichage du panel pageAjoutExp, la page permettant d'ajouter une experience
+     * Initialisation des listes déroultantes et des spinners
+     * @param event onClicked buttonNewExp
      * @throws IOException 
      */
     public void AddExpEvent(MouseEvent event) throws IOException {
@@ -422,7 +473,7 @@ public class AcceuilChercheurController implements Initializable {
                 frequTextField.increment(0);
             }
         });
-        // Value factory.
+        // Alpha3SpinnervalueFactory.
         SpinnerValueFactory<Double> Alpha3SpinnervalueFactory = //
                 new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 1.0, 0.0,0.1);
  
@@ -441,7 +492,7 @@ public class AcceuilChercheurController implements Initializable {
             }
         });
         
-        // Value factory.
+        // Alpha1SpinnervalueFactory.
         SpinnerValueFactory<Double> Alpha1SpinnervalueFactory = //
                 new SpinnerValueFactory.DoubleSpinnerValueFactory(0.5, 1000.0, 1.0,0.5);
  
@@ -461,7 +512,7 @@ public class AcceuilChercheurController implements Initializable {
         });
         
         
-        // Value factory.
+        // Alpha2SpinnervalueFactory.
         SpinnerValueFactory<Double> Alpha2SpinnervalueFactory = //
                 new SpinnerValueFactory.DoubleSpinnerValueFactory(0.5, 1000.0, 1.0, 0.5);
  
@@ -481,7 +532,7 @@ public class AcceuilChercheurController implements Initializable {
         });
         
 
-        // Value factory.
+        // dureeSpinnervalueFactory.
         SpinnerValueFactory<Integer> dureeSpinnervalueFactory = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 1);
  
@@ -500,7 +551,7 @@ public class AcceuilChercheurController implements Initializable {
         });
         
         
-         // Value factory.
+         // puitReplicatSpinnervalueFactory.
         SpinnerValueFactory<Integer> puitReplicatSpinnervalueFactory = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 1);
  
@@ -523,8 +574,8 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Event quand l'utilisateur clique sur oui dans si l'expérience est suivi dans le temps
-     * @param event 
+     * Evenement quand l'utilisateur clique sur "oui" pour savoir si l'experience est suivi dans le temps
+     * @param event onClicked buttonOuiSuivi
      */
     public void OuiSuiviButtonEvent(ActionEvent event){
         frequTextField.setVisible(true);
@@ -535,8 +586,8 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Evenement quand on clique sur le bouton oui avec le clavier
-     * @param e 
+     * Evenement quand on clique sur buttonOuiSuivi avec le clavier
+     * @param e on key pressed "enter"
      */
     public void keyPressedOuiSuivi(KeyEvent e) {
         if (e.getCode() == ENTER) {
@@ -550,8 +601,8 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Event quand l'utilisateur clique sur nondupont pour savoir si l'expérience est suivi dans le temps
-     * @param event 
+     * Evenement quand l'utilisateur clique sur "non" pour savoir si l'experience est suivi dans le temps
+     * @param event onClick buttonNonSuivi
      */
     public void NonSuiviButtonEvent(ActionEvent event){
         frequTextField.setVisible(false);
@@ -562,8 +613,8 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Evenemet quand on clique sur le bouton non avec le clavier
-     * @param e 
+     * Evenement quand on clique sur buttonNonSuivi avec le clavier
+     * @param e on key pressed "enter"
      */
     public void keyPressedNonSuivi(KeyEvent e) {
         if (e.getCode() == ENTER) {
@@ -577,28 +628,40 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Event si l'utilisateur clique sur ajouter un uplet
-     * @param event
+     * Quand l'utilisateur clique sur le buttonValiderExp, ajout de l'experience </br>
+     * Fait reference a la methode addExp()
+     * @see #addExp() 
+     * @param event onClicked buttonValiderExp
      * @throws IOException 
      */
     public void AddUpletEvent(MouseEvent event) throws IOException{
-        AddUpletExp(); 
+        AddExp(); 
     }
     
-    /**
-     * Evenemtn quand on clique sur ajouter un uplet avec le clavier
-     * @param e 
+     /**
+     * Quand l'utilisateur clique sur le buttonValiderExp via la touche "entree" du clavier, ajout de l'experience </br>
+     * @see #addExp() 
+     * @param e on key pressed "enter"
      */
     public void AddUpletKeyPressed(KeyEvent e) {
         if (e.getCode() == ENTER) {
-            AddUpletExp();
+            AddExp();
         }
     }
     
     /**
-     * Methode qui permet d'ajouter une nouvelle expérience
+     * Methode qui permet d'ajouter une nouvelle experience dans la liste apres controle du formulaire </br>
+     * Remise a zero du formulaire au debut (initialisation) et affichage de la page d'ajout de n uplet </br>
+     * En cas d'erreur, affichage de plusieurs messages personnalises et mise en evidence du ou des champs vides. </br>
+     * Cette methode appelle trois autres methodes : </br>
+     * affichage des informations de l'experience avec displayLabels
+     * Initialisation des comboBox et des spinners de la page n uplet avec solutionChoice
+     * Initialisation du tableau de n_uplet avec la methode setCellTableUplet
+     * @see #displayLabels(java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Double, java.lang.Double, java.lang.Double, java.lang.Integer)     
+     * @see #solutionChoice()
+     * @see #setCellTableUplet()
      */
-    public void AddUpletExp(){
+    public void AddExp(){
         deconnexionIV.setDisable(true);
         home.setDisable(true);
         newExp.setDisable(true);
@@ -622,12 +685,14 @@ public class AcceuilChercheurController implements Initializable {
         Alpha2= (Double) Alpha2Spinner.getValue();
         
         if(nomExpTextField1.getText().isEmpty()==false && duree!=0 && dureeSpinner.getValue()!=null && puitReplicatSpinner.getValue()!=null && TypeExpCombo.getSelectionModel().getSelectedItem()!= null && TypeAnalyseCombo.getSelectionModel().getSelectedItem()!=null && Alpha1Spinner.getValue()!= null && Alpha1 != 0.0 && Alpha2Spinner.getValue()!=null && Alpha2!=0.0){
+            
             nomExp=nomExpTextField1.getText();
             String TypeExp=(String) TypeExpCombo.getSelectionModel().getSelectedItem(); 
             String TypeAna =(String)TypeAnalyseCombo.getSelectionModel().getSelectedItem();
             Integer dureeExp=(Integer) dureeSpinner.getValue();
             Integer puitReplicat=(Integer) puitReplicatSpinner.getValue();             
           
+            //Si on selectionne le bouton non pas suivi dans le temps
             if (NonSuiviButton.isSelected()) {
 
                     projetbasededonnee.Data.CurrentDate Date = new projetbasededonnee.Data.CurrentDate();
@@ -637,11 +702,13 @@ public class AcceuilChercheurController implements Initializable {
                     try{
                     stmt = con.createStatement();
 
+                    //INSERTION DE L'EXPERIENCE SAISIE DANS LA BASE DE DONNEES
                     rs= stmt.executeQuery("INSERT INTO EXPERIENCE(NOMEXP, ETAT_EXP, DUREE, NBPUIT, TYPE_EXP, TYPE_ANALYSE, ALPHA1, ALPHA2, HD_DEMANDE_CHERCHEUR, UPLETTERMINE)VALUES('"+ nomExpTextField1.getText() + "', 'En Attente', "+ dureeSpinner.getValue() + ", "+ puitReplicatSpinner.getValue() + ", '"+ TypeExpCombo.getSelectionModel().getSelectedItem() + "', '"+ TypeAnalyseCombo.getSelectionModel().getSelectedItem() + "', "+ Alpha1Spinner.getValue() + ", "+ Alpha2Spinner.getValue() + ", '"+ Date.getdateFormat().format(Date.getDate()) + "', "+ 0 + ")");
                     
                     try{
                         stmt1 = con.createStatement();
 
+                        //Trouve l'id de l'experience qui vient d'être inséré
                         rs1 = stmt1.executeQuery("SELECT MAX(id_experience) FROM EXPERIENCE");
                         while (rs1.next()) { 
                             id_exp = rs1.getInt(1);
@@ -652,6 +719,7 @@ public class AcceuilChercheurController implements Initializable {
 
                     try{
                         stmt2 = con.createStatement();
+                        //Selectionne l'id de la personne connectée
                         rs2 = stmt2.executeQuery("SELECT ID_PERSONNE FROM PERSONNE WHERE EMAIL = '" + personne.getEmail() + "'");
                         while (rs2.next()) { 
                             id_pers = rs2.getInt(1);
@@ -662,11 +730,13 @@ public class AcceuilChercheurController implements Initializable {
 
                     try{           
                         stmt3 = con.createStatement();
+                        //Insertion dans fait de la personne et du chercheur
                         rs3 = stmt3.executeQuery("INSERT INTO FAIT VALUES("+ id_pers + ", " + id_exp  + ")");
                     }catch (SQLException e) {
                         Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                     }
                     
+                    //Permet d'afficher la page pour ajouter des uplets
                     homePageChercheur.setVisible(false);
                     ajoutExpPage.setVisible(false);
                     DisplayLabels(nomExp, TypeExp, TypeAna, dureeExp,"non", puitReplicat, Alpha1,Alpha2, 0.0, 0);    
@@ -675,6 +745,7 @@ public class AcceuilChercheurController implements Initializable {
                     loadDataUplet(id_exp);
                     AddUpletPage.setVisible(true);                   
                    
+                    //Remise à zero des valeurs du formulaire
                     ErreurReplicatValider.setVisible(false);
                     nomExpTextField1.clear();
                     dureeSpinner.getValueFactory().setValue(1);
@@ -717,6 +788,7 @@ public class AcceuilChercheurController implements Initializable {
 
             }
             else if (OuiSuiviButton.isSelected()) {
+                //Si on selectionne le bouton oui
                 
                 if (frequTextField.getValue()!=null && Alpha3Spinner.getValue()!=null){
                     
@@ -730,6 +802,7 @@ public class AcceuilChercheurController implements Initializable {
                     try{
                     stmt = con.createStatement();
 
+                    //INSERTION DE L'EXPERIENCE SAISIE DANS LA BASE DE DONNEES
                     rs= stmt.executeQuery("INSERT INTO EXPERIENCE(NOMEXP, ETAT_EXP, DUREE, FREQUENCE, NBPUIT, TYPE_EXP, TYPE_ANALYSE, ALPHA1, ALPHA2, ALPHA3, HD_DEMANDE_CHERCHEUR, UPLETTERMINE)VALUES('"+ nomExpTextField1.getText() + "', 'En Attente', "+ dureeSpinner.getValue() + ", "+ frequTextField.getValue() + ", "+ puitReplicatSpinner.getValue() + ", '"+ TypeExpCombo.getSelectionModel().getSelectedItem() + "', '"+ TypeAnalyseCombo.getSelectionModel().getSelectedItem() + "', "+ Alpha1Spinner.getValue() + ", "+ Alpha2Spinner.getValue() + ", "+ Alpha3Spinner.getValue() + ", '"+ Date.getdateFormat().format(Date.getDate()) + "', "+ 0 + ")");
                         try{
                         stmt1 = con.createStatement();
@@ -757,8 +830,9 @@ public class AcceuilChercheurController implements Initializable {
                             }
                         
                         }catch (SQLException e) {
-                        Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                         }
+                        //Permet d'afficher la page pour ajouter des uplets
                         homePageChercheur.setVisible(false);
                         ajoutExpPage.setVisible(false);
                         DisplayLabels(nomExp,TypeExp, TypeAna, dureeExp,"oui", puitReplicat, Alpha1,Alpha2, Alpha3, frequence);    
@@ -890,36 +964,40 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Methode qui affiche des labels pour récapituler l'expérience avant d'ajouter les n_uplets
-     * @param nomExp
-     * @param typeExp
-     * @param typeAna
-     * @param dureeExp
-     * @param suiviExp
-     * @param puitReplicat
-     * @param Biais1
-     * @param Biais2
-     * @param Biais3
-     * @param FrequExp 
+     *  /**
+     * Methode qui affiche dans des labels les informations de l'experience qui vient d'etre ajoutee
+     * @see #addExp() 
+     * @param nomExp nom de l'experience
+     * @param typeExp type d'experience : "Immunologique", "Toxicologique"
+     * @param typeAna  type d'analyse : "Colorimetrique", "Opacimetrique"
+     * @param dureeExp duree de l'experience en minute
+     * @param suiviExp "oui", "non"
+     * @param puitReplicat nombre de puits par replicat
+     * @param biais1 alpha1
+     * @param biais2 alpha2
+     * @param biais3 alpha3 
+     * @param frequExp nombre de fois que l'experience est analyse. 
+     * (exemple si freqExp = 2 et duree = 10 alors l'experience est analysee 10/2 = 5 fois)
      */
-    public void DisplayLabels(String nomExp, String typeExp, String typeAna, Integer dureeExp, String suiviExp, Integer puitReplicat, Double Biais1, Double Biais2 ,Double Biais3, Integer FrequExp){        
+    public void DisplayLabels(String nomExp, String typeExp, String typeAna, Integer dureeExp, String suiviExp, Integer puitReplicat, Double biais1, Double biais2 ,Double biais3, Integer frequExp){        
         nomExpLableUplet.setText(nomExp);
         typeExpLabelUplet.setText(typeExp); 
         dureeLabelUplet.setText(String.valueOf(dureeExp)); 
         suiviLabelUplet.setText(suiviExp);
         typeAnaLabelUplet.setText(typeAna); 
         nbPuitReplicatLabelUplet.setText(String.valueOf(puitReplicat)); 
-        alpha1LabelUplet.setText(String.valueOf(Biais1)); 
-        alpha2LabelUplet.setText(String.valueOf(Biais2)); 
+        alpha1LabelUplet.setText(String.valueOf(biais1)); 
+        alpha2LabelUplet.setText(String.valueOf(biais2)); 
         
         if ("oui".equals(suiviExp)){
-            frequenceLabelUplet.setText(String.valueOf(FrequExp)); 
-            alpha3LabelUplet.setText(String.valueOf(Biais3));
+            frequenceLabelUplet.setText(String.valueOf(frequExp)); 
+            alpha3LabelUplet.setText(String.valueOf(biais3));
         }        
     }
     
     /**
-     * Methode qui permet d'initialiser les combo box pour le type d'agent bio et le type de cellules
+     * Methode qui permet d'initialiser les comboBox comboAgentBio pour le type d'agent bio 
+     * et la comboBox comboCellule pour le type de cellules
      */
     public void SolutionChoice(){
         
@@ -948,7 +1026,7 @@ public class AcceuilChercheurController implements Initializable {
         
         //Les spinners
         
-         // Value factory.
+         // AgentbioSpinnervalueFactory.
         SpinnerValueFactory<Integer> AgentbioSpinnervalueFactory = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 100,100);
  
@@ -967,6 +1045,7 @@ public class AcceuilChercheurController implements Initializable {
             }
         });
         
+        // CelluleSpinnervalueFactory.
         SpinnerValueFactory<Integer> CelluleSpinnervalueFactory = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 100,100);
  
@@ -991,9 +1070,9 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Methode qui permet d'ajouter un n_uplet à l'expérience et de mettre à jour
-     * le tableau n_uplet quand on clique sur le bouton + pour ajouter un n_uplet
-     * @param event
+     * Methode qui permet d'ajouter un n_uplet à l'experience et de mettre à jour
+     * le tableau tableNUplet quand on clique sur le bouton + pour ajouter un n_uplet
+     * @param event onClicked buttonPlusReplicat
      * @throws IOException 
      */
     //Quand on clique sur plus
@@ -1004,10 +1083,10 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Methode qui permet d'ajouter un n_uplet à l'expérience et de mettre à jour
-     * le tableau n_uplet quand on clique avec le clavier
-     * sur le bouton + pour ajouter un n_uplet
-     * @param event 
+     * Methode qui permet d'ajouter un n_uplet à l'experience et de mettre à jour
+     * le tableau tableNUplet quand on clique sur le bouton + pour ajouter 
+     * un n_uplet via la touche entree du clavier
+     * @param event on key pressed "enter"
      */
     public void AddUpletSolPressed(KeyEvent event) {
         if (event.getCode() == ENTER) {
@@ -1017,9 +1096,13 @@ public class AcceuilChercheurController implements Initializable {
         }
     }
     
-    /**
-     * Methode qui permet d'ajouter un n_uplet à l'expérience dans la base de données
-     * @param id_exp 
+   /**
+     * Methode qui permet d'ajouter un n_uplet à l'experience
+     * Recuperation des valeurs saisies dans formulaire pour le n_uplet
+     * Affichage de message d'erreur s'il manque des valeurs
+     * Ajout du n_uplet dans la liste dataUpletTotal
+     * Mise à jour du tableau n_uplet
+     * @param id_exp identifiant de l'experience
      */
     public void AddUplet(Integer id_exp){
         
@@ -1037,22 +1120,26 @@ public class AcceuilChercheurController implements Initializable {
             try{
             stmt = con.createStatement();
 
+            //Compte le nombre d'agent biologique avec le meme nom et la meme quantité
             rs= stmt.executeQuery("SELECT count(*) FROM AGENT_BIOLOGIQUE WHERE NOMA = '" + AgentBioCombo.getValue() + "' and qteA = "+ AgentBioSpinner.getValue() + "");
             while (rs.next()) { 
                 nb_agentbio=rs.getInt(1);
             }
             
+            //Si il n'y a pas d'agent biologique avec le meme nom et la meme qte
             if (nb_agentbio == 0) {
                 Double prix= 3.0 * (Integer) AgentBioSpinner.getValue();
            
                 try{
                     stmt = con.createStatement();
+                    //On insert un nouveau agent bio
                     rs=stmt.executeQuery("INSERT INTO AGENT_BIOLOGIQUE (ID_AGENT_BIO, QTEA, NOMA,PRIXA) VALUES("+ 1 +", "+ AgentBioSpinner.getValue() + ", '" + AgentBioCombo.getValue() + "', " + prix +")");    
                 }catch (SQLException e){
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                 }
                 try{
                     stmt = con.createStatement();
+                    //On retrouve l'id de l'agent bio que l'on vient d'inserer
                     rs=stmt.executeQuery("SELECT MAX(id_agent_bio) from agent_biologique");
                     while (rs.next()){
                         id_agent_bio=rs.getInt(1);
@@ -1061,10 +1148,11 @@ public class AcceuilChercheurController implements Initializable {
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
-            else
+            else //Si l'agent biologique avec le meme qté est deja créer
             {
                 try{
                     stmt = con.createStatement();
+                    //On selectionne l'identifiant de l'agent deja créée
                     rs=stmt.executeQuery("SELECT ID_AGENT_BIO FROM AGENT_BIOLOGIQUE WHERE NOMA= '" + AgentBioCombo.getSelectionModel().getSelectedItem() + "' and QTEA= "+ AgentBioSpinner.getValue() + "");    
                     while (rs.next()) { 
                     id_agent_bio =rs.getInt(1);
@@ -1074,21 +1162,23 @@ public class AcceuilChercheurController implements Initializable {
                 }
             }
             }catch (SQLException e) {
-            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
             }
             
             //Pour cellule
             try{
-            stmt = con.createStatement();                                                                                                                              
+            stmt = con.createStatement();  
+            //Compte le nombre de cellule avec le meme nom et la meme qte
             rs= stmt.executeQuery("SELECT count(*) FROM CELLULE WHERE NOMC = '" + (CelluleCombo.getValue() + "").split(" - ")[0] + "' and qteC = "+ CelluleSpinner.getValue() + " and TYPE_CELLULAIRE='" + (CelluleCombo.getValue() + "").split(" - ")[1] + "' ");
             while (rs.next()) { 
                 nb_cellule=rs.getInt(1);
             }
             
-            if (nb_cellule ==0) {
+            if (nb_cellule ==0) { //Si il n'y a pas de cellule deja creer
                 Double prix= 2.0 * (Integer) CelluleSpinner.getValue();
                 try{
                     stmt = con.createStatement();
+                    //Insertion d'une nouvelle cellule
                     rs=stmt.executeQuery("INSERT INTO CELLULE VALUES("+ 1 +",'" + (CelluleCombo.getValue() + "").split(" - ")[1] + "',  "+ CelluleSpinner.getValue() + ",'" + (CelluleCombo.getValue() + "").split(" - ")[0] + "', " + prix +")");    
                 }catch (SQLException e) {
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
@@ -1116,21 +1206,22 @@ public class AcceuilChercheurController implements Initializable {
                 }
             }
             }catch (SQLException e) {
-            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
             }
             
             //ON creer la solution 
             try{
                 stmt = con.createStatement();                                           
-                                                                                                
+                //Compte le nombre de solution avec l'id de la cellule et de l'id l'agent bio
                 rs= stmt.executeQuery("SELECT count(*) FROM SOLUTION WHERE id_cell_cancereuse = " + id_cellule + " and id_agent_bio = "+ id_agent_bio + "");
                 while (rs.next()) { 
                     nb_solution=rs.getInt(1);
                 }
                 
-                if (nb_solution==0){
+                if (nb_solution==0){ //Si pas de solution avec l'id de la cellule et de l'agent bio
                     try{
                     stmt=con.createStatement();
+                    //Insertion d'une nouvelle solution
                     rs=stmt.executeQuery("INSERT INTO SOLUTION (id_solution, id_cell_cancereuse, id_agent_bio) VALUES(" + 1 +", " + id_cellule + ", "+ id_agent_bio +")");
                     }catch (SQLException e) {
                         Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
@@ -1163,6 +1254,7 @@ public class AcceuilChercheurController implements Initializable {
             //On a l'id_solution On peut creer le n_uplet
             try{
                 stmt=con.createStatement();
+                //Creation du n_uplet
                 rs=stmt.executeQuery("INSERT INTO N_UPLET VALUES(" + 1 +"," + id_exp + ", "+ id_solution +", " + 0 +", " + 0 +", " + 0 +")");   
                 Erreur_Ajout_Uplet.setText("Le réplicat a été ajouté");
                 Erreur_Ajout_Uplet.setVisible(true);
@@ -1176,13 +1268,14 @@ public class AcceuilChercheurController implements Initializable {
                 loadDataUplet(id_exp); 
 
             }catch (SQLException e) {
-            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
             }
             
             
             
         }
         else{
+            //Message d'erreur
             Erreur_Ajout_Uplet.setVisible(true);
             if(CelluleCombo.getSelectionModel().getSelectedItem()==null){
                 CelluleCombo.setStyle("-fx-border-color: red"); 
@@ -1201,17 +1294,7 @@ public class AcceuilChercheurController implements Initializable {
      
                 
     }
-              
-            
-    /**
-     * Setter pour modifier le main
-     * @param mainPBD 
-     */
-    public void setMain(ProjetBaseDeDonnee mainPBD)
-    {
-        this.main = mainPBD;
-    }
-    
+                  
     /**
      * Setter pour la connexion
      * @param cone 
@@ -1231,7 +1314,7 @@ public class AcceuilChercheurController implements Initializable {
     
 }
 
-
+//Classe pour inserer une date
  class MyConverter extends StringConverter<Integer> {
  
        @Override

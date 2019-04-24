@@ -12,7 +12,7 @@ import java.sql.Date;
  * @author Ludivine
  */
 public class AccueilChercheur {
-    private Integer id_exp; 
+    private Integer idExp; 
     private String nom_exp; 
     private String etat_exp; 
     private String nom; 
@@ -37,8 +37,8 @@ public class AccueilChercheur {
         this.qte_cellule = quantiteCellule;
     }
     
-    public AccueilChercheur(Integer id_exp, String nom_exp, String etat_exp, String nom, String type_exp, String type_analyse, Integer nb_replicat, Integer nb_puit, Date horo_deb, Date horo_fin) {
-        this.id_exp = id_exp;
+    public AccueilChercheur(Integer idExp, String nom_exp, String etat_exp, String nom, String type_exp, String type_analyse, Integer nb_replicat, Integer nb_puit, Date horo_deb, Date horo_fin) {
+        this.idExp = idExp;
         this.nom_exp = nom_exp;
         this.etat_exp = etat_exp;
         this.nom = nom;
@@ -51,8 +51,8 @@ public class AccueilChercheur {
         
     }
 
-    public AccueilChercheur(Integer id_exp, String nom_exp, String etat_exp, String type_exp, String type_analyse) {
-        this.id_exp = id_exp;
+    public AccueilChercheur(Integer idExp, String nom_exp, String etat_exp, String type_exp, String type_analyse) {
+        this.idExp = idExp;
         this.nom_exp = nom_exp;
         this.etat_exp = etat_exp;
         this.type_exp = type_exp;
@@ -109,8 +109,8 @@ public class AccueilChercheur {
         return nb_replicat;
     }
 
-    public void setId_exp(Integer id_exp) {
-        this.id_exp = id_exp;
+    public void setIdExp(Integer idExp) {
+        this.idExp = idExp;
     }
 
     public void setNom_exp(String nom_exp) {
@@ -149,8 +149,8 @@ public class AccueilChercheur {
         this.horo_fin = horo_fin;
     }
 
-    public Integer getId_exp() {
-        return id_exp;
+    public Integer getIdExp() {
+        return idExp;
     }
 
     public String getNom_exp() {
