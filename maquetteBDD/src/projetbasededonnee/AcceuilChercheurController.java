@@ -1334,7 +1334,7 @@ public class AcceuilChercheurController implements Initializable {
                     }
                 }
             }catch (SQLException e) {
-            Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
             }
             
             //On a l'id_solution On peut creer le n_uplet

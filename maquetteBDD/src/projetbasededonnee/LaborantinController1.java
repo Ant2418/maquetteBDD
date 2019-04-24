@@ -714,6 +714,9 @@ public class LaborantinController1 implements Initializable {
         ComboTypePlaque();
         loadDataPlaque();
         erreurAjoutPlaque.setVisible(false);
+        home.setDisable(false);
+        resultat.setDisable(false);
+        deconnexionIV.setDisable(false);
     } 
     
     /**
@@ -724,6 +727,7 @@ public class LaborantinController1 implements Initializable {
      */
     @FXML
     public void  CompletePlaque(MouseEvent event) throws IOException {
+        erreurAjoutPlaque.setVisible(false);
         if (cbTypePlaque.getSelectionModel().getSelectedItem()!= null) {
             
             try{
@@ -747,6 +751,7 @@ public class LaborantinController1 implements Initializable {
                 EmplacementPlaquePage.setVisible(false);
                 validationPage.setVisible(false);
                 resultatExp.setVisible(false);
+                
                 //maPlaque.setId_plaque(id_plaque);
                 //maPlaque.setType_plaque((String) cbTypePlaque.getSelectionModel().getSelectedItem());
                 if ("96puits".equals((String)cbTypePlaque.getValue())){
@@ -791,8 +796,11 @@ public class LaborantinController1 implements Initializable {
                 home.setDisable(true);
                 resultat.setDisable(true);
                 deconnexionIV.setDisable(true);
-                sauvegardePlaque.setDisable(true);
+                sauvegardePlaque.setDisable(false);
+                //Averifier
                 buttonLancerPlaque.setDisable(true); 
+                
+                ComboTypePlaque();
                 
 
             }catch (SQLException e) {
@@ -811,7 +819,7 @@ public class LaborantinController1 implements Initializable {
      * @param event 
      */
     public void ajoutPlaqueKeyPresse(KeyEvent event){
-        
+        erreurAjoutPlaque.setVisible(false);
         if (event.getCode() == ENTER) {
             if (cbTypePlaque.getSelectionModel().getSelectedItem()!= null) {
 
@@ -851,6 +859,7 @@ public class LaborantinController1 implements Initializable {
                     //Creer une nouvelle plaque
                    //labelInfoPlaquePuits.setText("Plaque n° " +maPlaque.getId_plaque()+ ". Il reste "+maPlaque.getPuits_dispo()+" puits dans la plaque");
                     setInfoPlaque(maPlaque);
+                    
                     listeIdExp = new ArrayList();
                     listeIdExpValid = new ArrayList(); 
                     listeIdUpletValid = new ArrayList();
@@ -858,10 +867,12 @@ public class LaborantinController1 implements Initializable {
                     listeIdUplet1 = new ArrayList();
                     setCellTableARenouveler();
                     loadDataExpARenouveler();
+                    
                     listeIdExpEA = new ArrayList();
                     listeIdExpValidA = new ArrayList();
                     setCellTableEnAttente();
                     loadDataExpEnAttente();
+                    
                     LabelAjoutExpAttentLabel.setVisible(false);
                     LabelAjoutExpPlaque.setVisible(false);
                     buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
@@ -961,7 +972,7 @@ public class LaborantinController1 implements Initializable {
         resultatExp.setVisible(true);
         
         home.setDisable(false);
-        resultat.setDisable(true);
+        resultat.setDisable(false);
         deconnexionIV.setDisable(false);
         
         setCellTableResult();
@@ -1465,15 +1476,19 @@ public class LaborantinController1 implements Initializable {
         //Mettre à jour le tableau de la page d'accueil
         loadDataPlaque();
         
-        accueilLaboPane.setVisible(true);
+        accueilLaboPane.setVisible(false);
         LancerPlaquePage.setVisible(false); 
-        EmplacementPlaquePage.setVisible(false);
+        EmplacementPlaquePage.setVisible(true);
         validationPage.setVisible(false);
         resultatExp.setVisible(false);
         
+        setCellEmplacementPlaque();
+        loadDataEmplacementPlaque(maPlaque);
+        
+        
         //Remet les setDisable à false pour la page completer plaque
-        resultat.setDisable(false);
-        deconnexionIV.setDisable(false);
+        resultat.setDisable(true);
+        deconnexionIV.setDisable(true);
         buttonAddAR.setDisable(false);
         buttonAddEA.setDisable(false);
         sauvegardePlaque.setDisable(false);
@@ -1617,27 +1632,7 @@ public class LaborantinController1 implements Initializable {
      * @param event 
      */
     public void clickOnRetour(ActionEvent event){
-        accueilLaboPane.setVisible(false);
-        LancerPlaquePage.setVisible(true); 
-        EmplacementPlaquePage.setVisible(false);
-        validationPage.setVisible(false);
-        resultatExp.setVisible(false);
-        
-        setInfoPlaque(maPlaque);
-        setCellTableARenouveler();
-        loadDataExpARenouveler();
-        setCellTableEnAttente();
-        loadDataExpEnAttente();
-        labelLancePlaque.setVisible(false);
-    }
-    
-    /**
-     * Action Event quand on clique sur ENTER sur le bouton retour quand on affiche 
-     * emplacement plaque
-     * @param event 
-     */
-    public void clickOnRetourKeyPress(KeyEvent event){
-        if (event.getCode()==ENTER){
+        if (dataPlaque.contains(maPlaque)){
             accueilLaboPane.setVisible(false);
             LancerPlaquePage.setVisible(true); 
             EmplacementPlaquePage.setVisible(false);
@@ -1651,6 +1646,56 @@ public class LaborantinController1 implements Initializable {
             loadDataExpEnAttente();
             labelLancePlaque.setVisible(false);
         }
+        else{
+            
+            accueilLaboPane.setVisible(true);
+            LancerPlaquePage.setVisible(false); 
+            EmplacementPlaquePage.setVisible(false);
+            validationPage.setVisible(false);
+            resultatExp.setVisible(false);
+            home.setDisable(false);
+            resultat.setDisable(false);
+            deconnexionIV.setDisable(false);
+            loadDataPlaque();
+            setCellTablePlaque();
+        }
+    }
+    
+    /**
+     * Action Event quand on clique sur ENTER sur le bouton retour quand on affiche 
+     * emplacement plaque
+     * @param event 
+     */
+    public void clickOnRetourKeyPress(KeyEvent event){
+        if (event.getCode()==ENTER){
+            if (dataPlaque.contains(maPlaque)){
+                accueilLaboPane.setVisible(false);
+                LancerPlaquePage.setVisible(true); 
+                EmplacementPlaquePage.setVisible(false);
+                validationPage.setVisible(false);
+                resultatExp.setVisible(false);
+
+                setInfoPlaque(maPlaque);
+                setCellTableARenouveler();
+                loadDataExpARenouveler();
+                setCellTableEnAttente();
+                loadDataExpEnAttente();
+                labelLancePlaque.setVisible(false);
+            }
+            else{
+
+                accueilLaboPane.setVisible(true);
+                LancerPlaquePage.setVisible(false); 
+                EmplacementPlaquePage.setVisible(false);
+                validationPage.setVisible(false);
+                resultatExp.setVisible(false);
+                home.setDisable(false);
+                resultat.setDisable(false);
+                deconnexionIV.setDisable(false);
+                loadDataPlaque();
+                setCellTablePlaque();
+            }
+        }
     }
     
     /**
@@ -1660,7 +1705,7 @@ public class LaborantinController1 implements Initializable {
     public void setConnection(Connexion cone)
     {
         connex = cone;
-    } 
+    }
     
     /**
      * Setter pour la personne connectée
