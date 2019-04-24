@@ -256,15 +256,15 @@ public class AcceuilChercheurController implements Initializable {
     private void setCellTableAccueil(){
        
         colNumExp.setCellValueFactory(new PropertyValueFactory<>("idExp"));
-        colNomExp.setCellValueFactory(new PropertyValueFactory<>("nom_exp"));
-        colEtat.setCellValueFactory(new PropertyValueFactory<>("etat_exp"));
+        colNomExp.setCellValueFactory(new PropertyValueFactory<>("nomExp"));
+        colEtat.setCellValueFactory(new PropertyValueFactory<>("etatExp"));
         colLab.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        colTypeExp.setCellValueFactory(new PropertyValueFactory<>("type_exp"));
-        colTypeAna.setCellValueFactory(new PropertyValueFactory<>("type_analyse"));
-        colNuplet.setCellValueFactory(new PropertyValueFactory<>("nb_replicat"));
-        colPuit.setCellValueFactory(new PropertyValueFactory<>("nb_puit"));
-        colDeb.setCellValueFactory(new PropertyValueFactory<>("horo_deb"));
-        colFin.setCellValueFactory(new PropertyValueFactory<>("horo_fin"));
+        colTypeExp.setCellValueFactory(new PropertyValueFactory<>("typeExp"));
+        colTypeAna.setCellValueFactory(new PropertyValueFactory<>("typeAnalyse"));
+        colNuplet.setCellValueFactory(new PropertyValueFactory<>("nbReplicat"));
+        colPuit.setCellValueFactory(new PropertyValueFactory<>("nbPuit"));
+        colDeb.setCellValueFactory(new PropertyValueFactory<>("horoDeb"));
+        colFin.setCellValueFactory(new PropertyValueFactory<>("horoFin"));
         
     }
     
@@ -282,11 +282,11 @@ public class AcceuilChercheurController implements Initializable {
         
         dataUplet = FXCollections.observableArrayList();
         
-        colReplicat.setCellValueFactory(new PropertyValueFactory<>("id_uplet"));
-        colAgentBio.setCellValueFactory(new PropertyValueFactory<>("nom_agent_bio"));
-        colQteAgentBio.setCellValueFactory(new PropertyValueFactory<>("qte_agent_bio"));
-        colTypeCell.setCellValueFactory(new PropertyValueFactory<>("nom_cellule"));
-        colQteCell.setCellValueFactory(new PropertyValueFactory<>("qte_cellule"));
+        colReplicat.setCellValueFactory(new PropertyValueFactory<>("idUplet"));
+        colAgentBio.setCellValueFactory(new PropertyValueFactory<>("nomAgentBio"));
+        colQteAgentBio.setCellValueFactory(new PropertyValueFactory<>("qteAgentBio"));
+        colTypeCell.setCellValueFactory(new PropertyValueFactory<>("nomCellule"));
+        colQteCell.setCellValueFactory(new PropertyValueFactory<>("qteCellule"));
     }
     
     /**

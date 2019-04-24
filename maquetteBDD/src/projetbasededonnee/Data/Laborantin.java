@@ -6,201 +6,322 @@
 package projetbasededonnee.Data;
 
 /**
- *
+ * Classe qui permet de créer des expériences nécessaires pour le laborantin
+ * Elle peut contenir des expériences ou des uplets
  * @author Antoine et Ludivine
+ * @version 24/04/2019
  */
 public class Laborantin {
     
-    private Integer id_plaque; 
-    private String Type_plaque;
-    private Integer puits_dispo;
+    private Integer idPlaque; 
+    private String typePlaque;
+    private Integer puitsDispo;
  
-    private Integer id_exp;
-    private String nom_exp;
-    private Integer nb_n_uplet;
-    private String type_ana;
-    private String type_exp;
-    private Integer nb_puits;
+    private Integer idExp;
+    private String nomExp;
+    private Integer nbUplet;
+    private String typeAna;
+    private String typeExp;
+    private Integer nbPuits;
     
     private Integer x; 
     private Integer y; 
-    private String agent_bio; 
-    private Integer qte_agent_bio; 
+    private String agentBio; 
+    private Integer qteAgentBio; 
     private String cellule; 
+    private Integer qteCellule; 
+    
 
+    /**
+     * Constructeur d'un laborantin qui permet créer un n_uplet avec sa position
+     * son agent biologique et les cellules
+     * @param x posiiton x sur la plaque
+     * @param y position y sur la plaque
+     * @param agentBio nom de l'agent bio
+     * @param qteAgentBio quantité de l'agent bio
+     * @param cellule nom des cellules
+     * @param qteCellule quantité des cellules
+     */
+    public Laborantin(Integer x, Integer y, String agentBio, Integer qteAgentBio, String cellule, Integer qteCellule) {
+        this.x = x;
+        this.y = y;
+        this.agentBio = agentBio;
+        this.qteAgentBio = qteAgentBio;
+        this.cellule = cellule;
+        this.qteCellule = qteCellule;
+    }
+
+    
+    
+    /**
+     * Constructeur d'un laborantin qui permet d'ajouter dans le tableau plaque
+     * Permet de créer des plaques
+     * @param idPlaque identifiant de la plaque
+     * @param typePlaque type de plaque
+     * @param puitsDispo puit disponible sur la plaque
+     */
+    public Laborantin(Integer idPlaque, String typePlaque, Integer puitsDispo) {
+        this.idPlaque = idPlaque;
+        this.typePlaque = typePlaque;
+        this.puitsDispo = puitsDispo;
+    }
+
+    /**
+     * Constructeur pour le tableau expérience à renouveler ou en attente du laborantin
+     * @param idExp identification de l'expérience  
+     * @param nomExp nom de l'expérience
+     * @param nbUplet nombre de uplet
+     * @param typeAna type d'analyse
+     * @param typeExp type d'expérience
+     * @param nbPuits nombre de puit par uplet
+     */
+    public Laborantin(Integer idExp, String nomExp, Integer nbUplet, String typeAna, String typeExp, Integer nbPuits) {
+        this.idExp = idExp;
+        this.nomExp = nomExp;
+        this.nbUplet = nbUplet;
+        this.typeAna = typeAna;
+        this.typeExp = typeExp;
+        this.nbPuits = nbPuits;
+    }
+    
+    /**
+     * Getter
+     * @return x 
+     */
     public Integer getX() {
         return x;
     }
 
+    /**
+     * Setter de la position x
+     * @param x 
+     */
     public void setX(Integer x) {
         this.x = x;
     }
 
+    /**
+     * Getter
+     * @return y
+     */
     public Integer getY() {
         return y;
     }
 
+    /**
+     * Setter pour la position Y 
+     * @param y 
+     */
     public void setY(Integer y) {
         this.y = y;
     }
 
-    public String getAgent_bio() {
-        return agent_bio;
+    /**
+     * Getter pour le nom de l'agent bio
+     * @return agentBio
+     */
+    public String getAgentBio() {
+        return agentBio;
     }
 
-    public void setAgent_bio(String agent_bio) {
-        this.agent_bio = agent_bio;
+    /**
+     * Setter pour le nom de l'agent bio
+     * @param agentBio 
+     */
+    public void setAgentBio(String agentBio) {
+        this.agentBio = agentBio;
     }
 
-    public Integer getQte_agent_bio() {
-        return qte_agent_bio;
+    /**
+     * Getter 
+     * @return qteAgentBio
+     */
+    public Integer getQteAgentBio() {
+        return qteAgentBio;
     }
 
-    public void setQte_agent_bio(Integer qte_agent_bio) {
-        this.qte_agent_bio = qte_agent_bio;
+    /**
+     * Setter pour la quantité d'agentbio
+     * @param qteAgentBio 
+     */
+    public void setQteAgentBio(Integer qteAgentBio) {
+        this.qteAgentBio = qteAgentBio;
     }
 
+    /**
+     * Getter pour le nom de cellule
+     * @return cellule
+     */
     public String getCellule() {
         return cellule;
     }
 
+    /**
+     * Setter pour le nom de la cellule
+     * @param cellule 
+     */
     public void setCellule(String cellule) {
         this.cellule = cellule;
     }
 
-    public Integer getQte_cellule() {
-        return qte_cellule;
+    /**
+     * Getter
+     * @return qteCellule
+     */
+    public Integer getQteCellule() {
+        return qteCellule;
     }
 
-    public void setQte_cellule(Integer qte_cellule) {
-        this.qte_cellule = qte_cellule;
-    }
-    private Integer qte_cellule; 
-
-    public Laborantin(Integer x, Integer y, String agent_bio, Integer qte_agent_bio, String cellule, Integer qte_cellule) {
-        this.x = x;
-        this.y = y;
-        this.agent_bio = agent_bio;
-        this.qte_agent_bio = qte_agent_bio;
-        this.cellule = cellule;
-        this.qte_cellule = qte_cellule;
+    /**
+     * Setter pour la quantité de cellule
+     * @param qteCellule 
+     */
+    public void setQteCellule(Integer qteCellule) {
+        this.qteCellule = qteCellule;
     }
 
-    
+    /**
+     * Setter pour l'identifiant de la plaque
+     * @param idPlaque 
+     */
+    public void setIdPlaque(Integer idPlaque) {
+        this.idPlaque = idPlaque;
+    }
+
+    /**
+     * Setter pour le type de la plaque
+     * @param typePlaque 
+     */
+    public void setTypePlaque(String typePlaque) {
+        this.typePlaque = typePlaque;
+    }
+
+    /**
+     * Setter pour le nombre de puits disponibles
+     * @param puitsDispo 
+     */
+    public void setPuitsDispo(Integer puitsDispo) {
+        this.puitsDispo = puitsDispo;
+    }
+
+    /**
+     * Getter
+     * @return idPlaque 
+     */
+    public Integer getIdPlaque() {
+        return idPlaque;
+    }
+
+    /**
+     * Getter
+     * @return typePlaque 
+     */
+    public String getTypePlaque() {
+        return typePlaque;
+    }
+
+    /**
+     * Getter
+     * @return puitsDispo 
+     */
+    public Integer getPuitsDispo() {
+        return puitsDispo;
+    }
     
     /**
-     * 
-     * @param id_plaque
-     * @param Type_plaque
-     * @param puits_dispo
+     * Getter
+     * @return nbUplet 
      */
-    public Laborantin(Integer id_plaque, String Type_plaque, Integer puits_dispo) {
-        this.id_plaque = id_plaque;
-        this.Type_plaque = Type_plaque;
-        this.puits_dispo = puits_dispo;
+    public Integer getNbUplet() {
+        return nbUplet;
     }
 
-    public void setId_plaque(Integer id_plaque) {
-        this.id_plaque = id_plaque;
-    }
-
-    public void setType_plaque(String Type_plaque) {
-        this.Type_plaque = Type_plaque;
-    }
-
-    public void setPuits_dispo(Integer puits_dispo) {
-        this.puits_dispo = puits_dispo;
-    }
-
-
-    public Integer getId_plaque() {
-        return id_plaque;
-    }
-
-    public String getType_plaque() {
-        return Type_plaque;
-    }
-
-    public Integer getPuits_dispo() {
-        return puits_dispo;
+    /**
+     * Setter pour le nombre de Uplet par expérience
+     * @param nbUplet 
+     */
+    public void setNbUplet(Integer nbUplet) {
+        this.nbUplet = nbUplet;
     }
     
     /**
-     * 
+     * Getter pour l'identifiant de l'expérience
+     * @return idExp
      */
-    
+    public Integer getIdExp() {
+        return idExp;
+    }
+
     /**
-     * Constructeur pour le tableau expérience à renouveler du laborantin
-     * @param id_exp
-     * @param nom_exp
-     * @param id_n_uplet
-     * @param type_ana
-     * @param type_exp
-     * @param nb_puits
+     * Setter pour l'identifiant de l'expérience
+     * @param idExp 
      */
-    public Laborantin(Integer id_exp, String nom_exp, Integer id_n_uplet, String type_ana, String type_exp, Integer nb_puits) {
-        this.id_exp = id_exp;
-        this.nom_exp = nom_exp;
-        this.nb_n_uplet = id_n_uplet;
-        this.type_ana = type_ana;
-        this.type_exp = type_exp;
-        this.nb_puits = nb_puits;
-    }
-    
-    public Integer getNb_n_uplet() {
-        return nb_n_uplet;
+    public void setIdExp(Integer idExp) {
+        this.idExp = idExp;
     }
 
-    public void setNb_n_uplet(Integer nb_n_uplet) {
-        this.nb_n_uplet = nb_n_uplet;
-    }
-    
-    public Integer getId_exp() {
-        return id_exp;
-    }
-
-    public void setId_exp(Integer id_exp) {
-        this.id_exp = id_exp;
+    /**
+     * Getter 
+     * @return nomExp
+     */
+    public String getNomExp() {
+        return nomExp;
     }
 
-    public String getNom_exp() {
-        return nom_exp;
+    /**
+     * Setter pour le nom de l'expérience
+     * @param nomExp 
+     */
+    public void setNomExp(String nomExp) {
+        this.nomExp = nomExp;
     }
 
-    public void setNom_exp(String nom_exp) {
-        this.nom_exp = nom_exp;
+    /**
+     * Getter pour le type d'analyse
+     * @return typeAna
+     */
+    public String getTypeAna() {
+        return typeAna;
     }
 
-    public Integer getId_n_uplet() {
-        return nb_n_uplet;
+    /**
+     * Setter pour le type d'analyse
+     * @param typeAna 
+     */
+    public void setTypeAna(String typeAna) {
+        this.typeAna = typeAna;
     }
 
-    public void setId_n_uplet(Integer id_n_uplet) {
-        this.nb_n_uplet = id_n_uplet;
+    /**
+     * Getter
+     * @return typeExp 
+     */
+    public String getTypeExp() {
+        return typeExp;
     }
 
-    public String getType_ana() {
-        return type_ana;
+    /**
+     * Setter pour le type d'expérience
+     * @param typeExp 
+     */
+    public void setTypeExp(String typeExp) {
+        this.typeExp = typeExp;
     }
 
-    public void setType_ana(String type_ana) {
-        this.type_ana = type_ana;
+    /**
+     * Getter pour le nombre de puits
+     * @return nbPuits
+     */
+    public Integer getNbPuits() {
+        return nbPuits;
     }
 
-    public String getType_exp() {
-        return type_exp;
-    }
-
-    public void setType_exp(String type_exp) {
-        this.type_exp = type_exp;
-    }
-
-    public Integer getNb_puits() {
-        return nb_puits;
-    }
-
-    public void setNb_puits(Integer nb_puits) {
-        this.nb_puits = nb_puits;
+    /**
+     * Setter pour le nombre de puits
+     * @param nbPuits 
+     */
+    public void setNbPuits(Integer nbPuits) {
+        this.nbPuits = nbPuits;
     }
     
 

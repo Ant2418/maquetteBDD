@@ -1,5 +1,5 @@
 /*
- * Antoine 17/04/2019
+ * Controller base de données
  */
 package projetbasededonnee;
 
@@ -220,11 +220,11 @@ public class LaborantinController1 implements Initializable {
   
         tableAccueilLabo.getColumns().clear();
         
-        colNumPlaque.setCellValueFactory(new PropertyValueFactory<>("id_plaque"));
+        colNumPlaque.setCellValueFactory(new PropertyValueFactory<>("idPlaque"));
         
-        colTypePlaque.setCellValueFactory(new PropertyValueFactory<>("Type_plaque"));
+        colTypePlaque.setCellValueFactory(new PropertyValueFactory<>("typePlaque"));
         
-        colPuitsDispo.setCellValueFactory(new PropertyValueFactory<>("puits_dispo"));
+        colPuitsDispo.setCellValueFactory(new PropertyValueFactory<>("puitsDispo"));
        
         
         //Set Edit button column
@@ -297,7 +297,6 @@ public class LaborantinController1 implements Initializable {
             con = connex.getCon();
             stmt = con.createStatement();
             
-    //A VERIFIER QUAND ON LANCE UNE PLAQUE QUE LA PLAQUE NE SOIT PLUS DANS LE TABLEAU 
             //Selectionne les id_plaque qui n'ont pas d'expérience en cours
             rs=stmt.executeQuery("SELECT distinct id_plaque FROM PLAQUE JOIN PUIT USING(id_plaque) join N_UPLET using(id_n_uplet) join experience using(id_experience) where etat_exp != '"+"En Cours"+"' and etat_exp != '"+"Terminee"+"'");
             while(rs.next()){
@@ -366,13 +365,13 @@ public class LaborantinController1 implements Initializable {
         
         colIdExpResult.setCellValueFactory(new PropertyValueFactory<>("idExp"));
         
-        colNomResult.setCellValueFactory(new PropertyValueFactory<>("nom_exp"));
+        colNomResult.setCellValueFactory(new PropertyValueFactory<>("nomExp"));
         
-        colEtatResult.setCellValueFactory(new PropertyValueFactory<>("etat_exp"));
+        colEtatResult.setCellValueFactory(new PropertyValueFactory<>("etatExp"));
        
-        colTypeExpResult.setCellValueFactory(new PropertyValueFactory<>("type_exp"));
+        colTypeExpResult.setCellValueFactory(new PropertyValueFactory<>("typeExp"));
         
-        colTypeAnaResult.setCellValueFactory(new PropertyValueFactory<>("type_analyse"));
+        colTypeAnaResult.setCellValueFactory(new PropertyValueFactory<>("typeAnalyse"));
         
         //Set Edit button column
         TableColumn<projetbasededonnee.Data.AccueilChercheur, Void> detailColonne = new TableColumn("Details");
@@ -410,7 +409,7 @@ public class LaborantinController1 implements Initializable {
                         setStyle("-fx-alignment : CENTER;");
                          //Récupération de l'expérience concernée
                         projetbasededonnee.Data.AccueilChercheur experience = getTableView().getItems().get(getIndex());
-                        if ("Terminee".equals(experience.getEtat_exp())) {
+                        if ("Terminee".equals(experience.getEtatExp())) {
                             btnDet.setDisable(false);
                         }
                          else{
@@ -474,12 +473,12 @@ public class LaborantinController1 implements Initializable {
     private void setCellTableARenouveler(){
         dataExpARenouveler = FXCollections.observableArrayList();
 
-        colNumExp.setCellValueFactory(new PropertyValueFactory<>("id_exp"));
-        colNomExp.setCellValueFactory(new PropertyValueFactory<>("nom_exp"));
-        colNbReplicat.setCellValueFactory(new PropertyValueFactory<>("nb_n_uplet"));
-        colTypeAna.setCellValueFactory(new PropertyValueFactory<>("type_ana"));
-        colTypeExp.setCellValueFactory(new PropertyValueFactory<>("type_exp"));
-        colNbPuits.setCellValueFactory(new PropertyValueFactory<>("nb_puits"));
+        colNumExp.setCellValueFactory(new PropertyValueFactory<>("idExp"));
+        colNomExp.setCellValueFactory(new PropertyValueFactory<>("nomExp"));
+        colNbReplicat.setCellValueFactory(new PropertyValueFactory<>("nbUplet"));
+        colTypeAna.setCellValueFactory(new PropertyValueFactory<>("typeAna"));
+        colTypeExp.setCellValueFactory(new PropertyValueFactory<>("typeExp"));
+        colNbPuits.setCellValueFactory(new PropertyValueFactory<>("nbPuits"));
     }
     
     /**
@@ -547,9 +546,9 @@ public class LaborantinController1 implements Initializable {
                         System.out.println(nbPuits +"nbre de puit");
                     }
                     Integer nbrePuitUplet = listeIdUpletValid.size()*nbPuits;
-                    System.out.println(maPlaque.getPuits_dispo() + "plaque");
+                    System.out.println(maPlaque.getPuitsDispo() + "plaque");
                     System.out.println(nbrePuitUplet + "nbe puit uplet");
-                    if (nbrePuitUplet <= maPlaque.getPuits_dispo()){
+                    if (nbrePuitUplet <= maPlaque.getPuitsDispo()){
                         System.out.println("PASSE DANS LE IF ");
                         dataExpARenouveler.add(new projetbasededonnee.Data.Laborantin(idExpValid, nomExp, listeIdUpletValid.size(), typeAna, typeExp, nbrePuitUplet));
                         tableExpARenouveler.setItems(dataExpARenouveler);
@@ -569,12 +568,12 @@ public class LaborantinController1 implements Initializable {
     private void setCellTableEnAttente(){
         dataExpEnAttente = FXCollections.observableArrayList();
 
-        colNumExp2.setCellValueFactory(new PropertyValueFactory<>("id_exp"));
-        colNomExp2.setCellValueFactory(new PropertyValueFactory<>("nom_exp"));
-        colNbReplicat2.setCellValueFactory(new PropertyValueFactory<>("nb_n_uplet"));
-        colTypeAna2.setCellValueFactory(new PropertyValueFactory<>("type_ana"));
-        colTypeExp2.setCellValueFactory(new PropertyValueFactory<>("type_exp"));
-        colNbPuits2.setCellValueFactory(new PropertyValueFactory<>("nb_puits"));
+        colNumExp2.setCellValueFactory(new PropertyValueFactory<>("idExp"));
+        colNomExp2.setCellValueFactory(new PropertyValueFactory<>("nomExp"));
+        colNbReplicat2.setCellValueFactory(new PropertyValueFactory<>("nbUplet"));
+        colTypeAna2.setCellValueFactory(new PropertyValueFactory<>("typeAna"));
+        colTypeExp2.setCellValueFactory(new PropertyValueFactory<>("typeExp"));
+        colNbPuits2.setCellValueFactory(new PropertyValueFactory<>("nbPuits"));
     }
     
     /**
@@ -635,9 +634,9 @@ public class LaborantinController1 implements Initializable {
                     System.out.println(nbPuits +"nbre de puit");
                 }
                 Integer nbrePuitUplet = listeIdUpletValid.size()*nbPuits;
-                System.out.println(maPlaque.getPuits_dispo() + "plaque");
+                System.out.println(maPlaque.getPuitsDispo() + "plaque");
                 System.out.println(nbrePuitUplet + "nbe puit uplet");
-                if (nbrePuitUplet <= maPlaque.getPuits_dispo()){
+                if (nbrePuitUplet <= maPlaque.getPuitsDispo()){
                     System.out.println("PASSE DANS LE IF ");
                     dataExpEnAttente.add(new projetbasededonnee.Data.Laborantin(idExpValid, nomExp, listeIdUpletValid.size(), typeAna, typeExp, nbrePuitUplet));
                     tableExpEnAttente.setItems(dataExpEnAttente);
@@ -905,22 +904,22 @@ public class LaborantinController1 implements Initializable {
         Integer nb_puits_plaque=0;
         try{
             stmt = con.createStatement();
-            rs= stmt.executeQuery("SELECT count(*) FROM PUIT WHERE ID_PLAQUE= "+ maPlaque.getId_plaque() +"");
+            rs= stmt.executeQuery("SELECT count(*) FROM PUIT WHERE ID_PLAQUE= "+ maPlaque.getIdPlaque() +"");
             while(rs.next()){
                 nb_puits_plaque=rs.getInt(1); 
             }
-            if ("96puits".equals(maPlaque.getType_plaque())){
-                maPlaque.setPuits_dispo(96-nb_puits_plaque);    
+            if ("96puits".equals(maPlaque.getTypePlaque())){
+                maPlaque.setPuitsDispo(96-nb_puits_plaque);    
             }
             else
             {
-                maPlaque.setPuits_dispo(384-nb_puits_plaque); 
+                maPlaque.setPuitsDispo(384-nb_puits_plaque); 
             }
         }catch (SQLException e) {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
-        labelInfoPlaquePuits.setText("Plaque n° " +maPlaque.getId_plaque()+ ". Il reste "+maPlaque.getPuits_dispo()+" puits dans la plaque");
-        if(maPlaque.getPuits_dispo()==0){
+        labelInfoPlaquePuits.setText("Plaque n° " +maPlaque.getIdPlaque()+ ". Il reste "+maPlaque.getPuitsDispo()+" puits dans la plaque");
+        if(maPlaque.getPuitsDispo()==0){
             home.setDisable(true);
             resultat.setDisable(true);
             deconnexionIV.setDisable(true);
@@ -1101,7 +1100,7 @@ public class LaborantinController1 implements Initializable {
     try{
         stmt4 = con.createStatement();
         stmt = con.createStatement();
-        rs4 = stmt4.executeQuery("SELECT id_n_uplet FROM N_UPLET WHERE id_experience = " + experience.getId_exp() + " and terminee = "+ 0 + "");
+        rs4 = stmt4.executeQuery("SELECT id_n_uplet FROM N_UPLET WHERE id_experience = " + experience.getIdExp() + " and terminee = "+ 0 + "");
         while (rs4.next()) { 
             
             Integer id_uplet= rs4.getInt(1);
@@ -1125,10 +1124,10 @@ public class LaborantinController1 implements Initializable {
         }
     }
  
-        if ("96puits".equals(plaque.getType_plaque())){
-            Integer nbrePuit_Uplet= experience.getNb_puits()/experience.getNb_n_uplet();
-            Integer puits_dispo=plaque.getPuits_dispo(); 
-            Integer puits_exp=experience.getNb_puits(); 
+        if ("96puits".equals(plaque.getTypePlaque())){
+            Integer nbrePuit_Uplet= experience.getNbPuits()/experience.getNbUplet();
+            Integer puits_dispo=plaque.getPuitsDispo(); 
+            Integer puits_exp=experience.getNbPuits(); 
             System.out.println(nbrePuit_Uplet + "nbre puit par upet");
             System.out.println(puits_dispo + "puit dispo" );
             System.out.println(puits_exp +" puit expe total");
@@ -1141,16 +1140,16 @@ public class LaborantinController1 implements Initializable {
                         System.out.println(idUplet);
                         for (int i=1; i <= nbrePuit_Uplet; i++){
                             try{
-                            rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");   
-                            maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);    
-                            if (Y == 8) {
-                                X=X+1;
-                                Y=1;
-                            }
-                            else
-                            {
-                                Y=Y+1;
-                            }
+                                rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");   
+                                maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);    
+                                if (Y == 8) {
+                                    X=X+1;
+                                    Y=1;
+                                }
+                                else
+                                {
+                                    Y=Y+1;
+                                }
                             
                             }catch (SQLException e) {
                                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
@@ -1164,7 +1163,7 @@ public class LaborantinController1 implements Initializable {
                    
                     try{
                        
-                        rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getId_plaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
+                        rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getIdPlaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
                         while (rs.next()) { 
                             X = rs.getInt(1);
                             Y = rs.getInt(2);
@@ -1194,8 +1193,8 @@ public class LaborantinController1 implements Initializable {
                             
                             try{
                           
-                            rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
-                            maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
+                            rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");
+                            maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);   
                             }catch (SQLException e) {
                                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                             }
@@ -1213,7 +1212,7 @@ public class LaborantinController1 implements Initializable {
                 int Y=0; 
                 try{
                     stmt = con.createStatement();
-                    rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getId_plaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
+                    rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getIdPlaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
                     while (rs.next()) { 
                         X = rs.getInt(1);
                         Y = rs.getInt(2);
@@ -1240,8 +1239,8 @@ public class LaborantinController1 implements Initializable {
                         System.out.println(X);
                         System.out.println(Y);
                         try{
-                        rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
-                        maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
+                        rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");
+                        maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);   
                         System.out.println("INSERTION DANS UN PUIT SUR PLAQUE MAIS PAS TOUTE EXPERIENCE");
                         }catch (SQLException e) {
                             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
@@ -1253,11 +1252,11 @@ public class LaborantinController1 implements Initializable {
             }
         
         
-        else if ("384puits".equals(plaque.getType_plaque())){
+        else if ("384puits".equals(plaque.getTypePlaque())){
             
-            Integer nbrePuit_Uplet= experience.getNb_puits()/experience.getNb_n_uplet();
-            Integer puits_dispo=plaque.getPuits_dispo(); 
-            Integer puits_exp=experience.getNb_puits(); 
+            Integer nbrePuit_Uplet= experience.getNbPuits()/experience.getNbUplet();
+            Integer puits_dispo=plaque.getPuitsDispo(); 
+            Integer puits_exp=experience.getNbPuits(); 
             System.out.println(nbrePuit_Uplet + "nbre puit par upet");
             System.out.println(puits_dispo + "puit dispo" );
             System.out.println(puits_exp +" puit expe total");
@@ -1272,8 +1271,8 @@ public class LaborantinController1 implements Initializable {
                         for (int i=1; i <= nbrePuit_Uplet; i++){
                             try{
                             stmt = con.createStatement();
-                            rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
-                            maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
+                            rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");
+                            maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);   
                             if (Y == 16) {
                                 X=X+1;
                                 Y=1;
@@ -1294,7 +1293,7 @@ public class LaborantinController1 implements Initializable {
                     int Y=0; 
                     try{
                       
-                        rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getId_plaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
+                        rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getIdPlaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
                         while (rs.next()) { 
                             X = rs.getInt(1);
                             Y = rs.getInt(2);
@@ -1322,8 +1321,8 @@ public class LaborantinController1 implements Initializable {
                             
                             try{
                             
-                            rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
-                            maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
+                                rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");
+                                maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);   
                             }catch (SQLException e) {
                                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                             }
@@ -1341,7 +1340,7 @@ public class LaborantinController1 implements Initializable {
                 int Y=0; 
                 try{
                     
-                    rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getId_plaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
+                    rs = stmt.executeQuery("SELECT X, Y FROM (SELECT id_puit, x, y from PUIT where id_plaque = "+ plaque.getIdPlaque()  +" ORDER BY ID_PUIT DESC) WHERE ROWNUM = "+1+"");
                     while (rs.next()) { 
                         X = rs.getInt(1);
                         Y = rs.getInt(2);
@@ -1369,8 +1368,8 @@ public class LaborantinController1 implements Initializable {
                         System.out.println(Y);
                         try{
                     
-                        rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getId_plaque() +", "+ idUplet +", "+X+", "+Y+")");
-                        maPlaque.setPuits_dispo(maPlaque.getPuits_dispo()-1);   
+                        rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");
+                        maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);   
                         System.out.println("INSERTION DANS UN PUIT SUR PLAQUE MAIS PAS TOUTE EXPERIENCE");
                         }catch (SQLException e) {
                             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
@@ -1381,29 +1380,33 @@ public class LaborantinController1 implements Initializable {
             }
         }
     }
+    
     /**
-     * permet de lancer une plaque #COMMENTAIRE A MODIFIER
+     * permet de lancer une plaque
+     * Modifie l'etat des expériences présent sur la plaque a 'en cours'
+     * Ajout la date de début de l'expérience
+     * Ajoute le nom du laborantin en charge de l'expérience
      * 
      */
     public void lancerPlaque(){
         con = connex.getCon();
         projetbasededonnee.Data.CurrentDate Date = new projetbasededonnee.Data.CurrentDate();
-        // recuperation de chaque id_experience et le nbpuit [i.e. par replicat] de l'experience de la plaque sur laquelle je suis
-        // j'ajoute les id_exp dans la listExp et le nbpuit dans la listNbrePuitsParReplicat
+
         try{
             stmt = con.createStatement();
-            rs = stmt.executeQuery("select distinct id_experience, nbpuit from EXPERIENCE join N_UPLET using (id_experience) join PUIT using (id_n_uplet) where id_plaque = "+ maPlaque.getId_plaque());
+            //Ajoute à une liste l'ensemble des id_experiences contenant des puits sur la plaque
+            rs = stmt.executeQuery("select distinct id_experience from EXPERIENCE join N_UPLET using (id_experience) join PUIT using (id_n_uplet) where id_plaque = "+ maPlaque.getIdPlaque());
             while (rs.next()) { 
                 listExp.add(rs.getInt(1));
-               // listNbrePuitsParReplicat.add(rs.getInt(2));
             }
             rs.close();
         }catch (SQLException e) {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
-        //A VERIFIER
+       
         try{
             stmt2 = con.createStatement();
+            //Trouve l'id de la personne connectée
             rs2 = stmt2.executeQuery("SELECT ID_PERSONNE FROM PERSONNE WHERE EMAIL = '" + personne.getEmail() + "'");
             while (rs2.next()) { 
                 id_pers = rs2.getInt(1);
@@ -1411,7 +1414,7 @@ public class LaborantinController1 implements Initializable {
         }catch (SQLException e) {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
-        // je recupere le nombre de n_uplet de chaque experience et je les ajoute dans la listNUplet
+        //Pour chaque expérience dans la liste
         for (int i=0; i < listExp.size(); i++) {
             Integer nbFait = null;
             listNUplet.clear();
@@ -1471,9 +1474,7 @@ public class LaborantinController1 implements Initializable {
             }
         } 
         
-       //dataPlaque.remove(maPlaque);
-       
-        //Mettre à jour le tableau de la page d'accueil
+       //Mettre à jour le tableau de la page d'accueil
         loadDataPlaque();
         
         accueilLaboPane.setVisible(false);
@@ -1595,10 +1596,10 @@ public class LaborantinController1 implements Initializable {
 
         colX.setCellValueFactory(new PropertyValueFactory<>("x"));
         colY.setCellValueFactory(new PropertyValueFactory<>("y"));
-        colAgentBio.setCellValueFactory(new PropertyValueFactory<>("agent_bio"));
-        colQteBio.setCellValueFactory(new PropertyValueFactory<>("qte_agent_bio"));
+        colAgentBio.setCellValueFactory(new PropertyValueFactory<>("agentBio"));
+        colQteBio.setCellValueFactory(new PropertyValueFactory<>("qteAgentBio"));
         colCellule.setCellValueFactory(new PropertyValueFactory<>("cellule"));
-        colQteCellule.setCellValueFactory(new PropertyValueFactory<>("qte_cellule"));
+        colQteCellule.setCellValueFactory(new PropertyValueFactory<>("qteCellule"));
 
     }
     
@@ -1612,7 +1613,7 @@ public class LaborantinController1 implements Initializable {
             con = connex.getCon();
             stmt = con.createStatement();
             
-            rs=stmt.executeQuery("SELECT x,y, qteA, nomA, qteC, nomC FROM PUIT JOIN N_UPLET USING(id_n_uplet) JOIN SOLUTION USING(id_solution) JOIN AGENT_BIOLOGIQUE USING(id_agent_bio) JOIN CELLULE USING(id_cell_cancereuse) where id_plaque = "+ plaque.getId_plaque()+"");
+            rs=stmt.executeQuery("SELECT x,y, qteA, nomA, qteC, nomC FROM PUIT JOIN N_UPLET USING(id_n_uplet) JOIN SOLUTION USING(id_solution) JOIN AGENT_BIOLOGIQUE USING(id_agent_bio) JOIN CELLULE USING(id_cell_cancereuse) where id_plaque = "+ plaque.getIdPlaque()+"");
             while(rs.next()){ 
                 dataEmplacementPlaque.add(new projetbasededonnee.Data.Laborantin(rs.getInt(1),rs.getInt(2), rs.getString(4), rs.getInt(3), rs.getString(6), rs.getInt(5)));
                 

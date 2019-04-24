@@ -17,27 +17,44 @@ public class Personne {
     private String email; 
     private String fonction; 
 
+    /**
+     * Getter du prenom
+     * @return prenom 
+     */
     public String getPrenom() {
         return prenom;
     }
 
+    /**
+     * Getter du nom
+     * @return nom
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     * getter de l'email
+     * @return email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * gette de la fonction (laborantin ou chercheur)
+     * @return fonction
+     */
     public String getFonction() {
         return fonction;
     }
     
     /**
-     * Constrcteur de la classe personne
-     * @param prenom
-     * @param nom
-     * @param email 
+     * Constructeur de la classe personne 
+     * @param prenomP
+     * @param nomP
+     * @param emailP
+     * @param fonctionP
      */
     public Personne(String prenomP, String nomP, String emailP, String fonctionP){
         prenom = prenomP; 
