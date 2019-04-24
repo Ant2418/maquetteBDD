@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * AVEC CONNEXION A LA BASE DE DONNEES
  */
 package projetbasededonnee;
 
@@ -41,6 +39,7 @@ import static javafx.scene.input.KeyCode.ENTER;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 /**
@@ -51,76 +50,78 @@ import javafx.util.StringConverter;
 public class AcceuilChercheurController implements Initializable {
 
     // Menu -------------------------------------------------------------------
-    @FXML    private ImageView deconnexionIV;
-    @FXML    private ImageView home;
-    @FXML    private ImageView newExp;
+    @FXML    private Button buttonDeconnexion;
+    @FXML    private Button buttonHome;
+    @FXML    private Button buttonNewExp;
+    @FXML    private Pane paneDeco;
+    @FXML    private Pane paneHome;
+    @FXML    private Pane paneNewExp;
     
     // Page d'accueil du chercheur --------------------------------------------
-    @FXML    private AnchorPane homePageChercheur;
-    @FXML    private TableView<projetbasededonnee.Data.AccueilChercheur> tableViewAccueil; 
-    @FXML    private TableColumn<?, ?> numExpCol;
-    @FXML    private TableColumn<?, ?> nomExpCol;
-    @FXML    private TableColumn<?, ?> etatCol;
-    @FXML    private TableColumn<?, ?> labCol;
-    @FXML    private TableColumn<?, ?> typeExpCol;
-    @FXML    private TableColumn<?, ?> nupletCol;
-    @FXML    private TableColumn<?, ?> puitCol;
-    @FXML    private TableColumn<?, ?> TypeAnaCol;
-    @FXML    private TableColumn<?, ?> debCol;
-    @FXML    private TableColumn<?, ?> finCol;
+    @FXML    private AnchorPane pageHomeChercheur;
+    @FXML    private TableView<projetbasededonnee.Data.AccueilChercheur> tableAccueilChercheur; 
+    @FXML    private TableColumn<?, ?> colNumExp;
+    @FXML    private TableColumn<?, ?> colNomExp;
+    @FXML    private TableColumn<?, ?> colEtat;
+    @FXML    private TableColumn<?, ?> colLab;
+    @FXML    private TableColumn<?, ?> colTypeExp;
+    @FXML    private TableColumn<?, ?> colNuplet;
+    @FXML    private TableColumn<?, ?> colPuit;
+    @FXML    private TableColumn<?, ?> colTypeAna;
+    @FXML    private TableColumn<?, ?> colDeb;
+    @FXML    private TableColumn<?, ?> colFin;
     
      // Page pour ajouter une experience ---------------------------------------
-    @FXML    private AnchorPane ajoutExpPage;
-    @FXML    private Label FreqLabel;
-    @FXML    private Label labelBiais3;
-    @FXML    private Label Alpha3Label;
-    @FXML    private Label labelFrequence;
-    @FXML    private Spinner frequTextField; 
-    @FXML    private Spinner Alpha3Spinner; 
-    @FXML    private Spinner Alpha1Spinner; 
-    @FXML    private Spinner Alpha2Spinner;
-    @FXML    private Spinner dureeSpinner;
-    @FXML    private Spinner puitReplicatSpinner;
-    @FXML    private RadioButton OuiSuiviButton;
-    @FXML    private RadioButton NonSuiviButton;
-    @FXML    private ComboBox TypeExpCombo;
-    @FXML    private ComboBox TypeAnalyseCombo;
-    @FXML    private Label ErreurExp_Label;
-    @FXML    private TextField nomExpTextField1;
-    @FXML    private Button ValiderExp;
-    @FXML    private Button ButtonPlusReplicat;
-    @FXML    private Button ButtonValideReplicat; 
-  
+    @FXML    private AnchorPane pageAjoutExp;
+    @FXML    private TextField textFieldlNomExp;
+    @FXML    private ComboBox comboTypeExp;
+    @FXML    private Spinner spinnerDuree;
+    @FXML    private RadioButton buttonOuiSuivi;
+    @FXML    private RadioButton buttonNonSuivi;
+    @FXML    private Label labelFreq;
+    @FXML    private Spinner spinnerFrequence;
+    @FXML    private ComboBox comboTypeAnalyse;
+    @FXML    private Spinner spinnerPuitReplicat;
+    @FXML    private Spinner spinnerAlpha1;
+    @FXML    private Spinner spinnerAlpha2;
+    @FXML    private Label labelAlpha3;
+    @FXML    private Spinner spinnerAlpha3;
+    @FXML    private Label labelErreurExp;
+    @FXML    private Button buttonValiderExp;
     
     // Page pour ajouter des Uplets à une experience --------------------------
-    @FXML    private AnchorPane AddUpletPage;
+    @FXML    private AnchorPane pageAddUplet;
     // * partie information*
-    @FXML   private Label nomExpLableUplet; 
-    @FXML   private Label typeExpLabelUplet; 
-    @FXML   private Label dureeLabelUplet; 
-    @FXML   private Label suiviLabelUplet; 
-    @FXML   private Label typeAnaLabelUplet; 
+    @FXML   private Label nomExpLableUplet;
+    @FXML   private Label typeExpLabelUplet;
+    @FXML   private Label typeAnaLabelUplet;
+    @FXML   private Label suiviLabelUplet;
+    @FXML   private Label frequenceLabelUplet;
+    @FXML   private Label labelFrequence;
+    @FXML   private Label dureeLabelUplet;
     @FXML   private Label nbPuitReplicatLabelUplet; 
-    @FXML   private Label alpha1LabelUplet; 
-    @FXML   private Label alpha2LabelUplet; 
-    @FXML   private Label frequenceLabelUplet; 
+    @FXML   private Label alpha1LabelUplet;
+    @FXML   private Label alpha2LabelUplet;
+    @FXML   private Label labelBiais3;
     @FXML   private Label alpha3LabelUplet; 
-    
+    @FXML   private Label Alpha3Label;
     // * Partie ajout d'un nuplet *
-    @FXML   private ComboBox AgentBioCombo;
-    @FXML   private ComboBox CelluleCombo;
-    @FXML   private Spinner AgentBioSpinner;
-    @FXML   private Spinner CelluleSpinner; 
-    @FXML   private Label Erreur_Ajout_Uplet;
-    @FXML   private Label ErreurReplicatValider; 
+    @FXML   private ComboBox comboAgentBio;
+    @FXML   private ComboBox comboCellule;
+    @FXML   private Spinner spinnerAgentBio;
+    @FXML   private Spinner spinnerCellule;
+    @FXML   private Label labelErreurAjoutUplet; 
+    @FXML   private Button buttonPlusReplicat;
     
     // * Partie visualisation *
     @FXML    private TableView<projetbasededonnee.Data.AccueilChercheur> tableNUplet;
-    @FXML    private TableColumn<?, ?> replicatCol;
-    @FXML    private TableColumn<?, ?> agentBioCol;
-    @FXML    private TableColumn<?, ?> qteAgentBioCol;
-    @FXML    private TableColumn<?, ?> typeCellCol;
-    @FXML    private TableColumn<?, ?> qteCellCol;
+    @FXML    private TableColumn<?, ?> colReplicat;
+    @FXML    private TableColumn<?, ?> colAgentBio;
+    @FXML    private TableColumn<?, ?> colQteAgentBio;
+    @FXML    private TableColumn<?, ?> colTypeCell;
+    @FXML    private TableColumn<?, ?> colQteCell;
+    @FXML    private Button buttonValideReplicat; 
+    @FXML   private Label labelErreurReplicatValider; 
     
     // Attributs interne a la classe ------------------------------------------
     private Integer nb_agentbio,id_agent_bio, nb_cellule, id_cellule,nb_solution,id_solution, id_uplet, quantiteAgent_bio, quantiteCellule;
@@ -159,14 +160,82 @@ public class AcceuilChercheurController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        homePageChercheur.setVisible(true);
-        ajoutExpPage.setVisible(false); 
-        AddUpletPage.setVisible(false);
+        pageHomeChercheur.setVisible(true);
+        pageAjoutExp.setVisible(false); 
+        pageAddUplet.setVisible(false);
+        paneHome.setStyle("-fx-background-color:#A1102A");
         dataAccueil = FXCollections.observableArrayList();
         setCellTableAccueil();   
+    }
+    
+    /**
+     * Permet de coloriser le bouton et le pane du bouton DECONNEXION </br>
+     *  - <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton</br>
+     *  - <code>#A1102A</code> : couleur pourpre </br>
+     */
+    public void onMouseEnteredDeconnexion (){
+        buttonDeconnexion.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
+        paneDeco.setStyle("-fx-background-color:#A1102A");
+    }
+    
+    /**
+     * Permet de reinitialiser la couleur du bouton et du pane du bouton DECONNEXION</br>
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs </br>
+     */
+    public void onMouseExitedDeconnexion (){
+        buttonDeconnexion.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
+        paneDeco.setStyle("-fx-background-color:#d7d7d7");
+    }
+    
+    /**
+     * Permet de coloriser le bouton et le pane du bouton HOME </br>
+     * <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton </br>
+     * <code>#A1102A</code> : couleur pourpre </br>
+     */
+    public void onMouseEnteredHome (){
+        buttonHome.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
+        paneHome.setStyle("-fx-background-color:#A1102A");
+    }
+    
+    /**
+     * Permet de reinitialiser la couleur du bouton et du pane du bouton HOME </br>
+     * si pageHomeChercheur est n'est pas visible on change la couleur paneHome </br>
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs </br>
+     */
+    public void onMouseExitedHome (){
+        buttonHome.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
+        if (pageHomeChercheur.isVisible() == true){
+            //nothing
+        }else{
+            paneHome.setStyle("-fx-background-color:#d7d7d7");
+        }
         
-    }      
-
+    }
+    /**
+     * Permet de coloriser le bouton et le pane du bouton NEW EXP </br>
+     * <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton </br>
+     * <code>#A1102A</code> : couleur pourpre </br>
+     */
+    public void onMouseEnteredNewExp (){
+        buttonNewExp.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
+        paneNewExp.setStyle("-fx-background-color:#A1102A");
+    }
+    
+    /**
+     * Permet de reinitialiser la couleur du bouton et du pane du bouton NEW EXP </br>
+     * Si pageAjoutExp ou pageAddUplet ne sont pas visible alors on peut changer
+     * la couleur de paneNewExp </br>
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs 
+     */
+    public void onMouseExitedNewExp (){
+        buttonNewExp.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
+        if (pageAjoutExp.isVisible() == true || pageAddUplet.isVisible() == true){
+            // nothing
+        }else{
+            paneNewExp.setStyle("-fx-background-color:#d7d7d7");
+        }
+    }
+    
     /**
      * Instantiation du tableau tableAccueilChercheur de la page d'accueil 
      * avec toutes les experiences du chercheur </br>
@@ -186,16 +255,16 @@ public class AcceuilChercheurController implements Initializable {
      */
     private void setCellTableAccueil(){
        
-        numExpCol.setCellValueFactory(new PropertyValueFactory<>("idExp"));
-        nomExpCol.setCellValueFactory(new PropertyValueFactory<>("nom_exp"));
-        etatCol.setCellValueFactory(new PropertyValueFactory<>("etat_exp"));
-        labCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        typeExpCol.setCellValueFactory(new PropertyValueFactory<>("type_exp"));
-        TypeAnaCol.setCellValueFactory(new PropertyValueFactory<>("type_analyse"));
-        nupletCol.setCellValueFactory(new PropertyValueFactory<>("nb_replicat"));
-        puitCol.setCellValueFactory(new PropertyValueFactory<>("nb_puit"));
-        debCol.setCellValueFactory(new PropertyValueFactory<>("horo_deb"));
-        finCol.setCellValueFactory(new PropertyValueFactory<>("horo_fin"));
+        colNumExp.setCellValueFactory(new PropertyValueFactory<>("idExp"));
+        colNomExp.setCellValueFactory(new PropertyValueFactory<>("nom_exp"));
+        colEtat.setCellValueFactory(new PropertyValueFactory<>("etat_exp"));
+        colLab.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        colTypeExp.setCellValueFactory(new PropertyValueFactory<>("type_exp"));
+        colTypeAna.setCellValueFactory(new PropertyValueFactory<>("type_analyse"));
+        colNuplet.setCellValueFactory(new PropertyValueFactory<>("nb_replicat"));
+        colPuit.setCellValueFactory(new PropertyValueFactory<>("nb_puit"));
+        colDeb.setCellValueFactory(new PropertyValueFactory<>("horo_deb"));
+        colFin.setCellValueFactory(new PropertyValueFactory<>("horo_fin"));
         
     }
     
@@ -213,11 +282,11 @@ public class AcceuilChercheurController implements Initializable {
         
         dataUplet = FXCollections.observableArrayList();
         
-        replicatCol.setCellValueFactory(new PropertyValueFactory<>("id_uplet"));
-        agentBioCol.setCellValueFactory(new PropertyValueFactory<>("nom_agent_bio"));
-        qteAgentBioCol.setCellValueFactory(new PropertyValueFactory<>("qte_agent_bio"));
-        typeCellCol.setCellValueFactory(new PropertyValueFactory<>("nom_cellule"));
-        qteCellCol.setCellValueFactory(new PropertyValueFactory<>("qte_cellule"));
+        colReplicat.setCellValueFactory(new PropertyValueFactory<>("id_uplet"));
+        colAgentBio.setCellValueFactory(new PropertyValueFactory<>("nom_agent_bio"));
+        colQteAgentBio.setCellValueFactory(new PropertyValueFactory<>("qte_agent_bio"));
+        colTypeCell.setCellValueFactory(new PropertyValueFactory<>("nom_cellule"));
+        colQteCell.setCellValueFactory(new PropertyValueFactory<>("qte_cellule"));
     }
     
     /**
@@ -324,7 +393,7 @@ public class AcceuilChercheurController implements Initializable {
                 dataAccueil.add(new projetbasededonnee.Data.AccueilChercheur(id_exp, nom_exp,etat_exp,nomPrenom,type_exp, type_analyse, nbReplicat, nbpuit, horo_deb, horo_fin));
             } 
             //Ajotue à la table la liste d'expérience
-            tableViewAccueil.setItems(dataAccueil);
+            tableAccueilChercheur.setItems(dataAccueil);
 
         } catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
@@ -364,8 +433,8 @@ public class AcceuilChercheurController implements Initializable {
      * @param event onClicked "buttonValiderReplicat"
      * @throws IOException 
      */
-    public void ValidationAddUplet(MouseEvent event) throws IOException {
-        ValidationUplet(); 
+    public void validationAddUplet(MouseEvent event) throws IOException {
+        validationUplet(); 
     }
     
     /**
@@ -375,13 +444,13 @@ public class AcceuilChercheurController implements Initializable {
      */
     public void keyPressedAddUpletVal(KeyEvent e) {
         if (e.getCode() == ENTER) {
-            ValidationUplet(); 
+            validationUplet(); 
         }
     }
 
     /**
      * Methode qui permet de valider une experience s'il y a au moins un ajout d'un un n_uplet.
-     * Les boutons de deconnexion, home et d'ajout d'une nouvelle experience sont inutilisable. </br>
+     * Les boutons de deconnexion, buttonHome et d'ajout d'une nouvelle experience sont inutilisable. </br>
      * Le label d'erreur du replicat valider n'est plus visible
      * Colorisation de paneHome en <code>#A1102A</code> et de paneNewExp en <code>#f4f4f4</code> </br>
      * Remise a zero du formulaire de l'experience </br>
@@ -392,11 +461,11 @@ public class AcceuilChercheurController implements Initializable {
      * @see #buttonHome
      * @see #buttonNewExp
      */
-    public void ValidationUplet(){
-        ErreurReplicatValider.setVisible(false);
-        deconnexionIV.setDisable(false);
-        home.setDisable(false);
-        newExp.setDisable(false);
+    public void validationUplet(){
+        labelErreurReplicatValider.setVisible(false);
+        buttonDeconnexion.setDisable(false);
+        buttonHome.setDisable(false);
+        buttonNewExp.setDisable(false);
         try{
             con = connex.getCon();
             stmt = con.createStatement();
@@ -411,15 +480,17 @@ public class AcceuilChercheurController implements Initializable {
         
         if (nbReplicat >0) {
             //Si supérieur à 0 alors on retourne à la page d'accueil
-            homePageChercheur.setVisible(true);
-            ajoutExpPage.setVisible(false); 
-            AddUpletPage.setVisible(false);
-            Erreur_Ajout_Uplet.setVisible(false);
+            pageHomeChercheur.setVisible(true);
+            pageAjoutExp.setVisible(false); 
+            pageAddUplet.setVisible(false);
+            paneHome.setStyle("-fx-background-color:#A1102A");
+            paneNewExp.setStyle("-fx-background-color:#d7d7d7");
+            labelErreurAjoutUplet.setVisible(false);
             loadDataAccueilDatabase();
         }
         else{
             
-            ErreurReplicatValider.setVisible(true);
+            labelErreurReplicatValider.setVisible(true);
         }
     }
 
@@ -431,11 +502,11 @@ public class AcceuilChercheurController implements Initializable {
      * @throws IOException 
      */
     public void homeEvent(MouseEvent event) throws IOException {
-        
-        homePageChercheur.setVisible(true);
-        ajoutExpPage.setVisible(false); 
-        AddUpletPage.setVisible(false);
-        
+        pageHomeChercheur.setVisible(true);
+        pageAjoutExp.setVisible(false); 
+        pageAddUplet.setVisible(false);
+        paneHome.setStyle("-fx-background-color:#A1102A");
+        paneNewExp.setStyle("-fx-background-color:#d7d7d7");
     }
     
     
@@ -447,49 +518,51 @@ public class AcceuilChercheurController implements Initializable {
      * @param event onClicked buttonNewExp
      * @throws IOException 
      */
-    public void AddExpEvent(MouseEvent event) throws IOException {
-        homePageChercheur.setVisible(false);
-        ajoutExpPage.setVisible(true); 
-        AddUpletPage.setVisible(false);     
+    public void addExpEvent(MouseEvent event) throws IOException {
+        pageHomeChercheur.setVisible(false);
+        pageAjoutExp.setVisible(true); 
+        pageAddUplet.setVisible(false);     
+        paneHome.setStyle("-fx-background-color:#d7d7d7");
+        paneNewExp.setStyle("-fx-background-color:#A1102A");
         
         // initialisation des listes deroulante (comboBox)
-        TypeExpCombo.getItems().clear(); 
-        TypeExpCombo.getItems().addAll("Immunologique", "Toxicologique");
-        TypeAnalyseCombo.getItems().clear(); 
-        TypeAnalyseCombo.getItems().addAll("Colorimetrique", "Opacimetrique");
+        comboTypeExp.getItems().clear(); 
+        comboTypeExp.getItems().addAll("Immunologique", "Toxicologique");
+        comboTypeAnalyse.getItems().clear(); 
+        comboTypeAnalyse.getItems().addAll("Colorimetrique", "Opacimetrique");
         
         // Value factory.
         SpinnerValueFactory<Integer> valueFactory = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 1);
  
-        frequTextField.setValueFactory(valueFactory); 
-        frequTextField.setEditable(true);
+        spinnerFrequence.setValueFactory(valueFactory); 
+        spinnerFrequence.setEditable(true);
         
         TextFormatter formatter=new TextFormatter(valueFactory.getConverter(),valueFactory.getValue());
-        frequTextField.getEditor().setTextFormatter(formatter);
+        spinnerFrequence.getEditor().setTextFormatter(formatter);
         
         valueFactory.valueProperty().bindBidirectional(formatter.valueProperty());
-        frequTextField.focusedProperty().addListener((observable,oldValue,newValue)->{
+        spinnerFrequence.focusedProperty().addListener((observable,oldValue,newValue)->{
             if(!newValue){
-                frequTextField.increment(0);
+                spinnerFrequence.increment(0);
             }
         });
         // Alpha3SpinnervalueFactory.
         SpinnerValueFactory<Double> Alpha3SpinnervalueFactory = //
                 new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 1.0, 0.0,0.1);
  
-        Alpha3Spinner.setValueFactory(Alpha3SpinnervalueFactory);
+        spinnerAlpha3.setValueFactory(Alpha3SpinnervalueFactory);
         
-        Alpha3Spinner.setEditable(true);
+        spinnerAlpha3.setEditable(true);
         
         TextFormatter formatter3=new TextFormatter(Alpha3SpinnervalueFactory.getConverter(),Alpha3SpinnervalueFactory.getValue());
-        Alpha3Spinner.getEditor().setTextFormatter(formatter3);
+        spinnerAlpha3.getEditor().setTextFormatter(formatter3);
         
         Alpha3SpinnervalueFactory.valueProperty().bindBidirectional(formatter3.valueProperty());
         
-        Alpha3Spinner.focusedProperty().addListener((observable,oldValue,newValue)->{
+        spinnerAlpha3.focusedProperty().addListener((observable,oldValue,newValue)->{
             if(!newValue){
-                Alpha3Spinner.increment(0);
+                spinnerAlpha3.increment(0);
             }
         });
         
@@ -497,18 +570,18 @@ public class AcceuilChercheurController implements Initializable {
         SpinnerValueFactory<Double> Alpha1SpinnervalueFactory = //
                 new SpinnerValueFactory.DoubleSpinnerValueFactory(0.5, 1000.0, 1.0,0.5);
  
-        Alpha1Spinner.setValueFactory(Alpha1SpinnervalueFactory);
+        spinnerAlpha1.setValueFactory(Alpha1SpinnervalueFactory);
 
-        Alpha1Spinner.setEditable(true);
+        spinnerAlpha1.setEditable(true);
         
         TextFormatter formatter1=new TextFormatter(Alpha1SpinnervalueFactory.getConverter(),Alpha1SpinnervalueFactory.getValue());
-        Alpha1Spinner.getEditor().setTextFormatter(formatter1);
+        spinnerAlpha1.getEditor().setTextFormatter(formatter1);
         
         Alpha1SpinnervalueFactory.valueProperty().bindBidirectional(formatter1.valueProperty());
         
-        Alpha1Spinner.focusedProperty().addListener((observable,oldValue,newValue)->{
+        spinnerAlpha1.focusedProperty().addListener((observable,oldValue,newValue)->{
             if(!newValue){
-                Alpha1Spinner.increment(0);
+                spinnerAlpha1.increment(0);
             }
         });
         
@@ -517,18 +590,18 @@ public class AcceuilChercheurController implements Initializable {
         SpinnerValueFactory<Double> Alpha2SpinnervalueFactory = //
                 new SpinnerValueFactory.DoubleSpinnerValueFactory(0.5, 1000.0, 1.0, 0.5);
  
-        Alpha2Spinner.setValueFactory(Alpha2SpinnervalueFactory);
+        spinnerAlpha2.setValueFactory(Alpha2SpinnervalueFactory);
         
-        Alpha2Spinner.setEditable(true);
+        spinnerAlpha2.setEditable(true);
         
         TextFormatter formatter2=new TextFormatter(Alpha2SpinnervalueFactory.getConverter(),Alpha2SpinnervalueFactory.getValue());
-        Alpha2Spinner.getEditor().setTextFormatter(formatter2);
+        spinnerAlpha2.getEditor().setTextFormatter(formatter2);
         
         Alpha2SpinnervalueFactory.valueProperty().bindBidirectional(formatter2.valueProperty());
         
-        Alpha2Spinner.focusedProperty().addListener((observable,oldValue,newValue)->{
+        spinnerAlpha2.focusedProperty().addListener((observable,oldValue,newValue)->{
             if(!newValue){
-                Alpha2Spinner.increment(0);
+                spinnerAlpha2.increment(0);
             }
         });
         
@@ -537,17 +610,17 @@ public class AcceuilChercheurController implements Initializable {
         SpinnerValueFactory<Integer> dureeSpinnervalueFactory = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 1);
  
-        dureeSpinner.setValueFactory(dureeSpinnervalueFactory);
-        dureeSpinner.setEditable(true);
+        spinnerDuree.setValueFactory(dureeSpinnervalueFactory);
+        spinnerDuree.setEditable(true);
         
         TextFormatter formatterd=new TextFormatter(dureeSpinnervalueFactory.getConverter(),dureeSpinnervalueFactory.getValue());
-        dureeSpinner.getEditor().setTextFormatter(formatterd);
+        spinnerDuree.getEditor().setTextFormatter(formatterd);
         
         dureeSpinnervalueFactory.valueProperty().bindBidirectional(formatterd.valueProperty());
         
-        dureeSpinner.focusedProperty().addListener((observable,oldValue,newValue)->{
+        spinnerDuree.focusedProperty().addListener((observable,oldValue,newValue)->{
             if(!newValue){
-                dureeSpinner.increment(0);
+                spinnerDuree.increment(0);
             }
         });
         
@@ -556,21 +629,21 @@ public class AcceuilChercheurController implements Initializable {
         SpinnerValueFactory<Integer> puitReplicatSpinnervalueFactory = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 1);
  
-        puitReplicatSpinner.setValueFactory(puitReplicatSpinnervalueFactory);
-        puitReplicatSpinner.setEditable(true);
+        spinnerPuitReplicat.setValueFactory(puitReplicatSpinnervalueFactory);
+        spinnerPuitReplicat.setEditable(true);
         
         TextFormatter formatterpr=new TextFormatter(puitReplicatSpinnervalueFactory.getConverter(),puitReplicatSpinnervalueFactory.getValue());
-        puitReplicatSpinner.getEditor().setTextFormatter(formatterpr);
+        spinnerPuitReplicat.getEditor().setTextFormatter(formatterpr);
         
         puitReplicatSpinnervalueFactory.valueProperty().bindBidirectional(formatterpr.valueProperty());
         
-        puitReplicatSpinner.focusedProperty().addListener((observable,oldValue,newValue)->{
+        spinnerPuitReplicat.focusedProperty().addListener((observable,oldValue,newValue)->{
             if(!newValue){
-                puitReplicatSpinner.increment(0);
+                spinnerPuitReplicat.increment(0);
             }
         });
         
-        ValiderExp.setGraphic(new ImageView(new Image(getClass().getResource("checked.png").toExternalForm(), 40, 40, true, true)));
+        buttonValiderExp.setGraphic(new ImageView(new Image(getClass().getResource("checked.png").toExternalForm(), 40, 40, true, true)));
        
     }
     
@@ -578,12 +651,12 @@ public class AcceuilChercheurController implements Initializable {
      * Evenement quand l'utilisateur clique sur "oui" pour savoir si l'experience est suivi dans le temps
      * @param event onClicked buttonOuiSuivi
      */
-    public void OuiSuiviButtonEvent(ActionEvent event){
-        frequTextField.setVisible(true);
-        FreqLabel.setVisible(true);
-        Alpha3Label.setVisible(true);
-        Alpha3Spinner.setVisible(true);
-        NonSuiviButton.setSelected(false);
+    public void buttonOuiSuiviEvent(ActionEvent event){
+        spinnerFrequence.setVisible(true);
+        labelFreq.setVisible(true);
+        labelAlpha3.setVisible(true);
+        spinnerAlpha3.setVisible(true);
+        buttonNonSuivi.setSelected(false);
     }
     
     /**
@@ -592,12 +665,12 @@ public class AcceuilChercheurController implements Initializable {
      */
     public void keyPressedOuiSuivi(KeyEvent e) {
         if (e.getCode() == ENTER) {
-            frequTextField.setVisible(true);
-            FreqLabel.setVisible(true);
-            Alpha3Label.setVisible(true);
-            Alpha3Spinner.setVisible(true);
-            NonSuiviButton.setSelected(false);  
-            OuiSuiviButton.setSelected(true);
+            spinnerFrequence.setVisible(true);
+            labelFreq.setVisible(true);
+            labelAlpha3.setVisible(true);
+            spinnerAlpha3.setVisible(true);
+            buttonNonSuivi.setSelected(false);  
+            buttonOuiSuivi.setSelected(true);
         }
     }
     
@@ -605,12 +678,12 @@ public class AcceuilChercheurController implements Initializable {
      * Evenement quand l'utilisateur clique sur "non" pour savoir si l'experience est suivi dans le temps
      * @param event onClick buttonNonSuivi
      */
-    public void NonSuiviButtonEvent(ActionEvent event){
-        frequTextField.setVisible(false);
-        FreqLabel.setVisible(false);
-        Alpha3Label.setVisible(false);
-        Alpha3Spinner.setVisible(false);
-        OuiSuiviButton.setSelected(false);
+    public void buttonNonSuiviEvent(ActionEvent event){
+        spinnerFrequence.setVisible(false);
+        labelFreq.setVisible(false);
+        labelAlpha3.setVisible(false);
+        spinnerAlpha3.setVisible(false);
+        buttonOuiSuivi.setSelected(false);
     }
     
     /**
@@ -619,12 +692,12 @@ public class AcceuilChercheurController implements Initializable {
      */
     public void keyPressedNonSuivi(KeyEvent e) {
         if (e.getCode() == ENTER) {
-            frequTextField.setVisible(false);
-            FreqLabel.setVisible(false);
-            Alpha3Label.setVisible(false);
-            Alpha3Spinner.setVisible(false);
-            OuiSuiviButton.setSelected(false);
-            NonSuiviButton.setSelected(true);
+            spinnerFrequence.setVisible(false);
+            labelFreq.setVisible(false);
+            labelAlpha3.setVisible(false);
+            spinnerAlpha3.setVisible(false);
+            buttonOuiSuivi.setSelected(false);
+            buttonNonSuivi.setSelected(true);
         }
     }
     
@@ -635,8 +708,8 @@ public class AcceuilChercheurController implements Initializable {
      * @param event onClicked buttonValiderExp
      * @throws IOException 
      */
-    public void AddUpletEvent(MouseEvent event) throws IOException{
-        AddExp(); 
+    public void addUpletEvent(MouseEvent event) throws IOException{
+        addExp(); 
     }
     
      /**
@@ -644,9 +717,9 @@ public class AcceuilChercheurController implements Initializable {
      * @see #addExp() 
      * @param e on key pressed "enter"
      */
-    public void AddUpletKeyPressed(KeyEvent e) {
+    public void addUpletKeyPressed(KeyEvent e) {
         if (e.getCode() == ENTER) {
-            AddExp();
+            addExp();
         }
     }
     
@@ -662,39 +735,40 @@ public class AcceuilChercheurController implements Initializable {
      * @see #solutionChoice()
      * @see #setCellTableUplet()
      */
-    public void AddExp(){
-        deconnexionIV.setDisable(true);
-        home.setDisable(true);
-        newExp.setDisable(true);
-        ErreurExp_Label.setText("Veuillez remplir tous les champs");
-        ErreurExp_Label.setVisible(false);
-        nomExpTextField1.setStyle(null);
-        dureeSpinner.setStyle(null);
-        puitReplicatSpinner.setStyle(null);
-        TypeExpCombo.setStyle(null);
-        TypeAnalyseCombo.setStyle(null);
-        Alpha1Spinner.setStyle(null);
-        Alpha2Spinner.setStyle(null);
-        Alpha3Spinner.setStyle(null);
-        NonSuiviButton.setStyle(null);
-        OuiSuiviButton.setStyle(null);
-        frequTextField.setStyle(null);
+    public void addExp(){
+        buttonDeconnexion.setDisable(true);
+        buttonHome.setDisable(true);
+        buttonNewExp.setDisable(true);
+        paneNewExp.setStyle("-fx-background-color:#A1102A");
+        labelErreurExp.setText("Veuillez remplir tous les champs");
+        labelErreurExp.setVisible(false);
+        textFieldlNomExp.setStyle(null);
+        spinnerDuree.setStyle(null);
+        spinnerPuitReplicat.setStyle(null);
+        comboTypeExp.setStyle(null);
+        comboTypeAnalyse.setStyle(null);
+        spinnerAlpha1.setStyle(null);
+        spinnerAlpha2.setStyle(null);
+        spinnerAlpha3.setStyle(null);
+        buttonNonSuivi.setStyle(null);
+        buttonOuiSuivi.setStyle(null);
+        spinnerFrequence.setStyle(null);
 
-        duree=(Integer) dureeSpinner.getValue();
-        puitReplicat=(Integer) puitReplicatSpinner.getValue();
-        Alpha1= (Double) Alpha1Spinner.getValue();
-        Alpha2= (Double) Alpha2Spinner.getValue();
+        duree=(Integer) spinnerDuree.getValue();
+        puitReplicat=(Integer) spinnerPuitReplicat.getValue();
+        Alpha1= (Double) spinnerAlpha1.getValue();
+        Alpha2= (Double) spinnerAlpha2.getValue();
         
-        if(nomExpTextField1.getText().isEmpty()==false && duree!=0 && dureeSpinner.getValue()!=null && puitReplicatSpinner.getValue()!=null && TypeExpCombo.getSelectionModel().getSelectedItem()!= null && TypeAnalyseCombo.getSelectionModel().getSelectedItem()!=null && Alpha1Spinner.getValue()!= null && Alpha1 != 0.0 && Alpha2Spinner.getValue()!=null && Alpha2!=0.0){
+        if(textFieldlNomExp.getText().isEmpty()==false && duree!=0 && spinnerDuree.getValue()!=null && spinnerPuitReplicat.getValue()!=null && comboTypeExp.getSelectionModel().getSelectedItem()!= null && comboTypeAnalyse.getSelectionModel().getSelectedItem()!=null && spinnerAlpha1.getValue()!= null && Alpha1 != 0.0 && spinnerAlpha2.getValue()!=null && Alpha2!=0.0){
             
-            nomExp=nomExpTextField1.getText();
-            String TypeExp=(String) TypeExpCombo.getSelectionModel().getSelectedItem(); 
-            String TypeAna =(String)TypeAnalyseCombo.getSelectionModel().getSelectedItem();
-            Integer dureeExp=(Integer) dureeSpinner.getValue();
-            Integer puitReplicat=(Integer) puitReplicatSpinner.getValue();             
+            nomExp=textFieldlNomExp.getText();
+            String TypeExp=(String) comboTypeExp.getSelectionModel().getSelectedItem(); 
+            String TypeAna =(String)comboTypeAnalyse.getSelectionModel().getSelectedItem();
+            Integer dureeExp=(Integer) spinnerDuree.getValue();
+            Integer puitReplicat=(Integer) spinnerPuitReplicat.getValue();             
           
             //Si on selectionne le bouton non pas suivi dans le temps
-            if (NonSuiviButton.isSelected()) {
+            if (buttonNonSuivi.isSelected()) {
 
                     projetbasededonnee.Data.CurrentDate Date = new projetbasededonnee.Data.CurrentDate();
 
@@ -704,7 +778,7 @@ public class AcceuilChercheurController implements Initializable {
                     stmt = con.createStatement();
 
                     //INSERTION DE L'EXPERIENCE SAISIE DANS LA BASE DE DONNEES
-                    rs= stmt.executeQuery("INSERT INTO EXPERIENCE(NOMEXP, ETAT_EXP, DUREE, NBPUIT, TYPE_EXP, TYPE_ANALYSE, ALPHA1, ALPHA2, HD_DEMANDE_CHERCHEUR, UPLETTERMINE)VALUES('"+ nomExpTextField1.getText() + "', 'En Attente', "+ dureeSpinner.getValue() + ", "+ puitReplicatSpinner.getValue() + ", '"+ TypeExpCombo.getSelectionModel().getSelectedItem() + "', '"+ TypeAnalyseCombo.getSelectionModel().getSelectedItem() + "', "+ Alpha1Spinner.getValue() + ", "+ Alpha2Spinner.getValue() + ", '"+ Date.getdateFormat().format(Date.getDate()) + "', "+ 0 + ")");
+                    rs= stmt.executeQuery("INSERT INTO EXPERIENCE(NOMEXP, ETAT_EXP, DUREE, NBPUIT, TYPE_EXP, TYPE_ANALYSE, ALPHA1, ALPHA2, HD_DEMANDE_CHERCHEUR, UPLETTERMINE)VALUES('"+ textFieldlNomExp.getText() + "', 'En Attente', "+ spinnerDuree.getValue() + ", "+ spinnerPuitReplicat.getValue() + ", '"+ comboTypeExp.getSelectionModel().getSelectedItem() + "', '"+ comboTypeAnalyse.getSelectionModel().getSelectedItem() + "', "+ spinnerAlpha1.getValue() + ", "+ spinnerAlpha2.getValue() + ", '"+ Date.getdateFormat().format(Date.getDate()) + "', "+ 0 + ")");
                     
                     try{
                         stmt1 = con.createStatement();
@@ -738,31 +812,31 @@ public class AcceuilChercheurController implements Initializable {
                     }
                     
                     //Permet d'afficher la page pour ajouter des uplets
-                    homePageChercheur.setVisible(false);
-                    ajoutExpPage.setVisible(false);
-                    DisplayLabels(nomExp, TypeExp, TypeAna, dureeExp,"non", puitReplicat, Alpha1,Alpha2, 0.0, 0);    
-                    SolutionChoice();
+                    pageHomeChercheur.setVisible(false);
+                    pageAjoutExp.setVisible(false);
+                    displayLabels(nomExp, TypeExp, TypeAna, dureeExp,"non", puitReplicat, Alpha1,Alpha2, 0.0, 0);    
+                    solutionChoice();
                     setCellTableUplet();
                     loadDataUplet(id_exp);
-                    AddUpletPage.setVisible(true);                   
+                    pageAddUplet.setVisible(true);                   
                    
                     //Remise à zero des valeurs du formulaire
-                    ErreurReplicatValider.setVisible(false);
-                    nomExpTextField1.clear();
-                    dureeSpinner.getValueFactory().setValue(1);
-                    frequTextField.getValueFactory().setValue(1);
-                    puitReplicatSpinner.getValueFactory().setValue(1);
-                    TypeExpCombo.getItems().clear(); 
-                    TypeAnalyseCombo.getItems().clear();  
-                    Alpha1Spinner.getValueFactory().setValue(1.0);
-                    Alpha2Spinner.getValueFactory().setValue(1.0);
-                    Alpha3Spinner.getValueFactory().setValue(0.0);
-                    NonSuiviButton.setSelected(false);
-                    OuiSuiviButton.setSelected(false);
-                    frequTextField.setVisible(false); 
-                    Alpha3Spinner.setVisible(false); 
-                    FreqLabel.setVisible(false);
-                    Alpha3Label.setVisible(false);
+                    labelErreurReplicatValider.setVisible(false);
+                    labelFreq.setVisible(false);
+                    labelAlpha3.setVisible(false);
+                    textFieldlNomExp.clear();
+                    spinnerDuree.getValueFactory().setValue(1);
+                    spinnerFrequence.getValueFactory().setValue(1);
+                    spinnerPuitReplicat.getValueFactory().setValue(1);
+                    comboTypeExp.getItems().clear(); 
+                    comboTypeAnalyse.getItems().clear();  
+                    spinnerAlpha1.getValueFactory().setValue(1.0);
+                    spinnerAlpha2.getValueFactory().setValue(1.0);
+                    spinnerAlpha3.getValueFactory().setValue(0.0);
+                    buttonNonSuivi.setSelected(false);
+                    buttonOuiSuivi.setSelected(false);
+                    spinnerFrequence.setVisible(false); 
+                    spinnerAlpha3.setVisible(false); 
                     
                     }catch (SQLException e) {
                          System.out.println("Exception SQL : ");
@@ -770,16 +844,16 @@ public class AcceuilChercheurController implements Initializable {
                             String message = e.getMessage();
                             int errorCode = e.getErrorCode();
                             if (errorCode == 984) {
-                                ErreurExp_Label.setText("");
-                                ErreurExp_Label.setText("Une valeur saisie est incorrecte.");
-                                ErreurExp_Label.setVisible(true);
+                                labelErreurExp.setText("");
+                                labelErreurExp.setText("Une valeur saisie est incorrecte.");
+                                labelErreurExp.setVisible(true);
                                 
                             } else if (errorCode == 2290) {
-                                ErreurExp_Label.setText("");
-                                ErreurExp_Label.setText("La valeur du Biais 1 doit être inférieure ou égale à celle du Bais 2.");
-                                ErreurExp_Label.setVisible(true);
-                                Alpha1Spinner.setStyle("-fx-border-color: red");
-                                Alpha2Spinner.setStyle("-fx-border-color: red");
+                                labelErreurExp.setText("");
+                                labelErreurExp.setText("La valeur du Biais 1 doit être inférieure ou égale à celle du Bais 2.");
+                                labelErreurExp.setVisible(true);
+                                spinnerAlpha1.setStyle("-fx-border-color: red");
+                                spinnerAlpha2.setStyle("-fx-border-color: red");
                                  
                             }
                             e = e.getNextException();
@@ -788,13 +862,13 @@ public class AcceuilChercheurController implements Initializable {
                     
 
             }
-            else if (OuiSuiviButton.isSelected()) {
+            else if (buttonOuiSuivi.isSelected()) {
                 //Si on selectionne le bouton oui
                 
-                if (frequTextField.getValue()!=null && Alpha3Spinner.getValue()!=null){
+                if (spinnerFrequence.getValue()!=null && spinnerAlpha3.getValue()!=null){
                     
-                    Integer frequence = (Integer) frequTextField.getValue();
-                    Double Alpha3 =(Double) Alpha3Spinner.getValue(); 
+                    Integer frequence = (Integer) spinnerFrequence.getValue();
+                    Double Alpha3 =(Double) spinnerAlpha3.getValue(); 
                     System.out.println("moi je suis la " + Alpha3); 
                     projetbasededonnee.Data.CurrentDate Date = new projetbasededonnee.Data.CurrentDate();
 
@@ -804,7 +878,7 @@ public class AcceuilChercheurController implements Initializable {
                     stmt = con.createStatement();
 
                     //INSERTION DE L'EXPERIENCE SAISIE DANS LA BASE DE DONNEES
-                    rs= stmt.executeQuery("INSERT INTO EXPERIENCE(NOMEXP, ETAT_EXP, DUREE, FREQUENCE, NBPUIT, TYPE_EXP, TYPE_ANALYSE, ALPHA1, ALPHA2, ALPHA3, HD_DEMANDE_CHERCHEUR, UPLETTERMINE)VALUES('"+ nomExpTextField1.getText() + "', 'En Attente', "+ dureeSpinner.getValue() + ", "+ frequTextField.getValue() + ", "+ puitReplicatSpinner.getValue() + ", '"+ TypeExpCombo.getSelectionModel().getSelectedItem() + "', '"+ TypeAnalyseCombo.getSelectionModel().getSelectedItem() + "', "+ Alpha1Spinner.getValue() + ", "+ Alpha2Spinner.getValue() + ", "+ Alpha3Spinner.getValue() + ", '"+ Date.getdateFormat().format(Date.getDate()) + "', "+ 0 + ")");
+                    rs= stmt.executeQuery("INSERT INTO EXPERIENCE(NOMEXP, ETAT_EXP, DUREE, FREQUENCE, NBPUIT, TYPE_EXP, TYPE_ANALYSE, ALPHA1, ALPHA2, ALPHA3, HD_DEMANDE_CHERCHEUR, UPLETTERMINE)VALUES('"+ textFieldlNomExp.getText() + "', 'En Attente', "+ spinnerDuree.getValue() + ", "+ spinnerFrequence.getValue() + ", "+ spinnerPuitReplicat.getValue() + ", '"+ comboTypeExp.getSelectionModel().getSelectedItem() + "', '"+ comboTypeAnalyse.getSelectionModel().getSelectedItem() + "', "+ spinnerAlpha1.getValue() + ", "+ spinnerAlpha2.getValue() + ", "+ spinnerAlpha3.getValue() + ", '"+ Date.getdateFormat().format(Date.getDate()) + "', "+ 0 + ")");
                         try{
                         stmt1 = con.createStatement();
 
@@ -834,33 +908,33 @@ public class AcceuilChercheurController implements Initializable {
                             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                         }
                         //Permet d'afficher la page pour ajouter des uplets
-                        homePageChercheur.setVisible(false);
-                        ajoutExpPage.setVisible(false);
-                        DisplayLabels(nomExp,TypeExp, TypeAna, dureeExp,"oui", puitReplicat, Alpha1,Alpha2, Alpha3, frequence);    
-                        SolutionChoice();
+                        pageHomeChercheur.setVisible(false);
+                        pageAjoutExp.setVisible(false);
+                        displayLabels(nomExp,TypeExp, TypeAna, dureeExp,"oui", puitReplicat, Alpha1,Alpha2, Alpha3, frequence);    
+                        solutionChoice();
                         setCellTableUplet();
                         loadDataUplet(id_exp);
                         System.out.println("c'est encore moi : "+ id_exp);
-                        AddUpletPage.setVisible(true);
+                        pageAddUplet.setVisible(true);
                         
                         
                         //Reinitialisation
-                        ErreurReplicatValider.setVisible(false);
-                        nomExpTextField1.clear();
-                        dureeSpinner.getValueFactory().setValue(1);
-                        frequTextField.getValueFactory().setValue(1);
-                        puitReplicatSpinner.getValueFactory().setValue(1);
-                        TypeExpCombo.getItems().clear(); 
-                        TypeAnalyseCombo.getItems().clear();  
-                        Alpha1Spinner.getValueFactory().setValue(1.0);
-                        Alpha2Spinner.getValueFactory().setValue(1.0);
-                        Alpha3Spinner.getValueFactory().setValue(0.0);
-                        NonSuiviButton.setSelected(false);
-                        OuiSuiviButton.setSelected(false);
-                        frequTextField.setVisible(false); 
-                        Alpha3Spinner.setVisible(false); 
-                        FreqLabel.setVisible(false);
-                        Alpha3Label.setVisible(false);
+                    labelErreurReplicatValider.setVisible(false);
+                    labelFreq.setVisible(false);
+                    labelAlpha3.setVisible(false);
+                    textFieldlNomExp.clear();
+                    spinnerDuree.getValueFactory().setValue(1);
+                    spinnerFrequence.getValueFactory().setValue(1);
+                    spinnerPuitReplicat.getValueFactory().setValue(1);
+                    comboTypeExp.getItems().clear(); 
+                    comboTypeAnalyse.getItems().clear();  
+                    spinnerAlpha1.getValueFactory().setValue(1.0);
+                    spinnerAlpha2.getValueFactory().setValue(1.0);
+                    spinnerAlpha3.getValueFactory().setValue(0.0);
+                    buttonNonSuivi.setSelected(false);
+                    buttonOuiSuivi.setSelected(false);
+                    spinnerFrequence.setVisible(false); 
+                    spinnerAlpha3.setVisible(false); 
                                                
                         
                     }catch (SQLException e) {
@@ -869,24 +943,24 @@ public class AcceuilChercheurController implements Initializable {
                             String message = e.getMessage();
                             int errorCode = e.getErrorCode();
                             if (errorCode == 984) {
-                                ErreurExp_Label.setText("");
-                                ErreurExp_Label.setText("Une valeur saisie est incorrecte.");
-                                ErreurExp_Label.setVisible(true);
+                                labelErreurExp.setText("");
+                                labelErreurExp.setText("Une valeur saisie est incorrecte.");
+                                labelErreurExp.setVisible(true);
                             } else if (errorCode == 2290) {
                                 if(Alpha1>Alpha2){
-                                ErreurExp_Label.setText("");
-                                ErreurExp_Label.setText("La valeur du Biais 1 doit être inférieure ou égale à celle du Bais 2.");
-                                ErreurExp_Label.setVisible(true);
-                                Alpha1Spinner.setStyle("-fx-border-color: red");
-                                Alpha2Spinner.setStyle("-fx-border-color: red");
+                                labelErreurExp.setText("");
+                                labelErreurExp.setText("La valeur du Biais 1 doit être inférieure ou égale à celle du Bais 2.");
+                                labelErreurExp.setVisible(true);
+                                spinnerAlpha1.setStyle("-fx-border-color: red");
+                                spinnerAlpha2.setStyle("-fx-border-color: red");
                                 }
-                                Double a3 = (Double) Alpha3Spinner.getValue();
+                                Double a3 = (Double) spinnerAlpha3.getValue();
                                 System.out.println("idem " + a3);
                                 if(a3>1 || a3<0){
-                                    ErreurExp_Label.setText("");
-                                    ErreurExp_Label.setText("La valeur du Biais 3 doit être compris entre 0 et 1.");
-                                    ErreurExp_Label.setVisible(true);
-                                    Alpha3Spinner.setStyle("-fx-border-color: red");
+                                    labelErreurExp.setText("");
+                                    labelErreurExp.setText("La valeur du Biais 3 doit être compris entre 0 et 1.");
+                                    labelErreurExp.setVisible(true);
+                                    spinnerAlpha3.setStyle("-fx-border-color: red");
                                    
                                 }
                             e = e.getNextException();
@@ -896,69 +970,69 @@ public class AcceuilChercheurController implements Initializable {
                 }
                 else
                 {
-                    if(frequTextField.getValue()==null){
-                        frequTextField.setStyle("-fx-border-color: red");
+                    if(spinnerFrequence.getValue()==null){
+                        spinnerFrequence.setStyle("-fx-border-color: red");
                     }
-                    if(Alpha3Spinner.getValue()==null){
-                    Alpha3Spinner.setStyle("-fx-border-color: red");
+                    if(spinnerAlpha3.getValue()==null){
+                    spinnerAlpha3.setStyle("-fx-border-color: red");
                     }
                 }
             }
             else{
                 
                 //Si le bouton oui ou le bouton non n'est pas coché
-                OuiSuiviButton.setStyle("-fx-border-color: red"); 
-                NonSuiviButton.setStyle("-fx-border-color: red");
-                ErreurExp_Label.setVisible(true);
-                homePageChercheur.setVisible(false);
-                ajoutExpPage.setVisible(true);
-                AddUpletPage.setVisible(false);
+                buttonOuiSuivi.setStyle("-fx-border-color: red"); 
+                buttonNonSuivi.setStyle("-fx-border-color: red");
+                labelErreurExp.setVisible(true);
+                pageHomeChercheur.setVisible(false);
+                pageAjoutExp.setVisible(true);
+                pageAddUplet.setVisible(false);
             }
         }                
         else
             { 
                 //Affiche le message d'erreur
-                ErreurExp_Label.setVisible(true);
+                labelErreurExp.setVisible(true);
                 
-                if(nomExpTextField1.getText().isEmpty()){
-                    nomExpTextField1.setStyle("-fx-border-color: red"); 
+                if(textFieldlNomExp.getText().isEmpty()){
+                    textFieldlNomExp.setStyle("-fx-border-color: red"); 
                 }
-                if(dureeSpinner.getValue()==null || duree==0){
-                    dureeSpinner.setStyle("-fx-border-color: red");
+                if(spinnerDuree.getValue()==null || duree==0){
+                    spinnerDuree.setStyle("-fx-border-color: red");
                 }
-                if(puitReplicatSpinner.getValue()==null){
-                    puitReplicatSpinner.setStyle("-fx-border-color: red");
+                if(spinnerPuitReplicat.getValue()==null){
+                    spinnerPuitReplicat.setStyle("-fx-border-color: red");
                 }
-                if(TypeExpCombo.getSelectionModel().getSelectedItem()== null){
-                    TypeExpCombo.setStyle("-fx-border-color: red");
+                if(comboTypeExp.getSelectionModel().getSelectedItem()== null){
+                    comboTypeExp.setStyle("-fx-border-color: red");
                 }
-                if(TypeAnalyseCombo.getSelectionModel().getSelectedItem()==null){
-                    TypeAnalyseCombo.setStyle("-fx-border-color: red");
+                if(comboTypeAnalyse.getSelectionModel().getSelectedItem()==null){
+                    comboTypeAnalyse.setStyle("-fx-border-color: red");
                 }
-                if(Alpha1Spinner.getValue()==null || Alpha1==0.0){
-                    Alpha1Spinner.setStyle("-fx-border-color: red");
+                if(spinnerAlpha1.getValue()==null || Alpha1==0.0){
+                    spinnerAlpha1.setStyle("-fx-border-color: red");
                 }
-                if(Alpha2Spinner.getValue()==null || Alpha2==0.0){
-                    Alpha2Spinner.setStyle("-fx-border-color: red");
+                if(spinnerAlpha2.getValue()==null || Alpha2==0.0){
+                    spinnerAlpha2.setStyle("-fx-border-color: red");
                 }
-                if(OuiSuiviButton.isSelected()==false && NonSuiviButton.isSelected()==false){
-                    OuiSuiviButton.setStyle("-fx-border-color: red");
-                    NonSuiviButton.setStyle("-fx-border-color: red");
+                if(buttonOuiSuivi.isSelected()==false && buttonNonSuivi.isSelected()==false){
+                    buttonOuiSuivi.setStyle("-fx-border-color: red");
+                    buttonNonSuivi.setStyle("-fx-border-color: red");
                 }
-                else if (OuiSuiviButton.isSelected()){
-                    if(frequTextField.getValue()==null){
-                        frequTextField.setStyle("-fx-border-color: red");
+                else if (buttonOuiSuivi.isSelected()){
+                    if(spinnerFrequence.getValue()==null){
+                        spinnerFrequence.setStyle("-fx-border-color: red");
                     }
-                    if(Alpha3Spinner.getValue()==null){
-                    Alpha3Spinner.setStyle("-fx-border-color: red");
+                    if(spinnerAlpha3.getValue()==null){
+                    spinnerAlpha3.setStyle("-fx-border-color: red");
                     }
                 }
                 
 
                 //Continue d'afficher la page ajout exp
-                homePageChercheur.setVisible(false);
-                ajoutExpPage.setVisible(true);
-                AddUpletPage.setVisible(false);
+                pageHomeChercheur.setVisible(false);
+                pageAjoutExp.setVisible(true);
+                pageAddUplet.setVisible(false);
                 
                 
         }
@@ -980,7 +1054,7 @@ public class AcceuilChercheurController implements Initializable {
      * @param frequExp nombre de fois que l'experience est analyse. 
      * (exemple si freqExp = 2 et duree = 10 alors l'experience est analysee 10/2 = 5 fois)
      */
-    public void DisplayLabels(String nomExp, String typeExp, String typeAna, Integer dureeExp, String suiviExp, Integer puitReplicat, Double biais1, Double biais2 ,Double biais3, Integer frequExp){        
+    public void displayLabels(String nomExp, String typeExp, String typeAna, Integer dureeExp, String suiviExp, Integer puitReplicat, Double biais1, Double biais2 ,Double biais3, Integer frequExp){        
         // initialise l'affichage dans le cas ou l'experience n'est pas suivi dans le temps
         labelBiais3.setVisible(false);
         labelFrequence.setVisible(false);
@@ -1011,25 +1085,25 @@ public class AcceuilChercheurController implements Initializable {
      * Methode qui permet d'initialiser les comboBox comboAgentBio pour le type d'agent bio 
      * et la comboBox comboCellule pour le type de cellules
      */
-    public void SolutionChoice(){
+    public void solutionChoice(){
         
         //Initialisation des combo-box
-        AgentBioCombo.getItems().clear();
+        comboAgentBio.getItems().clear();
         try{
             stmt2 = con.createStatement();
             rs2 = stmt2.executeQuery("SELECT DISTINCT(NOMA) FROM AGENT_BIOLOGIQUE");
             while (rs2.next()) { 
-                AgentBioCombo.getItems().add(rs2.getString(1));
+                comboAgentBio.getItems().add(rs2.getString(1));
             }
         }catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
         }
-        CelluleCombo.getItems().clear();
+        comboCellule.getItems().clear();
         try{
             stmt3 = con.createStatement();
             rs3 = stmt3.executeQuery("SELECT DISTINCT(NOMC), TYPE_CELLULAIRE FROM CELLULE");
             while (rs3.next()) { 
-                CelluleCombo.getItems().add(rs3.getString(1)+ " - " + rs3.getString(2));
+                comboCellule.getItems().add(rs3.getString(1)+ " - " + rs3.getString(2));
             }
         }catch (SQLException e) {
             Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
@@ -1042,18 +1116,18 @@ public class AcceuilChercheurController implements Initializable {
         SpinnerValueFactory<Integer> AgentbioSpinnervalueFactory = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 100,100);
  
-        AgentBioSpinner.setValueFactory(AgentbioSpinnervalueFactory);
+        spinnerAgentBio.setValueFactory(AgentbioSpinnervalueFactory);
         
-        AgentBioSpinner.setEditable(true);
+        spinnerAgentBio.setEditable(true);
         
         TextFormatter formatter2=new TextFormatter(AgentbioSpinnervalueFactory.getConverter(),AgentbioSpinnervalueFactory.getValue());
-        AgentBioSpinner.getEditor().setTextFormatter(formatter2);
+        spinnerAgentBio.getEditor().setTextFormatter(formatter2);
         
         AgentbioSpinnervalueFactory.valueProperty().bindBidirectional(formatter2.valueProperty());
         
-        AgentBioSpinner.focusedProperty().addListener((observable,oldValue,newValue)->{
+        spinnerAgentBio.focusedProperty().addListener((observable,oldValue,newValue)->{
             if(!newValue){
-                AgentBioSpinner.increment(0);
+                spinnerAgentBio.increment(0);
             }
         });
         
@@ -1061,23 +1135,23 @@ public class AcceuilChercheurController implements Initializable {
         SpinnerValueFactory<Integer> CelluleSpinnervalueFactory = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 100,100);
  
-        CelluleSpinner.setValueFactory(CelluleSpinnervalueFactory);
+        spinnerCellule.setValueFactory(CelluleSpinnervalueFactory);
         
-        CelluleSpinner.setEditable(true);
+        spinnerCellule.setEditable(true);
         
         TextFormatter formatter3=new TextFormatter(CelluleSpinnervalueFactory.getConverter(),CelluleSpinnervalueFactory.getValue());
-        CelluleSpinner.getEditor().setTextFormatter(formatter3);
+        spinnerCellule.getEditor().setTextFormatter(formatter3);
         
         CelluleSpinnervalueFactory.valueProperty().bindBidirectional(formatter3.valueProperty());
         
-        CelluleSpinner.focusedProperty().addListener((observable,oldValue,newValue)->{
+        spinnerCellule.focusedProperty().addListener((observable,oldValue,newValue)->{
             if(!newValue){
-                CelluleSpinner.increment(0);
+                spinnerCellule.increment(0);
             }
         }); 
 
-        ButtonPlusReplicat.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 30, 30, true, true)));
-        ButtonValideReplicat.setGraphic(new ImageView(new Image(getClass().getResource("checked.png").toExternalForm(), 40, 40, true, true)));
+        buttonPlusReplicat.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 30, 30, true, true)));
+        buttonValideReplicat.setGraphic(new ImageView(new Image(getClass().getResource("checked.png").toExternalForm(), 40, 40, true, true)));
        
     }
     
@@ -1088,10 +1162,10 @@ public class AcceuilChercheurController implements Initializable {
      * @throws IOException 
      */
     //Quand on clique sur plus
-    public void AddUpletSolution(MouseEvent event) throws IOException{
-        AddUplet(id_exp);
+    public void addUpletSolution(MouseEvent event) throws IOException{
+        addUplet(id_exp);
         loadDataUplet(id_exp);
-        ErreurReplicatValider.setVisible(false);
+        labelErreurReplicatValider.setVisible(false);
     }
     
     /**
@@ -1100,11 +1174,11 @@ public class AcceuilChercheurController implements Initializable {
      * un n_uplet via la touche entree du clavier
      * @param event on key pressed "enter"
      */
-    public void AddUpletSolPressed(KeyEvent event) {
+    public void addUpletSolPressed(KeyEvent event) {
         if (event.getCode() == ENTER) {
-            AddUplet(id_exp);
+            addUplet(id_exp);
             loadDataUplet(id_exp);
-            ErreurReplicatValider.setVisible(false);
+            labelErreurReplicatValider.setVisible(false);
         }
     }
     
@@ -1116,16 +1190,16 @@ public class AcceuilChercheurController implements Initializable {
      * Mise à jour du tableau n_uplet
      * @param id_exp identifiant de l'experience
      */
-    public void AddUplet(Integer id_exp){
+    public void addUplet(Integer id_exp){
         
-        Erreur_Ajout_Uplet.setVisible(false);
-        Erreur_Ajout_Uplet.setText("Veuillez remplir tous les champs");
-        CelluleSpinner.setStyle(null);
-        AgentBioSpinner.setStyle(null);
-        CelluleCombo.setStyle(null);
-        AgentBioCombo.setStyle(null);
+        labelErreurAjoutUplet.setVisible(false);
+        labelErreurAjoutUplet.setText("Veuillez remplir tous les champs");
+        spinnerCellule.setStyle(null);
+        spinnerAgentBio.setStyle(null);
+        comboCellule.setStyle(null);
+        comboAgentBio.setStyle(null);
         
-        if(AgentBioSpinner.getValue() != null && (Integer) AgentBioSpinner.getValue()!=0 && CelluleSpinner.getValue()!=null && (Integer) CelluleSpinner.getValue()!=0 && AgentBioCombo.getSelectionModel().getSelectedItem()!=null && CelluleCombo.getSelectionModel().getSelectedItem()!=null ){
+        if(spinnerAgentBio.getValue() != null && (Integer) spinnerAgentBio.getValue()!=0 && spinnerCellule.getValue()!=null && (Integer) spinnerCellule.getValue()!=0 && comboAgentBio.getSelectionModel().getSelectedItem()!=null && comboCellule.getSelectionModel().getSelectedItem()!=null ){
             con = connex.getCon();
       
             //Pour agent biologique
@@ -1133,19 +1207,19 @@ public class AcceuilChercheurController implements Initializable {
             stmt = con.createStatement();
 
             //Compte le nombre d'agent biologique avec le meme nom et la meme quantité
-            rs= stmt.executeQuery("SELECT count(*) FROM AGENT_BIOLOGIQUE WHERE NOMA = '" + AgentBioCombo.getValue() + "' and qteA = "+ AgentBioSpinner.getValue() + "");
+            rs= stmt.executeQuery("SELECT count(*) FROM AGENT_BIOLOGIQUE WHERE NOMA = '" + comboAgentBio.getValue() + "' and qteA = "+ spinnerAgentBio.getValue() + "");
             while (rs.next()) { 
                 nb_agentbio=rs.getInt(1);
             }
             
             //Si il n'y a pas d'agent biologique avec le meme nom et la meme qte
             if (nb_agentbio == 0) {
-                Double prix= 3.0 * (Integer) AgentBioSpinner.getValue();
+                Double prix= 3.0 * (Integer) spinnerAgentBio.getValue();
            
                 try{
                     stmt = con.createStatement();
                     //On insert un nouveau agent bio
-                    rs=stmt.executeQuery("INSERT INTO AGENT_BIOLOGIQUE (ID_AGENT_BIO, QTEA, NOMA,PRIXA) VALUES("+ 1 +", "+ AgentBioSpinner.getValue() + ", '" + AgentBioCombo.getValue() + "', " + prix +")");    
+                    rs=stmt.executeQuery("INSERT INTO AGENT_BIOLOGIQUE (ID_AGENT_BIO, QTEA, NOMA,PRIXA) VALUES("+ 1 +", "+ spinnerAgentBio.getValue() + ", '" + comboAgentBio.getValue() + "', " + prix +")");    
                 }catch (SQLException e){
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -1165,7 +1239,7 @@ public class AcceuilChercheurController implements Initializable {
                 try{
                     stmt = con.createStatement();
                     //On selectionne l'identifiant de l'agent deja créée
-                    rs=stmt.executeQuery("SELECT ID_AGENT_BIO FROM AGENT_BIOLOGIQUE WHERE NOMA= '" + AgentBioCombo.getSelectionModel().getSelectedItem() + "' and QTEA= "+ AgentBioSpinner.getValue() + "");    
+                    rs=stmt.executeQuery("SELECT ID_AGENT_BIO FROM AGENT_BIOLOGIQUE WHERE NOMA= '" + comboAgentBio.getSelectionModel().getSelectedItem() + "' and QTEA= "+ spinnerAgentBio.getValue() + "");    
                     while (rs.next()) { 
                     id_agent_bio =rs.getInt(1);
                     }
@@ -1181,17 +1255,17 @@ public class AcceuilChercheurController implements Initializable {
             try{
             stmt = con.createStatement();  
             //Compte le nombre de cellule avec le meme nom et la meme qte
-            rs= stmt.executeQuery("SELECT count(*) FROM CELLULE WHERE NOMC = '" + (CelluleCombo.getValue() + "").split(" - ")[0] + "' and qteC = "+ CelluleSpinner.getValue() + " and TYPE_CELLULAIRE='" + (CelluleCombo.getValue() + "").split(" - ")[1] + "' ");
+            rs= stmt.executeQuery("SELECT count(*) FROM CELLULE WHERE NOMC = '" + (comboCellule.getValue() + "").split(" - ")[0] + "' and qteC = "+ spinnerCellule.getValue() + " and TYPE_CELLULAIRE='" + (comboCellule.getValue() + "").split(" - ")[1] + "' ");
             while (rs.next()) { 
                 nb_cellule=rs.getInt(1);
             }
             
             if (nb_cellule ==0) { //Si il n'y a pas de cellule deja creer
-                Double prix= 2.0 * (Integer) CelluleSpinner.getValue();
+                Double prix= 2.0 * (Integer) spinnerCellule.getValue();
                 try{
                     stmt = con.createStatement();
                     //Insertion d'une nouvelle cellule
-                    rs=stmt.executeQuery("INSERT INTO CELLULE VALUES("+ 1 +",'" + (CelluleCombo.getValue() + "").split(" - ")[1] + "',  "+ CelluleSpinner.getValue() + ",'" + (CelluleCombo.getValue() + "").split(" - ")[0] + "', " + prix +")");    
+                    rs=stmt.executeQuery("INSERT INTO CELLULE VALUES("+ 1 +",'" + (comboCellule.getValue() + "").split(" - ")[1] + "',  "+ spinnerCellule.getValue() + ",'" + (comboCellule.getValue() + "").split(" - ")[0] + "', " + prix +")");    
                 }catch (SQLException e) {
                     Logger.getLogger(AcceuilChercheurController.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -1209,7 +1283,7 @@ public class AcceuilChercheurController implements Initializable {
             {
                 try{
                     stmt = con.createStatement();
-                    rs=stmt.executeQuery("SELECT ID_CELL_cancereuse FROM CELLULE WHERE NOMC= '" + (CelluleCombo.getValue() + "").split(" - ")[0] + "' and QTEC= "+ CelluleSpinner.getValue() + " and TYPE_CELLULAIRE = '" + (CelluleCombo.getValue() + "").split(" - ")[1] + "'");    
+                    rs=stmt.executeQuery("SELECT ID_CELL_cancereuse FROM CELLULE WHERE NOMC= '" + (comboCellule.getValue() + "").split(" - ")[0] + "' and QTEC= "+ spinnerCellule.getValue() + " and TYPE_CELLULAIRE = '" + (comboCellule.getValue() + "").split(" - ")[1] + "'");    
                     while (rs.next()) { 
                     id_cellule =rs.getInt(1);
                     }
@@ -1268,15 +1342,15 @@ public class AcceuilChercheurController implements Initializable {
                 stmt=con.createStatement();
                 //Creation du n_uplet
                 rs=stmt.executeQuery("INSERT INTO N_UPLET VALUES(" + 1 +"," + id_exp + ", "+ id_solution +", " + 0 +", " + 0 +", " + 0 +")");   
-                Erreur_Ajout_Uplet.setText("Le réplicat a été ajouté");
-                Erreur_Ajout_Uplet.setVisible(true);
+                labelErreurAjoutUplet.setText("Le réplicat a été ajouté");
+                labelErreurAjoutUplet.setVisible(true);
                 
                 //Reinitialisation
-                CelluleSpinner.getValueFactory().setValue(0);
-                AgentBioSpinner.getValueFactory().setValue(0);
-                CelluleCombo.getItems().clear();
-                AgentBioCombo.getItems().clear(); 
-                SolutionChoice();
+                spinnerCellule.getValueFactory().setValue(0);
+                spinnerAgentBio.getValueFactory().setValue(0);
+                comboCellule.getItems().clear();
+                comboAgentBio.getItems().clear(); 
+                solutionChoice();
                 loadDataUplet(id_exp); 
 
             }catch (SQLException e) {
@@ -1288,18 +1362,18 @@ public class AcceuilChercheurController implements Initializable {
         }
         else{
             //Message d'erreur
-            Erreur_Ajout_Uplet.setVisible(true);
-            if(CelluleCombo.getSelectionModel().getSelectedItem()==null){
-                CelluleCombo.setStyle("-fx-border-color: red"); 
+            labelErreurAjoutUplet.setVisible(true);
+            if(comboCellule.getSelectionModel().getSelectedItem()==null){
+                comboCellule.setStyle("-fx-border-color: red"); 
             }
-            if(CelluleSpinner.getValue()==null || (Integer) CelluleSpinner.getValue()==0){
-                CelluleSpinner.setStyle("-fx-border-color: red");
+            if(spinnerCellule.getValue()==null || (Integer) spinnerCellule.getValue()==0){
+                spinnerCellule.setStyle("-fx-border-color: red");
             }
-            if(AgentBioCombo.getSelectionModel().getSelectedItem()==null){
-                AgentBioCombo.setStyle("-fx-border-color: red"); 
+            if(comboAgentBio.getSelectionModel().getSelectedItem()==null){
+                comboAgentBio.setStyle("-fx-border-color: red"); 
             }
-            if(AgentBioSpinner.getValue()==null || (Integer)AgentBioSpinner.getValue()==0){
-                AgentBioSpinner.setStyle("-fx-border-color: red");
+            if(spinnerAgentBio.getValue()==null || (Integer)spinnerAgentBio.getValue()==0){
+                spinnerAgentBio.setStyle("-fx-border-color: red");
             }
         }
         
