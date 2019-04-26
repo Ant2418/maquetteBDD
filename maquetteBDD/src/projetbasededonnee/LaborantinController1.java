@@ -36,7 +36,6 @@ import static javafx.scene.input.KeyCode.ENTER;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -170,6 +169,7 @@ public class LaborantinController1 implements Initializable {
     
     //ArrayList utilisable en interne
     private ArrayList<Integer> listeIdPlaque;
+    private ArrayList<Integer> listePlaqueLancer;
     private ArrayList<Integer> listeIdExp;
     private final ArrayList<Integer> listExp= new ArrayList<>();
     private final ArrayList<Integer> listNbrePuitsParReplicat = new ArrayList<>();
@@ -205,6 +205,7 @@ public class LaborantinController1 implements Initializable {
         dataPlaque = FXCollections.observableArrayList();
         dataExpResult = FXCollections.observableArrayList();
         listeIdPlaque= new ArrayList();
+        listePlaqueLancer= new ArrayList();
         setCellTablePlaque();
         buttonAjoutPlaque.setGraphic(new ImageView(new Image(getClass().getResource("checked.png").toExternalForm(), 20, 20, true, true)));
         
@@ -368,10 +369,21 @@ public class LaborantinController1 implements Initializable {
             stmt = con.createStatement();
             
             //Selectionne les id_plaque qui n'ont pas d'expérience en cours
-            rs=stmt.executeQuery("SELECT distinct id_plaque FROM PLAQUE JOIN PUIT USING(id_plaque) join N_UPLET using(id_n_uplet) join experience using(id_experience) where etat_exp != '"+"En Cours"+"' and etat_exp != '"+"Terminee"+"'");
+//            rs=stmt.executeQuery("SELECT distinct id_plaque FROM PLAQUE JOIN PUIT USING(id_plaque) join N_UPLET using(id_n_uplet) join experience using(id_experience) where etat_exp = '"+"En Attente"+"'");
+            rs=stmt.executeQuery("SELECT distinct id_plaque FROM PLAQUE where ESTTERMINE = "+ 0 +"");
+
             while(rs.next()){
-                id_plaque=rs.getInt(1);          
-                listeIdPlaque.add(id_plaque);
+                id_plaque=rs.getInt(1); 
+//                if (listePlaqueLancer!=null){
+//                    if(listePlaqueLancer.contains(id_plaque)) {
+//                        //Rien
+//                    }else{
+//                        listeIdPlaque.add(id_plaque);
+//                    }  
+//                }
+//                else {
+                    listeIdPlaque.add(id_plaque);
+//                }
             }  
           
         } catch (SQLException e) {
@@ -556,8 +568,6 @@ public class LaborantinController1 implements Initializable {
      * le tableau d'experiences a renouveler
      */
     public void loadDataExpARenouveler(){
-        labelAjoutExpPlaque.setVisible(false);
-       
         try{
             listeIdExp.clear(); 
             listeIdExpValid.clear(); 
@@ -640,7 +650,6 @@ public class LaborantinController1 implements Initializable {
      * Methode qui recupere les donnees pour les mettre dans le tableau d'experiences en attente
      */
     public void loadDataExpEnAttente(){
-        labelAjoutExpAttentLabel.setVisible(true); 
         con = connex.getCon(); 
         listeIdExpEA.clear();
         listeIdExpValidA.clear(); 
@@ -741,6 +750,7 @@ public class LaborantinController1 implements Initializable {
         
         CCO.setConnexion(connex);
         CCO.setPersonne(personne); 
+        //CCO.setListePlaqueLancer(listePlaqueLancer);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -845,7 +855,7 @@ public class LaborantinController1 implements Initializable {
                 buttonHome.setDisable(true);
                 buttonResultat.setDisable(true);
                 buttonDeconnexion.setDisable(true);
-                sauvegardePlaque.setDisable(false);
+                sauvegardePlaque.setDisable(true);
                 //Averifier
                 buttonLancerPlaque.setDisable(true); 
                 
@@ -1040,6 +1050,7 @@ public class LaborantinController1 implements Initializable {
             setInfoPlaque(maPlaque);
             labelAjoutExpPlaque.setText("Expérience bien ajoutée");
             labelAjoutExpPlaque.setVisible(true);
+            labelAjoutExpAttentLabel.setVisible(false);
             buttonHome.setDisable(true);
             
             setCellTableEnAttente();
@@ -1049,6 +1060,7 @@ public class LaborantinController1 implements Initializable {
         else{
             labelAjoutExpPlaque.setText("Veuillez selectionner une ligne");
             labelAjoutExpPlaque.setVisible(true);
+            labelAjoutExpAttentLabel.setVisible(false);
         }
     }
     
@@ -1067,6 +1079,7 @@ public class LaborantinController1 implements Initializable {
             setInfoPlaque(maPlaque);
             labelAjoutExpPlaque.setText("Expérience bien ajoutée");
             labelAjoutExpPlaque.setVisible(true);
+            labelAjoutExpAttentLabel.setVisible(false);
             buttonHome.setDisable(true);
             
             setCellTableEnAttente();
@@ -1076,6 +1089,7 @@ public class LaborantinController1 implements Initializable {
             else{
                 labelAjoutExpPlaque.setText("Veuillez selectionner une ligne");
                 labelAjoutExpPlaque.setVisible(true);
+                labelAjoutExpAttentLabel.setVisible(false);
             }
         }
     }
@@ -1095,6 +1109,7 @@ public class LaborantinController1 implements Initializable {
             setInfoPlaque(maPlaque);
             labelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
             labelAjoutExpAttentLabel.setVisible(true);
+            labelAjoutExpPlaque.setVisible(false);
             
             setCellTableARenouveler();
             loadDataExpARenouveler();
@@ -1102,6 +1117,7 @@ public class LaborantinController1 implements Initializable {
         else{
             labelAjoutExpAttentLabel.setText("Veuillez selectionner une ligne");
             labelAjoutExpAttentLabel.setVisible(true);
+            labelAjoutExpPlaque.setVisible(false);
         }
         
     }
@@ -1121,6 +1137,7 @@ public class LaborantinController1 implements Initializable {
                 setInfoPlaque(maPlaque);
                 labelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
                 labelAjoutExpAttentLabel.setVisible(true);
+                labelAjoutExpPlaque.setVisible(false);
                 
                 setCellTableARenouveler();
                 loadDataExpARenouveler();
@@ -1128,6 +1145,7 @@ public class LaborantinController1 implements Initializable {
             else{
                 labelAjoutExpAttentLabel.setText("Veuillez selectionner une ligne");
                 labelAjoutExpAttentLabel.setVisible(true);
+                labelAjoutExpPlaque.setVisible(false);
             }
         }
     }
@@ -1480,7 +1498,18 @@ public class LaborantinController1 implements Initializable {
                 
             }
         } 
-        
+        //Ajoute l'id de la plaque dans la liste poubelle
+//        listePlaqueLancer.add(maPlaque.getIdPlaque());
+        //La plaque est terminee
+        try{
+            rs = stmt.executeQuery("update PLAQUE set ESTTERMINE = "+1+" where id_plaque = "+ maPlaque.getIdPlaque() +"");
+            rs.close();
+        }catch (SQLException e) {
+            Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+
+
        //Mettre à jour le tableau de la page d'accueil
         loadDataPlaque();
         
@@ -1724,4 +1753,14 @@ public class LaborantinController1 implements Initializable {
     public void setPersonne(Personne personneE){
         personne=personneE; 
     }
+
+    /**
+     * Setter pour la liste de plaque
+     * @param listePlaqueLancer 
+     */
+    public void setListePlaqueLancer(ArrayList<Integer> listePlaqueLancer) {
+        this.listePlaqueLancer = listePlaqueLancer;
+    }
+    
+    
 }

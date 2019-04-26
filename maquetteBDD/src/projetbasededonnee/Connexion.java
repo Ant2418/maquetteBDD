@@ -3,7 +3,6 @@ package projetbasededonnee;
 //import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.dateTime;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -25,7 +24,7 @@ public class Connexion {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             //step2 create  the connection object  
             con = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@192.168.254.3:1521:PFPBS", "GROUPE_35", "GROUPE_35");
+                    "jdbc:oracle:thin:@192.168.254.3:1521:PFPBS", "GROUPE_29", "GROUPE_29");
             //step3 create the statement object  
             Statement stmt = con.createStatement();
             

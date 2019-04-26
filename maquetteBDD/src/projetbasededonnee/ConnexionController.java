@@ -9,6 +9,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,7 +47,7 @@ public class ConnexionController implements Initializable {
     private Connexion connexion; 
     private Personne personne; 
     private Integer present;
-
+    //private ArrayList<Integer> listePlaqueLancer;
 
     /**
      * Initializes the contrProjetBaseDeDonneeoller class.
@@ -124,6 +125,7 @@ public class ConnexionController implements Initializable {
                         Scene ajoutScene = new Scene(ajoutParent);
                         LCO.setConnection(connexion);
                         LCO.setPersonne(personne);
+                        //LCO.setListePlaqueLancer(listePlaqueLancer);
                         LCO.loadDataPlaque();
                         LCO.ComboTypePlaque();
 
@@ -204,9 +206,10 @@ public class ConnexionController implements Initializable {
                     Scene ajoutScene = new Scene(ajoutParent);
                     LCO.setConnection(connexion);
                     LCO.setPersonne(personne);
+                    //LCO.setListePlaqueLancer(listePlaqueLancer);
                     LCO.loadDataPlaque();
                     LCO.ComboTypePlaque();
-                       
+      
                     //This line gets the Stage information
                     Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
@@ -248,4 +251,15 @@ public class ConnexionController implements Initializable {
     public void setPersonne(Personne personneE){
         personne=personneE;
     }
+
+    /**
+     * Setter pour la liste de plaque a ne plus afficher
+     * @param listePlaqueLancer 
+     */
+//    public void setListePlaqueLancer(ArrayList<Integer> listePlaqueLancer) {
+//        this.listePlaqueLancer = listePlaqueLancer;
+//    }
+    
+    
+    
 }
