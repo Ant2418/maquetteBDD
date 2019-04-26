@@ -14,61 +14,80 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="1000.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.LaborantinController1">
+<AnchorPane minHeight="-Infinity" minWidth="1000.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.LaborantinController1">
    <children>
       <SplitPane dividerPositions="0.05" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
-            <VBox fx:id="menuVBox" alignment="TOP_CENTER" maxWidth="-Infinity" prefWidth="50.0" style="-fx-background-color: #979797;">
+            <VBox fx:id="menuVBox" alignment="TOP_CENTER" maxWidth="-Infinity" prefWidth="60.0" style="-fx-background-color: #d7d7d7;">
                <children>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <VBox.margin>
-                        <Insets bottom="20.0" top="20.0" />
-                     </VBox.margin>
                      <image>
                         <Image url="@user.png" />
                      </image>
-                  </ImageView>
-                  <ImageView fx:id="deconnexionIV" fitHeight="45.0" fitWidth="45.0" layoutX="10.0" layoutY="30.0" onMouseClicked="#deconnexionEvent" pickOnBounds="true" preserveRatio="true">
                      <VBox.margin>
-                        <Insets bottom="5.0" top="50.0" />
-                     </VBox.margin>
-                     <image>
-                        <Image url="@power.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="home" fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="150.0" onMouseClicked="#homeEvent" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@home.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
+                        <Insets bottom="50.0" left="5.0" right="5.0" top="20.0" />
                      </VBox.margin>
                   </ImageView>
-                  <ImageView fx:id="resultat" fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="260.0" onMouseClicked="#validationEvent" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@analysis.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
-                  </ImageView>
+                  <HBox onMouseEntered="#onMouseEnteredDeconnexion" onMouseExited="#onMouseExitedDeconnexion">
+                     <children>
+                        <Pane fx:id="paneDeco" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="10.0" />
+                        <Button fx:id="buttonDeconnexion" mnemonicParsing="false" onMouseClicked="#deconnexionEvent" style="-fx-background-color: #d7d7d7; -fx-background-radius: 0;">
+                           <graphic>
+                              <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@power.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox onMouseEntered="#onMouseEnteredHome" onMouseExited="#onMouseExitedHome">
+                     <children>
+                        <Pane fx:id="paneHome" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="10.0" />
+                        <Button fx:id="buttonHome" mnemonicParsing="false" onMouseClicked="#homeEvent" style="-fx-background-color: #d7d7d7; -fx-background-radius: 0;">
+                           <graphic>
+                              <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@home.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox onMouseEntered="#onMouseEnteredResultat" onMouseExited="#onMouseExitedResultat">
+                     <children>
+                        <Pane fx:id="paneResultat" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="10.0" />
+                        <Button fx:id="buttonResultat" mnemonicParsing="false" onMouseClicked="#validationEvent" style="-fx-background-color: #d7d7d7; -fx-background-radius: 0;">
+                           <graphic>
+                              <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@analysis.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <BorderPane>
                <center>
                   <AnchorPane BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="accueilLaboPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="accueilLaboPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
                                     <VBox fx:id="titleAcceuil1" alignment="CENTER" BorderPane.alignment="CENTER">
                                        <children>
-                                          <Label text="Accueil Labo">
+                                          <Label text="Accueil">
                                              <font>
                                                 <Font size="48.0" />
                                              </font>
@@ -128,6 +147,13 @@
                                                          <HBox.margin>
                                                             <Insets top="8.0" />
                                                          </HBox.margin>
+                                                         <graphic>
+                                                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@checked.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
                                                       </Button>
                                                    </children>
                                                    <opaqueInsets>
@@ -154,7 +180,7 @@
                               </BorderPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="LancerPlaquePage" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="LancerPlaquePage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
@@ -195,7 +221,7 @@
                                                       </Label>
                                                       <HBox alignment="CENTER">
                                                          <children>
-                                                            <TableView fx:id="tableExpARenouveler" fixedCellSize="0.0" minWidth="800.0" prefWidth="806.0">
+                                                            <TableView fx:id="tableExpARenouveler" fixedCellSize="0.0" minWidth="800.0">
                                                               <columns>
                                                                 <TableColumn fx:id="colNumExp" minWidth="-Infinity" prefWidth="-1.0" text="N°" />
                                                                 <TableColumn fx:id="colNomExp" minWidth="-Infinity" prefWidth="-1.0" text="Nom" />
@@ -215,6 +241,13 @@
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
+                                                               <graphic>
+                                                                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                                     <image>
+                                                                        <Image url="@plus.png" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                               </graphic>
                                                             </Button>
                                                          </children>
                                                          <VBox.margin>
@@ -223,7 +256,7 @@
                                                       </HBox>
                                                       <HBox alignment="TOP_RIGHT" fillHeight="false">
                                                          <children>
-                                                            <Label fx:id="LabelAjoutExpPlaque" alignment="CENTER_RIGHT" text="Expérience bien ajoutée" textAlignment="RIGHT" visible="false">
+                                                            <Label fx:id="labelAjoutExpPlaque" alignment="CENTER_RIGHT" text="Expérience bien ajoutée" textAlignment="RIGHT" visible="false">
                                                                <font>
                                                                   <Font name="System Italic" size="13.0" />
                                                                </font>
@@ -267,6 +300,13 @@
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
+                                                               <graphic>
+                                                                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                                     <image>
+                                                                        <Image url="@plus.png" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                               </graphic>
                                                             </Button>
                                                          </children>
                                                          <VBox.margin>
@@ -275,7 +315,7 @@
                                                       </HBox>
                                                       <HBox alignment="TOP_RIGHT">
                                                          <children>
-                                                            <Label fx:id="LabelAjoutExpAttentLabel" alignment="CENTER_RIGHT" text="Expérience bien ajoutée" textAlignment="RIGHT" visible="false">
+                                                            <Label fx:id="labelAjoutExpAttentLabel" alignment="CENTER_RIGHT" text="Expérience bien ajoutée" textAlignment="RIGHT" visible="false">
                                                                <font>
                                                                   <Font name="System Italic" size="13.0" />
                                                                </font>
@@ -290,9 +330,12 @@
                                                       <Insets bottom="5.0" left="20.0" right="20.0" top="10.0" />
                                                    </VBox.margin>
                                                 </VBox>
-                                                <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="902.0">
+                                                <HBox alignment="TOP_RIGHT">
                                                    <children>
-                                                      <Button fx:id="buttonPlaque" mnemonicParsing="false" onAction="#clickOnButtonPlaque" onKeyPressed="#clickOnButtonPlaquePressed" style="-fx-background-color: #A9BCF5;" text="Voir la plaque" />
+                                                      <Button fx:id="buttonPlaque" mnemonicParsing="false" onAction="#clickOnButtonPlaque" onKeyPressed="#clickOnButtonPlaquePressed" style="-fx-background-color: #A9BCF5;" text="Voir la plaque">
+                                                         <HBox.margin>
+                                                            <Insets right="210.0" />
+                                                         </HBox.margin></Button>
                                                       <Label fx:id="labelLancePlaque" prefHeight="20.0" prefWidth="426.0" text="Il n'y a plus de place sur cette plaque, veuillez lancer la plaque" textFill="RED" visible="false">
                                                          <font>
                                                             <Font size="14.0" />
@@ -344,7 +387,7 @@
                               <Button fx:id="ButtonRetourComplPlaque" layoutX="813.0" layoutY="559.0" mnemonicParsing="false" onAction="#clickOnRetour" onKeyPressed="#clickOnRetourKeyPress" text="Retour" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="813.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="559.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="resultatExp">
+                        <AnchorPane fx:id="resultatExp" visible="false">
                            <children>
                               <TableView fx:id="tableResult" layoutX="72.0" layoutY="100.0" prefHeight="400.0" prefWidth="801.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="100.0">
                                  <columns>
@@ -376,7 +419,7 @@
                                                 <Font size="48.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="LabelValidExpResult" alignment="TOP_LEFT" prefHeight="50.0" prefWidth="262.0" text="Résultat de l'expérience numéro 1">
+                                          <Label fx:id="LabelValidExpResult" alignment="TOP_LEFT" prefHeight="50.0" style="-fx-background-color: #d7d7d7; -fx-background-radius: 5;" text="Résultat de l'expérience numéro 1">
                                              <opaqueInsets>
                                                 <Insets />
                                              </opaqueInsets>
@@ -386,6 +429,9 @@
                                              <font>
                                                 <Font name="System Italic" size="18.0" />
                                              </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
                                           </Label>
                                        </children>
                                        <opaqueInsets>
@@ -432,17 +478,17 @@
                                  <bottom>
                                     <HBox alignment="CENTER_RIGHT" prefHeight="100.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <ImageView fx:id="refuserIV1" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="refuserIV" fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../../../IHM_SANS_CONNEXION/IHMSANSBDD/IHMSANSBDD/IHMSANSBDD/src/projetbasededonnee/multiply.png" />
+                                                <Image url="@multiply.png" />
                                              </image>
                                              <HBox.margin>
                                                 <Insets right="20.0" />
                                              </HBox.margin>
                                           </ImageView>
-                                          <ImageView fx:id="validerResultat1" fitHeight="60.0" fitWidth="60.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="validerResultat" fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../../../IHM_SANS_CONNEXION/IHMSANSBDD/IHMSANSBDD/IHMSANSBDD/src/projetbasededonnee/checked.png" />
+                                                <Image url="@checked.png" />
                                              </image>
                                              <HBox.margin>
                                                 <Insets right="20.0" />

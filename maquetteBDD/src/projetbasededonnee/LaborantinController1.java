@@ -30,6 +30,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.image.ImageView;
 import static javafx.scene.input.KeyCode.ENTER;
 import javafx.scene.input.KeyEvent;
@@ -47,10 +48,12 @@ import javafx.util.Callback;
  */
 public class LaborantinController1 implements Initializable {
 
-    @FXML    private VBox menuVBox;
-    @FXML    private ImageView deconnexionIV;
-    @FXML    private ImageView home;
-    @FXML    private ImageView resultat;
+    @FXML    private Button buttonDeconnexion;
+    @FXML    private Button buttonHome;
+    @FXML    private Button buttonResultat;
+    @FXML    private Pane paneHome;
+    @FXML    private Pane paneDeco;
+    @FXML    private Pane paneResultat;
     
     @FXML    private AnchorPane accueilLaboPane;
     @FXML    private AnchorPane LancerPlaquePage;
@@ -108,8 +111,8 @@ public class LaborantinController1 implements Initializable {
     @FXML    private Label labelInfoPlaquePuits;
     @FXML    private Button buttonAddAR;
     @FXML    private Button buttonAddEA;
-    @FXML    private Label LabelAjoutExpPlaque;
-    @FXML    private Label LabelAjoutExpAttentLabel; 
+    @FXML    private Label labelAjoutExpPlaque;
+    @FXML    private Label labelAjoutExpAttentLabel; 
     @FXML    private Button sauvegardePlaque; 
     @FXML    private Button ButtonPlaque;
     @FXML    private Label labelLancePlaque; 
@@ -198,6 +201,7 @@ public class LaborantinController1 implements Initializable {
         EmplacementPlaquePage.setVisible(false);
         validationPage.setVisible(false);
         resultatExp.setVisible(false);
+        paneHome.setStyle("-fx-background-color:#A1102A"); 
         dataPlaque = FXCollections.observableArrayList();
         dataExpResult = FXCollections.observableArrayList();
         listeIdPlaque= new ArrayList();
@@ -206,6 +210,74 @@ public class LaborantinController1 implements Initializable {
         
     }    
 
+    /**
+     * Permet de coloriser le bouton et le pane du bouton DECONNEXION </br>
+     *  - <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton</br>
+     *  - <code>#A1102A</code> : couleur pourpre </br>
+     */
+    public void onMouseEnteredDeconnexion (){
+        buttonDeconnexion.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
+        paneDeco.setStyle("-fx-background-color:#A1102A");
+    }
+    
+    /**
+     * Permet de reinitialiser la couleur du bouton et du pane du bouton DECONNEXION</br>
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs </br>
+     */
+    public void onMouseExitedDeconnexion (){
+        buttonDeconnexion.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
+        paneDeco.setStyle("-fx-background-color:#d7d7d7");
+    }
+    
+    /**
+     * Permet de coloriser le bouton et le pane du bouton HOME </br>
+     * <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton </br>
+     * <code>#A1102A</code> : couleur pourpre </br>
+     */
+    public void onMouseEnteredHome (){
+        buttonHome.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
+        paneHome.setStyle("-fx-background-color:#A1102A");
+    }
+    
+    /**
+     * Permet de reinitialiser la couleur du bouton et du pane du bouton HOME </br>
+     * si pageHomeChercheur est n'est pas visible on change la couleur paneHome </br>
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs </br>
+     */
+    public void onMouseExitedHome (){
+        buttonHome.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
+        if (accueilLaboPane.isVisible() == true || EmplacementPlaquePage.isVisible() == true || LancerPlaquePage.isVisible() == true){
+            //nothing
+        }else{
+            paneHome.setStyle("-fx-background-color:#d7d7d7");
+        }
+        
+    }
+    /**
+     * Permet de coloriser le bouton et le pane du bouton NEW EXP </br>
+     * <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton </br>
+     * <code>#A1102A</code> : couleur pourpre </br>
+     */
+    public void onMouseEnteredResultat (){
+        buttonResultat.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
+        paneResultat.setStyle("-fx-background-color:#A1102A");
+    }
+    
+    /**
+     * Permet de reinitialiser la couleur du bouton et du pane du bouton NEW EXP </br>
+     * Si pageAjoutExp ou pageAddUplet ne sont pas visible alors on peut changer
+     * la couleur de paneNewExp </br>
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs 
+     */
+    public void onMouseExitedResultat (){
+        buttonResultat.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
+        if (validationPage.isVisible() == true || resultatExp.isVisible() == true){
+            // nothing
+        }else{
+            paneResultat.setStyle("-fx-background-color:#d7d7d7");
+        }
+    }
+    
     /**
      *  Initialisation des colonnes pour le tableau de la plaque accueil labo
      * Creation du bouton editer et des autres colonnes </br>
@@ -256,10 +328,8 @@ public class LaborantinController1 implements Initializable {
                         
                         setCellTableEnAttente();
                         loadDataExpEnAttente();
-                        LabelAjoutExpAttentLabel.setVisible(false);
-                        LabelAjoutExpPlaque.setVisible(false);
-                        buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
-                        buttonAddEA.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
+                        labelAjoutExpAttentLabel.setVisible(false);
+                        labelAjoutExpPlaque.setVisible(false);
                         setInfoPlaque(maPlaque);
                         labelLancePlaque.setVisible(false);
                 
@@ -392,9 +462,9 @@ public class LaborantinController1 implements Initializable {
                         validationPage.setVisible(true);
                         resultatExp.setVisible(false);
                         
-                        home.setDisable(true);
-                        resultat.setDisable(true);
-                        deconnexionIV.setDisable(true);
+                        buttonHome.setDisable(true);
+                        buttonResultat.setDisable(true);
+                        buttonDeconnexion.setDisable(true);
                 
                     });
                 }
@@ -486,7 +556,7 @@ public class LaborantinController1 implements Initializable {
      * le tableau d'experiences a renouveler
      */
     public void loadDataExpARenouveler(){
-        LabelAjoutExpPlaque.setVisible(false);
+        labelAjoutExpPlaque.setVisible(false);
        
         try{
             listeIdExp.clear(); 
@@ -510,7 +580,6 @@ public class LaborantinController1 implements Initializable {
         
         try{
             stmt1 = con.createStatement();
-            System.out.println(listeIdExp + "LISTE DES EXPERIENCES");
             for (Integer idExpValid : listeIdExp){
                 listeIdUplet.clear(); 
                 listeIdUpletValid.clear(); 
@@ -521,7 +590,6 @@ public class LaborantinController1 implements Initializable {
 
                         listeIdUplet.add(idUplet);
                 } 
-                System.out.println(listeIdUplet + " La liste de n_uplet");
                 for(Integer idU : listeIdUplet){
                     try{
                         rs=stmt.executeQuery("SELECT count(*) FROM PUIT WHERE ID_N_UPLET = "+ idU +"");
@@ -533,26 +601,18 @@ public class LaborantinController1 implements Initializable {
                          Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
-                System.out.println(listeIdUpletValid + " Mes id uplets sont correcte");
-                System.out.println(listeIdUpletValid.size() + " Mes id uplets sont correcte taille");
                 if(!listeIdUpletValid.isEmpty()){
                     rs1=stmt1.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE where id_experience = "+ idExpValid +" ");
                     while(rs1.next()){
-                        System.out.println("Ca rentre");
                         nomExp=rs1.getString(1);
                         typeAna=rs1.getString(2);
                         typeExp=rs1.getString(3);
                         nbPuits=rs1.getInt(4);
-                        System.out.println(nbPuits +"nbre de puit");
                     }
                     Integer nbrePuitUplet = listeIdUpletValid.size()*nbPuits;
-                    System.out.println(maPlaque.getPuitsDispo() + "plaque");
-                    System.out.println(nbrePuitUplet + "nbe puit uplet");
                     if (nbrePuitUplet <= maPlaque.getPuitsDispo()){
-                        System.out.println("PASSE DANS LE IF ");
                         dataExpARenouveler.add(new projetbasededonnee.Data.Laborantin(idExpValid, nomExp, listeIdUpletValid.size(), typeAna, typeExp, nbrePuitUplet));
                         tableExpARenouveler.setItems(dataExpARenouveler);
-                        System.out.println(dataExpARenouveler + " LA LISTE OBSERVABLE");
                     }
                 }
             }            
@@ -580,7 +640,7 @@ public class LaborantinController1 implements Initializable {
      * Methode qui recupere les donnees pour les mettre dans le tableau d'experiences en attente
      */
     public void loadDataExpEnAttente(){
-        LabelAjoutExpAttentLabel.setVisible(true); 
+        labelAjoutExpAttentLabel.setVisible(true); 
         con = connex.getCon(); 
         listeIdExpEA.clear();
         listeIdExpValidA.clear(); 
@@ -593,7 +653,6 @@ public class LaborantinController1 implements Initializable {
             rs=stmt.executeQuery("select distinct(id_experience) from EXPERIENCE join N_UPLET using (id_experience) where etat_exp = '"+"En Attente"+"'order by id_experience ASC");
             while(rs.next()){
                 idExp=rs.getInt(1);
-                System.out.println(idExp + "IDEXPERIENCE");
                 listeIdExpEA.add(idExp); 
             }
         } catch (SQLException e) {
@@ -626,21 +685,15 @@ public class LaborantinController1 implements Initializable {
        
                 rs1=stmt1.executeQuery("select nomexp, type_analyse, type_exp, nbpuit from EXPERIENCE where id_experience = "+ idExpValid +" ");
                 while(rs1.next()){
-                    System.out.println("Ca rentre");
                     nomExp=rs1.getString(1);
                     typeAna=rs1.getString(2);
                     typeExp=rs1.getString(3);
                     nbPuits=rs1.getInt(4);
-                    System.out.println(nbPuits +"nbre de puit");
                 }
                 Integer nbrePuitUplet = listeIdUpletValid.size()*nbPuits;
-                System.out.println(maPlaque.getPuitsDispo() + "plaque");
-                System.out.println(nbrePuitUplet + "nbe puit uplet");
                 if (nbrePuitUplet <= maPlaque.getPuitsDispo()){
-                    System.out.println("PASSE DANS LE IF ");
                     dataExpEnAttente.add(new projetbasededonnee.Data.Laborantin(idExpValid, nomExp, listeIdUpletValid.size(), typeAna, typeExp, nbrePuitUplet));
                     tableExpEnAttente.setItems(dataExpEnAttente);
-                    System.out.println(dataExpARenouveler + " LA LISTE OBSERVABLE");
                 }
             }
         
@@ -713,9 +766,10 @@ public class LaborantinController1 implements Initializable {
         ComboTypePlaque();
         loadDataPlaque();
         erreurAjoutPlaque.setVisible(false);
-        home.setDisable(false);
-        resultat.setDisable(false);
-        deconnexionIV.setDisable(false);
+        buttonHome.setDisable(false);
+        buttonResultat.setDisable(false);
+        buttonDeconnexion.setDisable(false);
+        paneResultat.setStyle("-fx-background-color:#d7d7d7");
     } 
     
     /**
@@ -756,13 +810,11 @@ public class LaborantinController1 implements Initializable {
                 if ("96puits".equals((String)cbTypePlaque.getValue())){
                     
                     maPlaque = new projetbasededonnee.Data.Laborantin(id_plaque,(String) cbTypePlaque.getSelectionModel().getSelectedItem(),96);
-                    System.out.println("96 plaque");
                 }
                 else if ("384puits".equals((String) cbTypePlaque.getSelectionModel().getSelectedItem()))
                 {   
                     //maPlaque.setPuits_dispo(384);
                     maPlaque = new projetbasededonnee.Data.Laborantin(id_plaque,(String) cbTypePlaque.getSelectionModel().getSelectedItem(),384);
-                    System.out.println("384 plaque");
                 }
                 //Creer une nouvelle plaque
                //labelInfoPlaquePuits.setText("Plaque n° " +maPlaque.getId_plaque()+ ". Il reste "+maPlaque.getPuits_dispo()+" puits dans la plaque");
@@ -785,16 +837,14 @@ public class LaborantinController1 implements Initializable {
                 setCellTableEnAttente();
                 loadDataExpEnAttente();
                 
-                LabelAjoutExpAttentLabel.setVisible(false);
-                LabelAjoutExpPlaque.setVisible(false);
-                buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
-                buttonAddEA.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
+                labelAjoutExpAttentLabel.setVisible(false);
+                labelAjoutExpPlaque.setVisible(false);
 
                 buttonAddAR.setDisable(false);
                 buttonAddEA.setDisable(false);
-                home.setDisable(true);
-                resultat.setDisable(true);
-                deconnexionIV.setDisable(true);
+                buttonHome.setDisable(true);
+                buttonResultat.setDisable(true);
+                buttonDeconnexion.setDisable(true);
                 sauvegardePlaque.setDisable(false);
                 //Averifier
                 buttonLancerPlaque.setDisable(true); 
@@ -847,13 +897,11 @@ public class LaborantinController1 implements Initializable {
                     if ("96puits".equals((String)cbTypePlaque.getValue())){
                         //martin.cmaPlaque.setPuits_dispo(96);
                         maPlaque = new projetbasededonnee.Data.Laborantin(id_plaque,(String) cbTypePlaque.getSelectionModel().getSelectedItem(),96);
-                        System.out.println("96 plaque");
                     }
                     else if ("384puits".equals((String) cbTypePlaque.getSelectionModel().getSelectedItem()))
                     {   
                         //maPlaque.setPuits_dispo(384);
                         maPlaque = new projetbasededonnee.Data.Laborantin(id_plaque,(String) cbTypePlaque.getSelectionModel().getSelectedItem(),384);
-                        System.out.println("384 plaque");
                     }
                     //Creer une nouvelle plaque
                    //labelInfoPlaquePuits.setText("Plaque n° " +maPlaque.getId_plaque()+ ". Il reste "+maPlaque.getPuits_dispo()+" puits dans la plaque");
@@ -872,16 +920,14 @@ public class LaborantinController1 implements Initializable {
                     setCellTableEnAttente();
                     loadDataExpEnAttente();
                     
-                    LabelAjoutExpAttentLabel.setVisible(false);
-                    LabelAjoutExpPlaque.setVisible(false);
-                    buttonAddAR.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
-                    buttonAddEA.setGraphic(new ImageView(new Image(getClass().getResource("plus.png").toExternalForm(), 20, 20, true, true)));
+                    labelAjoutExpAttentLabel.setVisible(false);
+                    labelAjoutExpPlaque.setVisible(false);
 
                     buttonAddAR.setDisable(false);
                     buttonAddEA.setDisable(false);
-                    home.setDisable(true);
-                    resultat.setDisable(true);
-                    deconnexionIV.setDisable(true);
+                    buttonHome.setDisable(true);
+                    buttonResultat.setDisable(true);
+                    buttonDeconnexion.setDisable(true);
                     sauvegardePlaque.setDisable(true);
                     buttonLancerPlaque.setDisable(true); 
 
@@ -920,9 +966,9 @@ public class LaborantinController1 implements Initializable {
         }
         labelInfoPlaquePuits.setText("Plaque n° " +maPlaque.getIdPlaque()+ ". Il reste "+maPlaque.getPuitsDispo()+" puits dans la plaque");
         if(maPlaque.getPuitsDispo()==0){
-            home.setDisable(true);
-            resultat.setDisable(true);
-            deconnexionIV.setDisable(true);
+            buttonHome.setDisable(true);
+            buttonResultat.setDisable(true);
+            buttonDeconnexion.setDisable(true);
             buttonAddAR.setDisable(true);
             buttonAddEA.setDisable(true);
             sauvegardePlaque.setDisable(true);
@@ -930,9 +976,9 @@ public class LaborantinController1 implements Initializable {
             buttonLancerPlaque.setDisable(false); 
         }
         else{
-            home.setDisable(true);
-            resultat.setDisable(true);
-            deconnexionIV.setDisable(true);
+            buttonHome.setDisable(true);
+            buttonResultat.setDisable(true);
+            buttonDeconnexion.setDisable(true);
             buttonAddAR.setDisable(false);
             buttonAddEA.setDisable(false);
             sauvegardePlaque.setDisable(false);
@@ -970,10 +1016,10 @@ public class LaborantinController1 implements Initializable {
         validationPage.setVisible(false);
         resultatExp.setVisible(true);
         
-        home.setDisable(false);
-        resultat.setDisable(false);
-        deconnexionIV.setDisable(false);
-        
+        buttonHome.setDisable(false);
+        buttonResultat.setDisable(false);
+        buttonDeconnexion.setDisable(false);
+        paneHome.setStyle("-fx-background-color:#d7d7d7");
         setCellTableResult();
         loadDataResultExp();
         
@@ -992,17 +1038,17 @@ public class LaborantinController1 implements Initializable {
             setCellTableARenouveler();
             loadDataExpARenouveler();
             setInfoPlaque(maPlaque);
-            LabelAjoutExpPlaque.setText("Expérience bien ajoutée");
-            LabelAjoutExpPlaque.setVisible(true);
-            home.setDisable(true);
+            labelAjoutExpPlaque.setText("Expérience bien ajoutée");
+            labelAjoutExpPlaque.setVisible(true);
+            buttonHome.setDisable(true);
             
             setCellTableEnAttente();
             loadDataExpEnAttente();
           
         }
         else{
-            LabelAjoutExpPlaque.setText("Veuillez selectionner une ligne");
-            LabelAjoutExpPlaque.setVisible(true);
+            labelAjoutExpPlaque.setText("Veuillez selectionner une ligne");
+            labelAjoutExpPlaque.setVisible(true);
         }
     }
     
@@ -1019,17 +1065,17 @@ public class LaborantinController1 implements Initializable {
             setCellTableARenouveler();
             loadDataExpARenouveler();
             setInfoPlaque(maPlaque);
-            LabelAjoutExpPlaque.setText("Expérience bien ajoutée");
-            LabelAjoutExpPlaque.setVisible(true);
-            home.setDisable(true);
+            labelAjoutExpPlaque.setText("Expérience bien ajoutée");
+            labelAjoutExpPlaque.setVisible(true);
+            buttonHome.setDisable(true);
             
             setCellTableEnAttente();
             loadDataExpEnAttente();
 
             }
             else{
-                LabelAjoutExpPlaque.setText("Veuillez selectionner une ligne");
-                LabelAjoutExpPlaque.setVisible(true);
+                labelAjoutExpPlaque.setText("Veuillez selectionner une ligne");
+                labelAjoutExpPlaque.setVisible(true);
             }
         }
     }
@@ -1047,15 +1093,15 @@ public class LaborantinController1 implements Initializable {
             setCellTableEnAttente();
             loadDataExpEnAttente();
             setInfoPlaque(maPlaque);
-            LabelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
-            LabelAjoutExpAttentLabel.setVisible(true);
+            labelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
+            labelAjoutExpAttentLabel.setVisible(true);
             
             setCellTableARenouveler();
             loadDataExpARenouveler();
         }
         else{
-            LabelAjoutExpAttentLabel.setText("Veuillez selectionner une ligne");
-            LabelAjoutExpAttentLabel.setVisible(true);
+            labelAjoutExpAttentLabel.setText("Veuillez selectionner une ligne");
+            labelAjoutExpAttentLabel.setVisible(true);
         }
         
     }
@@ -1073,15 +1119,15 @@ public class LaborantinController1 implements Initializable {
                 setCellTableEnAttente();
                 loadDataExpEnAttente();
                 setInfoPlaque(maPlaque);
-                LabelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
-                LabelAjoutExpAttentLabel.setVisible(true);
+                labelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
+                labelAjoutExpAttentLabel.setVisible(true);
                 
                 setCellTableARenouveler();
                 loadDataExpARenouveler();
             }
             else{
-                LabelAjoutExpAttentLabel.setText("Veuillez selectionner une ligne");
-                LabelAjoutExpAttentLabel.setVisible(true);
+                labelAjoutExpAttentLabel.setText("Veuillez selectionner une ligne");
+                labelAjoutExpAttentLabel.setVisible(true);
             }
         }
     }
@@ -1104,7 +1150,6 @@ public class LaborantinController1 implements Initializable {
         while (rs4.next()) { 
             
             Integer id_uplet= rs4.getInt(1);
-            System.out.println(id_uplet);
             listeIdUplet.add(id_uplet); 
         }
     }catch (SQLException e) {
@@ -1128,16 +1173,12 @@ public class LaborantinController1 implements Initializable {
             Integer nbrePuit_Uplet= experience.getNbPuits()/experience.getNbUplet();
             Integer puits_dispo=plaque.getPuitsDispo(); 
             Integer puits_exp=experience.getNbPuits(); 
-            System.out.println(nbrePuit_Uplet + "nbre puit par upet");
-            System.out.println(puits_dispo + "puit dispo" );
-            System.out.println(puits_exp +" puit expe total");
+
             if (puits_dispo >=  puits_exp){
                 if (puits_dispo == 96){
                     int X=1;
                     int Y=1;
-                    System.out.println("plaque vide");
                     for (Integer idUplet : listeIdUpletValid) {
-                        System.out.println(idUplet);
                         for (int i=1; i <= nbrePuit_Uplet; i++){
                             try{
                                 rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");   
@@ -1167,21 +1208,14 @@ public class LaborantinController1 implements Initializable {
                         while (rs.next()) { 
                             X = rs.getInt(1);
                             Y = rs.getInt(2);
-                            System.out.println(rs.getInt(1));
-                            System.out.println(rs.getInt(2));
                         }
-                        System.out.println(X);
-                        System.out.println(Y);
                         
                     }catch (SQLException e) {
                         Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                     }
                     
                     for (Integer idUplet : listeIdUpletValid) {
-                        System.out.println(idUplet);
                         for (int i=1; i <= nbrePuit_Uplet; i++){
-                            System.out.println(nbrePuit_Uplet);
-                            System.out.println(i); 
                             if (Y == 8) {
                                 X=X+1;
                                 Y=1;
@@ -1207,7 +1241,6 @@ public class LaborantinController1 implements Initializable {
             {
                 Integer nbreUpletAInserer = puits_dispo/nbrePuit_Uplet;
                 Integer nb=1;
-                System.out.println(nbreUpletAInserer + "nbre uplet a inserer");
                 int X=0; 
                 int Y=0; 
                 try{
@@ -1217,17 +1250,13 @@ public class LaborantinController1 implements Initializable {
                         X = rs.getInt(1);
                         Y = rs.getInt(2);
                     }
-                    System.out.println(X);
-                    System.out.println(Y);
 
                 }catch (SQLException e) {
                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
                 while( nb <= nbreUpletAInserer){
-                    System.out.println(nb + " nb");
                     Integer idUplet=listeIdUpletValid.get(nb);
                      for (int i=1; i <= nbrePuit_Uplet; i++){
-                        System.out.println(i);
                         if (Y == 8) {
                             X=X+1;
                             Y=1;
@@ -1236,12 +1265,9 @@ public class LaborantinController1 implements Initializable {
                         {
                             Y=Y+1;
                         }
-                        System.out.println(X);
-                        System.out.println(Y);
                         try{
                         rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");
                         maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);   
-                        System.out.println("INSERTION DANS UN PUIT SUR PLAQUE MAIS PAS TOUTE EXPERIENCE");
                         }catch (SQLException e) {
                             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                         }
@@ -1257,9 +1283,6 @@ public class LaborantinController1 implements Initializable {
             Integer nbrePuit_Uplet= experience.getNbPuits()/experience.getNbUplet();
             Integer puits_dispo=plaque.getPuitsDispo(); 
             Integer puits_exp=experience.getNbPuits(); 
-            System.out.println(nbrePuit_Uplet + "nbre puit par upet");
-            System.out.println(puits_dispo + "puit dispo" );
-            System.out.println(puits_exp +" puit expe total");
             if (puits_dispo >=  puits_exp){
                 if (puits_dispo == 384){
                     int X=1;
@@ -1267,7 +1290,6 @@ public class LaborantinController1 implements Initializable {
 
                    
                     for (Integer idUplet : listeIdUpletValid) {
-                        System.out.println(idUplet);
                         for (int i=1; i <= nbrePuit_Uplet; i++){
                             try{
                             stmt = con.createStatement();
@@ -1298,18 +1320,13 @@ public class LaborantinController1 implements Initializable {
                             X = rs.getInt(1);
                             Y = rs.getInt(2);
                         }
-                        System.out.println(X);
-                        System.out.println(Y);
                         
                     }catch (SQLException e) {
                         Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                     }
                     
                     for (Integer idUplet : listeIdUpletValid) {
-                        System.out.println(idUplet);
                         for (int i=1; i <= nbrePuit_Uplet; i++){
-                            System.out.println(nbrePuit_Uplet);
-                            System.out.println(i); 
                             if (Y == 16) {
                                 X=X+1;
                                 Y=1;
@@ -1335,7 +1352,6 @@ public class LaborantinController1 implements Initializable {
             {
                 Integer nbreUpletAInserer = puits_dispo/nbrePuit_Uplet;
                 Integer nb=1;
-                System.out.println(nbreUpletAInserer + "nbre uplet a inserer");
                 int X=0; 
                 int Y=0; 
                 try{
@@ -1345,17 +1361,13 @@ public class LaborantinController1 implements Initializable {
                         X = rs.getInt(1);
                         Y = rs.getInt(2);
                     }
-                    System.out.println(X);
-                    System.out.println(Y);
 
                 }catch (SQLException e) {
                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
                 while( nb <= nbreUpletAInserer){
-                    System.out.println(nb + " nb");
                     Integer idUplet=listeIdUpletValid.get(nb);
                      for (int i=1; i <= nbrePuit_Uplet; i++){
-                        System.out.println(i);
                         if (Y == 16) {
                             X=X+1;
                             Y=1;
@@ -1364,13 +1376,9 @@ public class LaborantinController1 implements Initializable {
                         {
                             Y=Y+1;
                         }
-                        System.out.println(X);
-                        System.out.println(Y);
                         try{
-                    
                         rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");
                         maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);   
-                        System.out.println("INSERTION DANS UN PUIT SUR PLAQUE MAIS PAS TOUTE EXPERIENCE");
                         }catch (SQLException e) {
                             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                         }
@@ -1442,7 +1450,6 @@ public class LaborantinController1 implements Initializable {
                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
-            System.out.println("Exp "+listExp.get(i)+" listResNbPuit "+listResNbPuit);
             // si la liste contient pas 0 alors passage de l'experience a 'en cours'
             if (listResNbPuit.contains(0)){
                 // nothing
@@ -1488,8 +1495,8 @@ public class LaborantinController1 implements Initializable {
         
         
         //Remet les setDisable à false pour la page completer plaque
-        resultat.setDisable(true);
-        deconnexionIV.setDisable(true);
+        buttonResultat.setDisable(true);
+        buttonDeconnexion.setDisable(true);
         buttonAddAR.setDisable(false);
         buttonAddEA.setDisable(false);
         sauvegardePlaque.setDisable(false);
@@ -1530,8 +1537,9 @@ public class LaborantinController1 implements Initializable {
         EmplacementPlaquePage.setVisible(false);
         validationPage.setVisible(false);
         resultatExp.setVisible(false);
-        resultat.setDisable(false);
-        deconnexionIV.setDisable(false);
+        buttonResultat.setDisable(false);
+        buttonDeconnexion.setDisable(false);
+        buttonHome.setDisable(false);
         loadDataPlaque();
         setCellTablePlaque();
     }
@@ -1548,8 +1556,9 @@ public class LaborantinController1 implements Initializable {
             EmplacementPlaquePage.setVisible(false);
             validationPage.setVisible(false);
             resultatExp.setVisible(false);
-            resultat.setDisable(false);
-            deconnexionIV.setDisable(false);
+            buttonResultat.setDisable(false);
+            buttonDeconnexion.setDisable(false);
+            buttonHome.setDisable(false);
             loadDataPlaque();
             setCellTablePlaque(); 
         }
@@ -1654,9 +1663,9 @@ public class LaborantinController1 implements Initializable {
             EmplacementPlaquePage.setVisible(false);
             validationPage.setVisible(false);
             resultatExp.setVisible(false);
-            home.setDisable(false);
-            resultat.setDisable(false);
-            deconnexionIV.setDisable(false);
+            buttonHome.setDisable(false);
+            buttonResultat.setDisable(false);
+            buttonDeconnexion.setDisable(false);
             loadDataPlaque();
             setCellTablePlaque();
         }
@@ -1690,9 +1699,9 @@ public class LaborantinController1 implements Initializable {
                 EmplacementPlaquePage.setVisible(false);
                 validationPage.setVisible(false);
                 resultatExp.setVisible(false);
-                home.setDisable(false);
-                resultat.setDisable(false);
-                deconnexionIV.setDisable(false);
+                buttonHome.setDisable(false);
+                buttonResultat.setDisable(false);
+                buttonDeconnexion.setDisable(false);
                 loadDataPlaque();
                 setCellTablePlaque();
             }
