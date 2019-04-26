@@ -1383,7 +1383,7 @@ public class AcceuilChercheurController implements Initializable {
                   
     /**
      * Setter pour la connexion
-     * @param cone 
+     * @param cone une connexion
      */
     public void setConnection(Connexion cone)
     {
@@ -1392,7 +1392,7 @@ public class AcceuilChercheurController implements Initializable {
     
     /**
      * Setter pour la personne qui est connectée
-     * @param personneE 
+     * @param personneE une personne
      */
     public void setPersonne(Personne personneE){
         personne=personneE; 
@@ -1401,16 +1401,16 @@ public class AcceuilChercheurController implements Initializable {
 }
 
 //Classe pour inserer une date
- class MyConverter extends StringConverter<Integer> {
+class MyConverter extends StringConverter<Integer> {
  
-       @Override
-       public String toString(Integer object) {
-           return object + "";
-       }
- 
-       @Override
-       public Integer fromString(String string) {
-           return Integer.parseInt(string);
-       }
+    @Override
+    public String toString(Integer object) {
+        return object + "";
+    }
+
+    @Override
+    public Integer fromString(String string) {
+        return Integer.parseInt(string);
+    }
  
    }
