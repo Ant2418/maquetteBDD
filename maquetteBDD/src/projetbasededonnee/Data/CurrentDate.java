@@ -5,17 +5,20 @@
  */
 package projetbasededonnee.Data;
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 /**
- *
- * @author Antoine
+ * Permet de créer une date au format bdd
+ * @author Antoine et Ludivine
+ * @version 24/04/2019
  */
 public class CurrentDate {
-    private java.util.Date date;
-    private SimpleDateFormat dateFormat;
+    private final java.util.Date date;
+    private final SimpleDateFormat dateFormat;
+    
+    /**
+     * Constructeur pour la date
+     */
     public CurrentDate(){
 		//get current date time using java.util.Date class
 		 date = new java.util.Date();
@@ -24,11 +27,20 @@ public class CurrentDate {
                  //HH:mm:ss
 		//formatting date time
 		System.out.println(dateFormat.format(date));
-	}
+    }
+    
+    /**
+     * Getter pour la date
+     * @return date
+     */
     public java.util.Date getDate(){
         return date;
     }
     
+    /**
+     * Getter pour SimpleDateFormat
+     * @return dateFormat
+     */
     public SimpleDateFormat getdateFormat(){
         return dateFormat;
     }

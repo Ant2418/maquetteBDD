@@ -60,7 +60,7 @@ public class ProjetBaseDeDonnee extends Application {
     
     /**
      * Getter de la personne qui est connecte
-     * @return 
+     * @return pers
      */
     public Personne getPersonne(){
         return pers; 
@@ -68,7 +68,7 @@ public class ProjetBaseDeDonnee extends Application {
     
     /**
      * Getter de la connexion
-     * @return 
+     * @return maCo
      */
     public Connexion getConnect(){
         return maCo; 

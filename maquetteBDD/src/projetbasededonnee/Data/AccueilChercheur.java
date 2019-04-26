@@ -9,184 +9,345 @@ import java.sql.Date;
 
 /**
  *
- * @author Ludivine
+ * Classe accueilChercheur qui permet de faire des tableaux
+ * @author Ludivine et Antoine
+ * @version 24/04/2019
  */
 public class AccueilChercheur {
+    
     private Integer idExp; 
-    private String nom_exp; 
-    private String etat_exp; 
+    private String nomExp; 
+    private String etatExp; 
     private String nom; 
     private String prenom; 
-    private String type_exp; 
-    private String type_analyse; 
-    private Integer nb_puit; 
-    private Date horo_deb; 
-    private Date horo_fin;
-    private Integer nb_replicat;
-    private Integer id_uplet; 
-    private String nom_agent_bio;
-    private String nom_cellule;
-    private Integer qte_agent_bio;
-    private Integer qte_cellule;
+    private String typeExp; 
+    private String typeAnalyse; 
+    private Integer nbPuit; 
+    private Date horoDeb; 
+    private Date horoFin;
+    private Integer nbReplicat;
+    private Integer idUplet; 
+    private String nomAgentBio;
+    private String nomCellule;
+    private Integer qteAgentBio;
+    private Integer qteCellule;
 
-    public AccueilChercheur(Integer id_uplet, String nomAgent_bio, String nomCellule, Integer quantiteAgent_bio, Integer quantiteCellule) {
-        this.id_uplet = id_uplet;
-        this.nom_agent_bio = nomAgent_bio;
-        this.nom_cellule = nomCellule;
-        this.qte_agent_bio = quantiteAgent_bio;
-        this.qte_cellule = quantiteCellule;
+
+    /**
+     * Constructeur pour dataUpletTotal / tableNUplet
+     * @param idUplet identifiant de l'uplet
+     * @param nomAgentBio nom de l'agent biologique
+     * @param nomCellule nom de la cellule
+     * @param quantiteAgentBio quantitee de d'agent biologique
+     * @param quantiteCellule  quantitee de cellule
+     */
+    public AccueilChercheur(Integer idUplet, String nomAgentBio, String nomCellule, Integer quantiteAgentBio, Integer quantiteCellule) {
+        this.idUplet = idUplet;
+        this.nomAgentBio = nomAgentBio;
+        this.nomCellule = nomCellule;
+        this.qteAgentBio = quantiteAgentBio;
+        this.qteCellule = quantiteCellule;
     }
     
-    public AccueilChercheur(Integer idExp, String nom_exp, String etat_exp, String nom, String type_exp, String type_analyse, Integer nb_replicat, Integer nb_puit, Date horo_deb, Date horo_fin) {
-        this.idExp = idExp;
-        this.nom_exp = nom_exp;
-        this.etat_exp = etat_exp;
+    /**
+     * Constructeur pour 
+     * @see projetbasededonnee.AcceuilChercheurController#dataAccueil
+     * @see tableAccueilChercheur
+     * @param idExp identifiant de l'experience
+     * @param nomExp nom de l'experience
+     * @param etatExp etat de l'experience "En Cours", "Terminee", "En Attente", "Facturee", "A renouveler"
+     * @param nom nom de l'experience
+     * @param typeExp type d'experience "Immunologique", "Toxicologique"
+     * @param typeAnalyse type d'analyse "Colorimetrique", "Opacimetrique"
+     * @param nbReplicat nombre d'uplet
+     * @param nbPuits nombre puits
+     * @param horoDeb date de debut de l'experience format DD/MM/YYYY
+     * @param horoFin date de fin de l'experience format DD/MM/YYYY
+     */
+    public AccueilChercheur(Integer idExp, String nomExp, String etatExp, String nom, String typeExp, String typeAnalyse, Integer nbReplicat, Integer nbPuits, Date horoDeb, Date horoFin) {
+        this.idExp = idExp; 
+        this.nomExp = nomExp;
+        this.etatExp = etatExp;
         this.nom = nom;
-        this.type_exp = type_exp;
-        this.type_analyse = type_analyse;
-        this.nb_replicat = nb_replicat;
-        this.nb_puit = nb_puit;
-        this.horo_deb = horo_deb;
-        this.horo_fin = horo_fin;
+        this.typeExp = typeExp;
+        this.typeAnalyse = typeAnalyse;
+        this.nbReplicat = nbReplicat;
+        this.nbPuit = nbPuits;
+        this.horoDeb = horoDeb;
+        this.horoFin = horoFin;
         
     }
 
-    public AccueilChercheur(Integer idExp, String nom_exp, String etat_exp, String type_exp, String type_analyse) {
+    /**
+     * Constructeur qui permet de faire le tableau pour les expériences
+     * @param idExp
+     * @param nomExp
+     * @param etatExp
+     * @param typeExp
+     * @param typeAnalyse 
+     */
+    public AccueilChercheur(Integer idExp, String nomExp, String etatExp, String typeExp, String typeAnalyse) {
         this.idExp = idExp;
-        this.nom_exp = nom_exp;
-        this.etat_exp = etat_exp;
-        this.type_exp = type_exp;
-        this.type_analyse = type_analyse;
+        this.nomExp = nomExp;
+        this.etatExp = etatExp;
+        this.typeExp = typeExp;
+        this.typeAnalyse = typeAnalyse;
     }
     
-    public void setNom_agent_bio(String nom_agent_bio) {
-        this.nom_agent_bio = nom_agent_bio;
+    /**
+     * Setter du nom de l'agent biologique
+     * @param nomAgentBio nom de l'agent biologique
+     */
+    public void setNomAgentBio(String nomAgentBio) {
+        this.nomAgentBio = nomAgentBio;
     }
 
-    public void setNom_cellule(String nom_cellule) {
-        this.nom_cellule = nom_cellule;
+    /**
+     * Setter du nom de la cellule
+     * @param nomCellule nom de la cellule
+     */
+    public void setNomCellule(String nomCellule) {
+        this.nomCellule = nomCellule;
     }
 
-    public void setQte_agent_bio(Integer qte_agent_bio) {
-        this.qte_agent_bio = qte_agent_bio;
+    /**
+     *  setter
+     * @param qteAgentBio quantitee d'agent biologique 
+     */
+    public void setQteAgentBio(Integer qteAgentBio) {
+        this.qteAgentBio = qteAgentBio;
     }
 
-    public void setQte_cellule(Integer qte_cellule) {
-        this.qte_cellule = qte_cellule;
+    /**
+     * setter
+     * @param qteCellule quantitee de cellule
+     */
+    public void setQteCellule(Integer qteCellule) {
+        this.qteCellule = qteCellule;
     }
 
-    public String getNom_agent_bio() {
-        return nom_agent_bio;
+    /**
+     * getter
+     * @return nomAgentBio
+     */
+    public String getNomAgentBio() {
+        return nomAgentBio;
     }
 
-    public String getNom_cellule() {
-        return nom_cellule;
+    /**
+     * getter
+     * @return nomCellule
+     */
+    public String getNomCellule() {
+        return nomCellule;
     }
 
-    public Integer getQte_agent_bio() {
-        return qte_agent_bio;
+    /**
+     * getter
+     * @return qteAgentBio
+     */
+    public Integer getQteAgentBio() {
+        return qteAgentBio;
     }
 
-    public Integer getQte_cellule() {
-        return qte_cellule;
+    /**
+     * getter
+     * @return qteCellule
+     */
+    public Integer getQteCellule() {
+        return qteCellule;
     }
     
-    
-
-    public void setId_uplet(Integer id_uplet) {
-        this.id_uplet = id_uplet;
+    /**
+     * setter
+     * @param idUplet identifiant de l'uplet
+     */
+    public void setIdUplet(Integer idUplet) {
+        this.idUplet = idUplet;
     }
 
-    public Integer getId_uplet() {
-        return id_uplet;
+    /**
+     * getter
+     * @return idUplet
+     */
+    public Integer getIdUplet() {
+        return idUplet;
     }
 
-    public void setNb_replicat(Integer nb_replicat) {
-        this.nb_replicat = nb_replicat;
+    /**
+     * setter 
+     * @param nbReplicat nombre de replicat
+     */
+    public void setNbReplicat(Integer nbReplicat) {
+        this.nbReplicat = nbReplicat;
     }
 
-    public Integer getNb_replicat() {
-        return nb_replicat;
+    /**
+     * getter
+     * @return nbReplicat
+     */
+    public Integer getNbReplicat() {
+        return nbReplicat;
     }
 
+    /**
+     * setter 
+     * @param idExp identifiant de l'experience
+     */
     public void setIdExp(Integer idExp) {
         this.idExp = idExp;
     }
 
-    public void setNom_exp(String nom_exp) {
-        this.nom_exp = nom_exp;
+    /**
+     * setter
+     * @param nomExp nom de l'experience
+     */
+    public void setNomExp(String nomExp) {
+        this.nomExp = nomExp;
     }
 
-    public void setEtat_exp(String etat_exp) {
-        this.etat_exp = etat_exp;
+    /**
+     * setter 
+     * @param etatExp etat de l'experience "En Cours", "Terminee", "En Attente", "Facturee", "A renouveler"
+     */
+    public void setEtatExp(String etatExp) {
+        this.etatExp = etatExp;
     }
 
+    /**
+     * setter 
+     * @param nom de la personne qui fait l'experience
+     */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     * setter
+     * @param prenom de la personne qui fait l'experience
+     */
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
 
-    public void setType_exp(String type_exp) {
-        this.type_exp = type_exp;
+    /**
+     * setter
+     * @param typeExp type d'experience "Colorimetrique", "Opacimetrique"
+     */
+    public void setTypeExp(String typeExp) {
+        this.typeExp = typeExp;
     }
 
-    public void setType_analyse(String type_analyse) {
-        this.type_analyse = type_analyse;
+    /**
+     * setter
+     * @param typeAnalyse type d'analyse "Immunologique", "Toxicologique"
+     */
+    public void setTypeAnalyse(String typeAnalyse) {
+        this.typeAnalyse = typeAnalyse;
     }
 
-    public void setNb_puit(Integer nb_puit) {
-        this.nb_puit = nb_puit;
+    /**
+     * setter
+     * @param nbPuit nombre de puit
+     */
+    public void setNbPuit(Integer nbPuit) {
+        this.nbPuit = nbPuit;
     }
 
-    public void setHoro_deb(Date horo_deb) {
-        this.horo_deb = horo_deb;
+    /**
+     * setter
+     * @param horoDeb date de debut de l'experience Format DD/MM/YYYY
+     */
+    public void setHoroDeb(Date horoDeb) {
+        this.horoDeb = horoDeb;
     }
 
-    public void setHoro_fin(Date horo_fin) {
-        this.horo_fin = horo_fin;
+    /**
+     * setter
+     * @param horoFin date de fin de l'experience Format DD/MM/YYYY
+     */
+    public void setHoroFin(Date horoFin) {
+        this.horoFin = horoFin;
     }
 
+    /**
+     * getter
+     * @return idExp
+     */
     public Integer getIdExp() {
         return idExp;
     }
 
-    public String getNom_exp() {
-        return nom_exp;
+    /**
+     * getter
+     * @return nomExp
+     */
+    public String getNomExp() {
+        return nomExp;
     }
 
-    public String getEtat_exp() {
-        return etat_exp;
+    /**
+     * getter
+     * @return etatExp
+     */
+    public String getEtatExp() {
+        return etatExp;
     }
 
+    /**
+     * getter
+     * @return nom
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     * getter
+     * @return prenom
+     */
     public String getPrenom() {
         return prenom;
     }
 
-    public String getType_exp() {
-        return type_exp;
+    /**
+     * getter
+     * @return typeExp
+     */
+    public String getTypeExp() {
+        return typeExp;
     }
 
-    public String getType_analyse() {
-        return type_analyse;
+    /**
+     * getter
+     * @return typeAnalyse
+     */
+    public String getTypeAnalyse() {
+        return typeAnalyse;
     }
 
-    public Integer getNb_puit() {
-        return nb_puit;
+    /**
+     * getter
+     * @return nbPuit
+     */
+    public Integer getNbPuit() {
+        return nbPuit;
     }
 
-    public Date getHoro_deb() {
-        return horo_deb;
+    /**
+     * getter
+     * @return horoDeb
+     */
+    public Date getHoroDeb() {
+        return horoDeb;
     }
 
-    public Date getHoro_fin() {
-        return horo_fin;
+    /**
+     * getter
+     * @return horoFin
+     */
+    public Date getHoroFin() {
+        return horoFin;
     }
     
 }
