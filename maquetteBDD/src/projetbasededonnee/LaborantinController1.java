@@ -796,7 +796,7 @@ public class LaborantinController1 implements Initializable {
             try{
                 stmt = con.createStatement();
                 //INSERTION d'une plaque
-                rs= stmt.executeQuery("INSERT INTO PLAQUE (id_plaque, type_plaque, EstRefuse)VALUES("+ 1 + ", '"+ cbTypePlaque.getSelectionModel().getSelectedItem()+ "', "+ 0 +")");
+                rs= stmt.executeQuery("INSERT INTO PLAQUE (id_plaque, type_plaque, EstRefuse, ESTTERMINE)VALUES("+ 1 + ", '"+ cbTypePlaque.getSelectionModel().getSelectedItem()+ "', "+ 0 +", "+ 0 +")");
 
                 try{
                 stmt = con.createStatement();
@@ -884,7 +884,7 @@ public class LaborantinController1 implements Initializable {
 
                 try{
                     stmt = con.createStatement();
-                    rs= stmt.executeQuery("INSERT INTO PLAQUE (id_plaque, type_plaque, EstRefuse)VALUES("+ 1 + ", '"+ cbTypePlaque.getSelectionModel().getSelectedItem()+ "', "+ 0 +")");
+                    rs= stmt.executeQuery("INSERT INTO PLAQUE (id_plaque, type_plaque, EstRefuse, ESTTERMINE)VALUES("+ 1 + ", '"+ cbTypePlaque.getSelectionModel().getSelectedItem()+ "', "+ 0 +", "+0+")");
 
                     try{
                     stmt = con.createStatement();
@@ -1507,8 +1507,6 @@ public class LaborantinController1 implements Initializable {
         }catch (SQLException e) {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
-
-
 
        //Mettre à jour le tableau de la page d'accueil
         loadDataPlaque();
