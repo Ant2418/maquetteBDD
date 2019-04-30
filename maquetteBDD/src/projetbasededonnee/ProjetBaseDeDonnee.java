@@ -42,7 +42,7 @@ public class ProjetBaseDeDonnee extends Application {
         pers= new Personne("0", "0", "0", "0");
         coCo.setPersonne(pers); 
         
-        primaryStage.setTitle("Gestions de plaque de laboratoire");
+        primaryStage.setTitle("Gestion de laboratoire");
         primaryStage.setMinWidth(1020);
         primaryStage.setMinHeight(610);
         primaryStage.setScene(scene);
