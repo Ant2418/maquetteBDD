@@ -29,11 +29,6 @@ public class Connexion {
             Statement stmt = con.createStatement();
             
             projetbasededonnee.Data.CurrentDate data = new projetbasededonnee.Data.CurrentDate();
-            //step4 execute query  
-//            ResultSet rs = stmt.executeQuery("select * from EXPERIENCE");
-//            while (rs.next()) {
-//                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
-//            }
           
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);

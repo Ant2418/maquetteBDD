@@ -1,5 +1,5 @@
 /*
- * Controller base de données
+ * Controller du laborantin avec connexion
  */
 package projetbasededonnee;
 
@@ -191,11 +191,11 @@ public class LaborantinController1 implements Initializable {
      
     
     /**
-     * Initialisation de la classe controlleur pour le laborantin </br>
-     *  - Page d'accueil du laborantin est visible </br>
-     *  - Page ajouter une plaque, ou la remplir, l'emplacement de la plaque, la validation des résultats sont invisibles </br>
-     *  - instantiation de l'observableList dataPlaque </br>
-     *  - instantiation d'une ArrayList dataExpResult </br>
+     * Initialisation de la classe controlleur pour le laborantin 
+     *  - Page d'accueil du laborantin est visible 
+     *  - Page ajouter une plaque, ou la remplir, l'emplacement de la plaque, la validation des résultats sont invisibles 
+     *  - instantiation de l'observableList dataPlaque 
+     *  - instantiation d'une ArrayList dataExpResult 
      * @param url
      * @param rb
      */
@@ -217,9 +217,9 @@ public class LaborantinController1 implements Initializable {
     }    
 
     /**
-     * Permet de coloriser le bouton et le pane du bouton DECONNEXION </br>
-     *  - <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton</br>
-     *  - <code>#A1102A</code> : couleur pourpre </br>
+     * Permet de coloriser le bouton et le pane du bouton DECONNEXION 
+     *  - <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton
+     *  - <code>#A1102A</code> : couleur pourpre 
      */
     public void onMouseEnteredDeconnexion (){
         buttonDeconnexion.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
@@ -227,8 +227,8 @@ public class LaborantinController1 implements Initializable {
     }
     
     /**
-     * Permet de reinitialiser la couleur du bouton et du pane du bouton DECONNEXION</br>
-     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs </br>
+     * Permet de reinitialiser la couleur du bouton et du pane du bouton DECONNEXION
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs 
      */
     public void onMouseExitedDeconnexion (){
         buttonDeconnexion.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
@@ -236,9 +236,9 @@ public class LaborantinController1 implements Initializable {
     }
     
     /**
-     * Permet de coloriser le bouton et le pane du bouton HOME </br>
-     * <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton </br>
-     * <code>#A1102A</code> : couleur pourpre </br>
+     * Permet de coloriser le bouton et le pane du bouton HOME 
+     * <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton 
+     * <code>#A1102A</code> : couleur pourpre 
      */
     public void onMouseEnteredHome (){
         buttonHome.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
@@ -246,9 +246,9 @@ public class LaborantinController1 implements Initializable {
     }
     
     /**
-     * Permet de reinitialiser la couleur du bouton et du pane du bouton HOME </br>
-     * si pageHomeChercheur est n'est pas visible on change la couleur paneHome </br>
-     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs </br>
+     * Permet de reinitialiser la couleur du bouton et du pane du bouton HOME 
+     * si pageHomeChercheur est n'est pas visible on change la couleur paneHome 
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs 
      */
     public void onMouseExitedHome (){
         buttonHome.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
@@ -260,9 +260,9 @@ public class LaborantinController1 implements Initializable {
         
     }
     /**
-     * Permet de coloriser le bouton et le pane du bouton NEW EXP </br>
-     * <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton </br>
-     * <code>#A1102A</code> : couleur pourpre </br>
+     * Permet de coloriser le bouton et le pane du bouton NEW EXP 
+     * <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton 
+     * <code>#A1102A</code> : couleur pourpre 
      */
     public void onMouseEnteredResultat (){
         buttonResultat.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
@@ -270,9 +270,9 @@ public class LaborantinController1 implements Initializable {
     }
     
     /**
-     * Permet de reinitialiser la couleur du bouton et du pane du bouton NEW EXP </br>
+     * Permet de reinitialiser la couleur du bouton et du pane du bouton NEW EXP 
      * Si pageAjoutExp ou pageAddUplet ne sont pas visible alors on peut changer
-     * la couleur de paneNewExp </br>
+     * la couleur de paneNewExp 
      * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs 
      */
     public void onMouseExitedResultat (){
@@ -285,9 +285,9 @@ public class LaborantinController1 implements Initializable {
     }
     
     /**
-     * Permet de coloriser le bouton buttonInfo et le pane du bouton paneInfo </br>
-     *  - <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton</br>
-     *  - <code>#A1102A</code> : couleur pourpre </br>
+     * Permet de coloriser le bouton buttonInfo et le pane du bouton paneInfo 
+     *  - <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton
+     *  - <code>#A1102A</code> : couleur pourpre 
      */
     public void onMouseEnteredInfo (){
         buttonInfo.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
@@ -295,8 +295,8 @@ public class LaborantinController1 implements Initializable {
     }
     
     /**
-     * Permet de reinitialiser la couleur du bouton buttonInfo et du pane du bouton paneInfo</br>
-     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs </br>
+     * Permet de reinitialiser la couleur du bouton buttonInfo et du pane du bouton paneInfo
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs 
      */
     public void onMouseExitedInfo (){
         buttonInfo.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
@@ -329,8 +329,8 @@ public class LaborantinController1 implements Initializable {
     
     /**
      *  Initialisation des colonnes pour le tableau de la plaque accueil labo
-     * Creation du bouton editer et des autres colonnes </br>
-     * Les colonnes sont : </br>
+     * Creation du bouton editer et des autres colonnes 
+     * Les colonnes sont : 
      * <ul>
      *  <li> identifiant de la plaque </li>
      *  <li> Type de plaque </li>
@@ -418,21 +418,11 @@ public class LaborantinController1 implements Initializable {
             stmt = con.createStatement();
             
             //Selectionne les id_plaque qui n'ont pas d'expérience en cours
-//            rs=stmt.executeQuery("SELECT distinct id_plaque FROM PLAQUE JOIN PUIT USING(id_plaque) join N_UPLET using(id_n_uplet) join experience using(id_experience) where etat_exp = '"+"En Attente"+"'");
-            rs=stmt.executeQuery("SELECT distinct id_plaque FROM PLAQUE where ESTTERMINE = "+ 0 +"");
+            rs=stmt.executeQuery("SELECT id_plaque FROM PLAQUE where ESTTERMINE = "+0+"");
 
             while(rs.next()){
                 id_plaque=rs.getInt(1); 
-//                if (listePlaqueLancer!=null){
-//                    if(listePlaqueLancer.contains(id_plaque)) {
-//                        //Rien
-//                    }else{
-//                        listeIdPlaque.add(id_plaque);
-//                    }  
-//                }
-//                else {
                     listeIdPlaque.add(id_plaque);
-//                }
             }  
           
         } catch (SQLException e) {

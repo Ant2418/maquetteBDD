@@ -17,7 +17,6 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -156,11 +155,11 @@ public class AcceuilChercheurController implements Initializable {
     private ObservableList<projetbasededonnee.Data.AccueilChercheur> dataUplet;
    
     /**
-     * Initialisation de la classe controlleur </br>
-     *  - Page d'accueil du chercheur est visible </br>
-     *  - Page pour ajouter une experience, ajouter des nuplet sont invisibles </br>
-     *  - instantiation de l'observableList dataUplet </br>
-     *  - instantiation d'une ArrayList dataUpletTotal </br>
+     * Initialisation de la classe controlleur 
+     *  - Page d'accueil du chercheur est visible 
+     *  - Page pour ajouter une experience, ajouter des nuplet sont invisibles 
+     *  - instantiation de l'observableList dataUplet 
+     *  - instantiation d'une ArrayList dataUpletTotal 
      * @param url
      * @param rb
      */
@@ -175,9 +174,9 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Permet de coloriser le bouton et le pane du bouton DECONNEXION </br>
-     *  - <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton</br>
-     *  - <code>#A1102A</code> : couleur pourpre </br>
+     * Permet de coloriser le bouton et le pane du bouton DECONNEXION 
+     *  - <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton
+     *  - <code>#A1102A</code> : couleur pourpre 
      */
     public void onMouseEnteredDeconnexion (){
         buttonDeconnexion.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
@@ -185,8 +184,8 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Permet de reinitialiser la couleur du bouton et du pane du bouton DECONNEXION</br>
-     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs </br>
+     * Permet de reinitialiser la couleur du bouton et du pane du bouton DECONNEXION
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs 
      */
     public void onMouseExitedDeconnexion (){
         buttonDeconnexion.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
@@ -194,9 +193,9 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Permet de coloriser le bouton et le pane du bouton HOME </br>
-     * <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton </br>
-     * <code>#A1102A</code> : couleur pourpre </br>
+     * Permet de coloriser le bouton et le pane du bouton HOME 
+     * <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton 
+     * <code>#A1102A</code> : couleur pourpre 
      */
     public void onMouseEnteredHome (){
         buttonHome.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
@@ -204,9 +203,9 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Permet de reinitialiser la couleur du bouton et du pane du bouton HOME </br>
-     * si pageHomeChercheur est n'est pas visible on change la couleur paneHome </br>
-     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs </br>
+     * Permet de reinitialiser la couleur du bouton et du pane du bouton HOME 
+     * si pageHomeChercheur est n'est pas visible on change la couleur paneHome 
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs 
      */
     public void onMouseExitedHome (){
         buttonHome.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
@@ -218,9 +217,9 @@ public class AcceuilChercheurController implements Initializable {
         
     }
     /**
-     * Permet de coloriser le bouton et le pane du bouton NEW EXP </br>
-     * <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton </br>
-     * <code>#A1102A</code> : couleur pourpre </br>
+     * Permet de coloriser le bouton et le pane du bouton NEW EXP 
+     * <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton 
+     * <code>#A1102A</code> : couleur pourpre 
      */
     public void onMouseEnteredNewExp (){
         buttonNewExp.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
@@ -228,9 +227,9 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Permet de reinitialiser la couleur du bouton et du pane du bouton NEW EXP </br>
+     * Permet de reinitialiser la couleur du bouton et du pane du bouton NEW EXP 
      * Si pageAjoutExp ou pageAddUplet ne sont pas visible alors on peut changer
-     * la couleur de paneNewExp </br>
+     * la couleur de paneNewExp 
      * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs 
      */
     public void onMouseExitedNewExp (){
@@ -243,9 +242,9 @@ public class AcceuilChercheurController implements Initializable {
     }
     
      /**
-     * Permet de coloriser le bouton buttonInfo et le pane du bouton paneInfo </br>
-     *  - <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton</br>
-     *  - <code>#A1102A</code> : couleur pourpre </br>
+     * Permet de coloriser le bouton buttonInfo et le pane du bouton paneInfo 
+     *  - <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton
+     *  - <code>#A1102A</code> : couleur pourpre 
      */
     public void onMouseEnteredInfo (){
         buttonInfo.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
@@ -253,8 +252,8 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Permet de reinitialiser la couleur du bouton buttonInfo et du pane du bouton paneInfo</br>
-     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs </br>
+     * Permet de reinitialiser la couleur du bouton buttonInfo et du pane du bouton paneInfo
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs 
      */
     public void onMouseExitedInfo (){
         buttonInfo.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
@@ -287,8 +286,8 @@ public class AcceuilChercheurController implements Initializable {
     
     /**
      * Instantiation du tableau tableAccueilChercheur de la page d'accueil 
-     * avec toutes les experiences du chercheur </br>
-     * Les colonnes sont : </br>
+     * avec toutes les experiences du chercheur 
+     * Les colonnes sont : 
      * <ul>
      *  <li> numero de l'experience </li>
      *  <li> nom de l'experience </li>
@@ -318,7 +317,7 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Instantiation du tableau tableNUplet pour ajouter les n_uplets a une experience </br>
+     * Instantiation du tableau tableNUplet pour ajouter les n_uplets a une experience 
      * <ul>
      *  <li> numero du replicat </li>
      *  <li> nom de l'agent biologique </li>
@@ -499,12 +498,12 @@ public class AcceuilChercheurController implements Initializable {
 
     /**
      * Methode qui permet de valider une experience s'il y a au moins un ajout d'un un n_uplet.
-     * Les boutons de deconnexion, buttonHome et d'ajout d'une nouvelle experience sont inutilisable. </br>
+     * Les boutons de deconnexion, buttonHome et d'ajout d'une nouvelle experience sont inutilisable. 
      * Le label d'erreur du replicat valider n'est plus visible
-     * Colorisation de paneHome en <code>#A1102A</code> et de paneNewExp en <code>#f4f4f4</code> </br>
-     * Remise a zero du formulaire de l'experience </br>
+     * Colorisation de paneHome en <code>#A1102A</code> et de paneNewExp en <code>#f4f4f4</code> 
+     * Remise a zero du formulaire de l'experience 
      * @see #addExpEvent(javafx.scene.input.MouseEvent) 
-     * Renvoie d'un message d'erreur dans le cas contraire </br>
+     * Renvoie d'un message d'erreur dans le cas contraire 
      * @see #labelErreurReplicatValider
      * @see #buttonDeconnexion
      * @see #buttonHome
@@ -544,8 +543,8 @@ public class AcceuilChercheurController implements Initializable {
     }
 
     /**
-     * Affichage du panel pageHomeChercheur, l'accueil du chercheur. </br>
-     * Les panel pageAjoutExp et pageAddUplet sont invisible. </br>
+     * Affichage du panel pageHomeChercheur, l'accueil du chercheur. 
+     * Les panel pageAjoutExp et pageAddUplet sont invisible. 
      * paneHome est colorise avec <code>#A1102A</code>
      * @param event onClicked buttonHome
      * @throws IOException 
@@ -561,7 +560,7 @@ public class AcceuilChercheurController implements Initializable {
     
 
     /**
-     * Methode qui permet de créer l'expérience saisie. </br>
+     * Methode qui permet de créer l'expérience saisie. 
      * Affichage du panel pageAjoutExp, la page permettant d'ajouter une experience
      * Initialisation des listes déroultantes et des spinners
      * @param event onClicked buttonNewExp
@@ -751,7 +750,7 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Quand l'utilisateur clique sur le buttonValiderExp, ajout de l'experience </br>
+     * Quand l'utilisateur clique sur le buttonValiderExp, ajout de l'experience 
      * Fait reference a la methode addExp()
      * @see #addExp() 
      * @param event onClicked buttonValiderExp
@@ -762,7 +761,7 @@ public class AcceuilChercheurController implements Initializable {
     }
     
      /**
-     * Quand l'utilisateur clique sur le buttonValiderExp via la touche "entree" du clavier, ajout de l'experience </br>
+     * Quand l'utilisateur clique sur le buttonValiderExp via la touche "entree" du clavier, ajout de l'experience 
      * @see #addExp() 
      * @param e on key pressed "enter"
      */
@@ -773,10 +772,10 @@ public class AcceuilChercheurController implements Initializable {
     }
     
     /**
-     * Methode qui permet d'ajouter une nouvelle experience dans la liste apres controle du formulaire </br>
-     * Remise a zero du formulaire au debut (initialisation) et affichage de la page d'ajout de n uplet </br>
-     * En cas d'erreur, affichage de plusieurs messages personnalises et mise en evidence du ou des champs vides. </br>
-     * Cette methode appelle trois autres methodes : </br>
+     * Methode qui permet d'ajouter une nouvelle experience dans la liste apres controle du formulaire 
+     * Remise a zero du formulaire au debut (initialisation) et affichage de la page d'ajout de n uplet 
+     * En cas d'erreur, affichage de plusieurs messages personnalises et mise en evidence du ou des champs vides. 
+     * Cette methode appelle trois autres methodes : 
      * affichage des informations de l'experience avec displayLabels
      * Initialisation des comboBox et des spinners de la page n uplet avec solutionChoice
      * Initialisation du tableau de n_uplet avec la methode setCellTableUplet
@@ -888,7 +887,6 @@ public class AcceuilChercheurController implements Initializable {
                     spinnerAlpha3.setVisible(false); 
                     
                     }catch (SQLException e) {
-                         System.out.println("Exception SQL : ");
                         while (e != null) {
                             String message = e.getMessage();
                             int errorCode = e.getErrorCode();
@@ -918,7 +916,6 @@ public class AcceuilChercheurController implements Initializable {
                     
                     Integer frequence = (Integer) spinnerFrequence.getValue();
                     Double Alpha3 =(Double) spinnerAlpha3.getValue(); 
-                    System.out.println("moi je suis la " + Alpha3); 
                     projetbasededonnee.Data.CurrentDate Date = new projetbasededonnee.Data.CurrentDate();
 
                     con = connex.getCon();
@@ -963,7 +960,6 @@ public class AcceuilChercheurController implements Initializable {
                         solutionChoice();
                         setCellTableUplet();
                         loadDataUplet(id_exp);
-                        System.out.println("c'est encore moi : "+ id_exp);
                         pageAddUplet.setVisible(true);
                         
                         
@@ -987,7 +983,6 @@ public class AcceuilChercheurController implements Initializable {
                                                
                         
                     }catch (SQLException e) {
-                         System.out.println("Exception SQL : ");
                         while (e != null) {
                             String message = e.getMessage();
                             int errorCode = e.getErrorCode();
@@ -1004,7 +999,6 @@ public class AcceuilChercheurController implements Initializable {
                                 spinnerAlpha2.setStyle("-fx-border-color: red");
                                 }
                                 Double a3 = (Double) spinnerAlpha3.getValue();
-                                System.out.println("idem " + a3);
                                 if(a3>1 || a3<0){
                                     labelErreurExp.setText("");
                                     labelErreurExp.setText("La valeur du Biais 3 doit être compris entre 0 et 1.");
