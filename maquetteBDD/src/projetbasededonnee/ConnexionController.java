@@ -9,7 +9,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,7 +46,7 @@ public class ConnexionController implements Initializable {
     private Connexion connexion; 
     private Personne personne; 
     private Integer present;
-    //private ArrayList<Integer> listePlaqueLancer;
+  
 
     /**
      * Initializes the contrProjetBaseDeDonneeoller class.
@@ -124,7 +123,7 @@ public class ConnexionController implements Initializable {
                         Scene ajoutScene = new Scene(ajoutParent);
                         LCO.setConnection(connexion);
                         LCO.setPersonne(personne);
-                        //LCO.setListePlaqueLancer(listePlaqueLancer);
+                    
                         LCO.loadDataPlaque();
                         LCO.ComboTypePlaque();
 
@@ -180,7 +179,7 @@ public class ConnexionController implements Initializable {
                 personne.setNom(nom);
                 personne.setEmail(email);
                 personne.setFonction(res);
-//                System.out.println(res);
+
                 if ("chercheur".equals(res)) {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("Chercheur.fxml"));
                     Parent ajoutParent = (Parent) loader.load();
@@ -205,7 +204,7 @@ public class ConnexionController implements Initializable {
                     Scene ajoutScene = new Scene(ajoutParent);
                     LCO.setConnection(connexion);
                     LCO.setPersonne(personne);
-                    //LCO.setListePlaqueLancer(listePlaqueLancer);
+                    
                     LCO.loadDataPlaque();
                     LCO.ComboTypePlaque();
       
