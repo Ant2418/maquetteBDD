@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="1000.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.LaborantinController1">
+<AnchorPane minHeight="-Infinity" minWidth="1000.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetbasededonnee.LaborantinController1">
    <children>
       <SplitPane dividerPositions="0.05" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -95,7 +95,7 @@
                <center>
                   <AnchorPane BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="accueilLaboPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="accueilLaboPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
@@ -194,7 +194,7 @@
                               </BorderPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="LancerPlaquePage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="LancerPlaquePage" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
@@ -346,7 +346,7 @@
                                                 </VBox>
                                                 <HBox alignment="TOP_RIGHT">
                                                    <children>
-                                                      <Button fx:id="buttonPlaque" mnemonicParsing="false" onAction="#clickOnButtonPlaque" onKeyPressed="#clickOnButtonPlaquePressed" style="-fx-background-color: #A9BCF5;" text="Voir la plaque">
+                                                      <Button fx:id="buttonPlaque" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#clickOnButtonPlaque" onKeyPressed="#clickOnButtonPlaquePressed" style="-fx-background-color: #A9BCF5;" text="Voir la plaque">
                                                          <HBox.margin>
                                                             <Insets right="210.0" />
                                                          </HBox.margin></Button>
@@ -380,28 +380,56 @@
                         </AnchorPane>
                         <AnchorPane fx:id="EmplacementPlaquePage" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <TableView fx:id="tableEmplacementPlaque" layoutX="48.0" layoutY="109.0" prefHeight="444.0" prefWidth="868.0">
-                                <columns>
-                                  <TableColumn fx:id="colX" prefWidth="75.0" text="Colonne (X)" />
-                                  <TableColumn fx:id="colY" prefWidth="87.0" text="Ligne (Y)" />
-                                    <TableColumn fx:id="colAgentBio" prefWidth="139.0" text="Agent Biologique" />
-                                    <TableColumn fx:id="colQteBio" prefWidth="200.0" text="Quantité d'agent &#10;  biologique (µL)" />
-                                    <TableColumn fx:id="colCellule" prefWidth="184.0" text="Cellules" />
-                                    <TableColumn fx:id="colQteCellule" prefWidth="171.0" text="Quantité de &#10; cellules (µL)" />
-                                </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                              <Label layoutX="185.0" layoutY="30.0" text="Emplacement sur la plaque" textAlignment="CENTER">
-                                 <font>
-                                    <Font size="48.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="ButtonRetourComplPlaque" layoutX="813.0" layoutY="559.0" mnemonicParsing="false" onAction="#clickOnRetour" onKeyPressed="#clickOnRetourKeyPress" text="Retour" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="813.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="559.0" />
+                              <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label alignment="CENTER" text="Emplacement sur la plaque" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="48.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <TableView fx:id="tableEmplacementPlaque">
+                                      <columns>
+                                        <TableColumn fx:id="colX" prefWidth="75.0" text="Colonne (X)" />
+                                        <TableColumn fx:id="colY" prefWidth="87.0" text="Ligne (Y)" />
+                                          <TableColumn fx:id="colAgentBio" prefWidth="139.0" text="Agent Biologique" />
+                                          <TableColumn fx:id="colQteBio" prefWidth="200.0" text="Quantité d'agent &#10;  biologique (µL)" />
+                                          <TableColumn fx:id="colCellule" prefWidth="184.0" text="Cellules" />
+                                          <TableColumn fx:id="colQteCellule" prefWidth="171.0" text="Quantité de &#10; cellules (µL)" />
+                                      </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                    </TableView>
+                                    <HBox alignment="TOP_RIGHT">
+                                       <children>
+                                          <Button fx:id="ButtonRetourComplPlaque" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#clickOnRetour" onKeyPressed="#clickOnRetourKeyPress" prefHeight="25.0" prefWidth="103.0" text="Retour">
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets top="10.0" />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="resultatExp" visible="false">
+                        <AnchorPane fx:id="resultatExp" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <TableView fx:id="tableResult" layoutX="72.0" layoutY="100.0" prefHeight="400.0" prefWidth="801.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="100.0">
                                  <columns>
@@ -422,9 +450,9 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="validationPage" onMouseClicked="#validationEvent" visible="false">
+                        <AnchorPane fx:id="validationPage" onMouseClicked="#validationEvent" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <BorderPane prefHeight="600.0" prefWidth="950.0">
+                              <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
                                     <VBox fx:id="titleAcceuil1111" alignment="CENTER" prefHeight="100.0" prefWidth="950.0" BorderPane.alignment="CENTER">
                                        <children>
@@ -438,7 +466,7 @@
                                                 <Insets />
                                              </opaqueInsets>
                                              <VBox.margin>
-                                                <Insets right="500.0" />
+                                                <Insets bottom="5.0" right="500.0" />
                                              </VBox.margin>
                                              <font>
                                                 <Font name="System Italic" size="18.0" />
