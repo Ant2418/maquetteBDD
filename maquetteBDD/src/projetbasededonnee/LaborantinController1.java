@@ -113,7 +113,7 @@ public class LaborantinController1 implements Initializable {
     @FXML    private Label labelAjoutExpPlaque;
     @FXML    private Label labelAjoutExpAttentLabel; 
     @FXML    private Button sauvegardePlaque; 
-    @FXML    private Button ButtonPlaque;
+    @FXML    private Button buttonPlaque;
     @FXML    private Label labelLancePlaque; 
     @FXML    private Button buttonLancerPlaque;
     
@@ -316,7 +316,8 @@ public class LaborantinController1 implements Initializable {
                         EmplacementPlaquePage.setVisible(false);
                         validationPage.setVisible(false);
                         resultatExp.setVisible(false);
-
+                        buttonPlaque.setDisable(false);
+                        
                         listeIdExp = new ArrayList();
                         listeIdExpValid = new ArrayList(); 
                         listeIdUpletValid = new ArrayList();
@@ -835,6 +836,10 @@ public class LaborantinController1 implements Initializable {
                 listeIdUplet = new ArrayList(); 
                 listeIdUplet1 = new ArrayList();
                 
+                //Ajoute la plaque à la liste de la plaque
+                
+                dataPlaque.add(maPlaque);
+                
                 //Mise a jour du tableau a renouveler
                 setCellTableARenouveler();
                 loadDataExpARenouveler();
@@ -856,7 +861,7 @@ public class LaborantinController1 implements Initializable {
                 buttonResultat.setDisable(true);
                 buttonDeconnexion.setDisable(true);
                 sauvegardePlaque.setDisable(true);
-                //Averifier
+                buttonPlaque.setDisable(true);
                 buttonLancerPlaque.setDisable(true); 
                 
                 ComboTypePlaque();
@@ -1052,6 +1057,7 @@ public class LaborantinController1 implements Initializable {
             labelAjoutExpPlaque.setVisible(true);
             labelAjoutExpAttentLabel.setVisible(false);
             buttonHome.setDisable(true);
+            buttonPlaque.setDisable(false);
             
             setCellTableEnAttente();
             loadDataExpEnAttente();
@@ -1081,6 +1087,7 @@ public class LaborantinController1 implements Initializable {
             labelAjoutExpPlaque.setVisible(true);
             labelAjoutExpAttentLabel.setVisible(false);
             buttonHome.setDisable(true);
+            buttonPlaque.setDisable(false);
             
             setCellTableEnAttente();
             loadDataExpEnAttente();
@@ -1110,6 +1117,7 @@ public class LaborantinController1 implements Initializable {
             labelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
             labelAjoutExpAttentLabel.setVisible(true);
             labelAjoutExpPlaque.setVisible(false);
+            buttonPlaque.setDisable(false);
             
             setCellTableARenouveler();
             loadDataExpARenouveler();
@@ -1138,6 +1146,7 @@ public class LaborantinController1 implements Initializable {
                 labelAjoutExpAttentLabel.setText("Expérience bien ajoutée");
                 labelAjoutExpAttentLabel.setVisible(true);
                 labelAjoutExpPlaque.setVisible(false);
+                buttonPlaque.setDisable(false);
                 
                 setCellTableARenouveler();
                 loadDataExpARenouveler();
@@ -1170,6 +1179,7 @@ public class LaborantinController1 implements Initializable {
             Integer id_uplet= rs4.getInt(1);
             listeIdUplet.add(id_uplet); 
         }
+        rs4.close();
     }catch (SQLException e) {
         Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
     }
@@ -1181,7 +1191,7 @@ public class LaborantinController1 implements Initializable {
             if (rs.getInt(1) ==0){
                 listeIdUpletValid.add(idU);
             }
-            
+            rs.close();
         } catch (SQLException e) {
             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -1209,7 +1219,7 @@ public class LaborantinController1 implements Initializable {
                                 {
                                     Y=Y+1;
                                 }
-                            
+                                rs.close();
                             }catch (SQLException e) {
                                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                             }
@@ -1227,7 +1237,7 @@ public class LaborantinController1 implements Initializable {
                             X = rs.getInt(1);
                             Y = rs.getInt(2);
                         }
-                        
+                        rs.close();
                     }catch (SQLException e) {
                         Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                     }
@@ -1246,7 +1256,8 @@ public class LaborantinController1 implements Initializable {
                             try{
                           
                             rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");
-                            maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);   
+                            maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);  
+                            rs.close();
                             }catch (SQLException e) {
                                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                             }
@@ -1268,7 +1279,7 @@ public class LaborantinController1 implements Initializable {
                         X = rs.getInt(1);
                         Y = rs.getInt(2);
                     }
-
+                    rs.close();
                 }catch (SQLException e) {
                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -1285,7 +1296,8 @@ public class LaborantinController1 implements Initializable {
                         }
                         try{
                         rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");
-                        maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);   
+                        maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1); 
+                        rs.close();
                         }catch (SQLException e) {
                             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                         }
@@ -1321,7 +1333,7 @@ public class LaborantinController1 implements Initializable {
                             {
                                 Y=Y+1;
                             }
-                            
+                            rs.close();
                             }catch (SQLException e) {
                                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                             }
@@ -1338,7 +1350,7 @@ public class LaborantinController1 implements Initializable {
                             X = rs.getInt(1);
                             Y = rs.getInt(2);
                         }
-                        
+                        rs.close();
                     }catch (SQLException e) {
                         Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                     }
@@ -1357,7 +1369,8 @@ public class LaborantinController1 implements Initializable {
                             try{
                             
                                 rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");
-                                maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);   
+                                maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);
+                                rs.close();
                             }catch (SQLException e) {
                                 Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                             }
@@ -1379,7 +1392,7 @@ public class LaborantinController1 implements Initializable {
                         X = rs.getInt(1);
                         Y = rs.getInt(2);
                     }
-
+                    rs.close();
                 }catch (SQLException e) {
                     Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -1396,7 +1409,8 @@ public class LaborantinController1 implements Initializable {
                         }
                         try{
                         rs = stmt.executeQuery("INSERT INTO PUIT (id_puit, id_plaque, id_n_uplet, x, y) VALUES (" + 1 + ", "+ plaque.getIdPlaque() +", "+ idUplet +", "+X+", "+Y+")");
-                        maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);   
+                        maPlaque.setPuitsDispo(maPlaque.getPuitsDispo()-1);
+                        rs.close();
                         }catch (SQLException e) {
                             Logger.getLogger(LaborantinController1.class.getName()).log(Level.SEVERE, null, e);
                         }

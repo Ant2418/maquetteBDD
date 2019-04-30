@@ -107,7 +107,6 @@ public class ConnexionController implements Initializable {
                         AcceuilChercheurController ACCo = loader.getController();
                         Scene ajoutScene = new Scene(ajoutParent);
                         ACCo.setConnection(connexion);
-                        System.out.println(ACCo + "hggvv");
                         ACCo.setPersonne(personne);
                         ACCo.loadDataAccueilDatabase();
 
