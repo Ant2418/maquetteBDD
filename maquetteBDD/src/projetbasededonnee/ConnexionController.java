@@ -81,7 +81,6 @@ public class ConnexionController implements Initializable {
             }
             
             if(present>0){
-            System.out.println("je suis la");
                 try { 
                 con = connexion.getCon();          
                 stmt = con.createStatement();
@@ -97,9 +96,8 @@ public class ConnexionController implements Initializable {
                     personne.setNom(nom);
                     personne.setEmail(email);
                     personne.setFonction(res);
-//                    System.out.println(res);
+
                     if ("chercheur".equals(res)) {
-                        System.out.println("c'est encore moi");
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("Chercheur.fxml"));
                         Parent ajoutParent = (Parent) loader.load();
 

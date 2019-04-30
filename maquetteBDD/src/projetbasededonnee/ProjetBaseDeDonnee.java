@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Classe principale du projet BDD IHM, gestion de plaque de laboratoire. </br>
+ * Classe principale du projet BDD IHM, gestion de plaque de laboratoire. 
  * Un chercheur ou un laborantin peut se connecter.
  * @verison 26/04/2019
  * @author Antoine et Ludivine
@@ -19,7 +19,7 @@ public class ProjetBaseDeDonnee extends Application {
     private Connexion maCo; 
     
     /**
-     * Methode qui permet de lancer la page de connexion (connexion.fxml) </br>
+     * Methode qui permet de lancer la page de connexion (connexion.fxml) 
      * Creation de la personne et de sa connexion
      * @param primaryStage fenetre principale de taille minimale 1020x610
      * @throws IOException 
