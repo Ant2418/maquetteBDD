@@ -3,7 +3,11 @@
  */
 package projetbasededonnee;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -51,10 +55,11 @@ public class LaborantinController1 implements Initializable {
     @FXML    private Button buttonDeconnexion;
     @FXML    private Button buttonHome;
     @FXML    private Button buttonResultat;
+    @FXML    private Button buttonInfo;
     @FXML    private Pane paneHome;
     @FXML    private Pane paneDeco;
     @FXML    private Pane paneResultat;
-    
+    @FXML    private Pane paneInfo;
     @FXML    private AnchorPane accueilLaboPane;
     @FXML    private AnchorPane LancerPlaquePage;
     @FXML    private AnchorPane EmplacementPlaquePage; 
@@ -206,7 +211,7 @@ public class LaborantinController1 implements Initializable {
         dataExpResult = FXCollections.observableArrayList();
         listeIdPlaque= new ArrayList();
         setCellTablePlaque();
-        buttonAjoutPlaque.setGraphic(new ImageView(new Image(getClass().getResource("checked.png").toExternalForm(), 20, 20, true, true)));
+        //buttonAjoutPlaque.setGraphic(new ImageView(new Image(getClass().getResource("checked.png").toExternalForm(), 20, 20, true, true)));
         
     }    
 
@@ -276,6 +281,49 @@ public class LaborantinController1 implements Initializable {
         }else{
             paneResultat.setStyle("-fx-background-color:#d7d7d7");
         }
+    }
+    
+    /**
+     * Permet de coloriser le bouton buttonInfo et le pane du bouton paneInfo </br>
+     *  - <code>#c1b5a9</code> : couleur du fond qui permet de ressortir le bouton</br>
+     *  - <code>#A1102A</code> : couleur pourpre </br>
+     */
+    public void onMouseEnteredInfo (){
+        buttonInfo.setStyle("-fx-background-color:#c1b5a9; -fx-background-radius:0");
+        paneInfo.setStyle("-fx-background-color:#A1102A");
+    }
+    
+    /**
+     * Permet de reinitialiser la couleur du bouton buttonInfo et du pane du bouton paneInfo</br>
+     * <code>#d7d7d7</code> : couleur du fond dans les tonds clairs </br>
+     */
+    public void onMouseExitedInfo (){
+        buttonInfo.setStyle("-fx-background-color:#d7d7d7; -fx-background-radius:0");
+        paneInfo.setStyle("-fx-background-color:#d7d7d7");
+    }
+    
+    /**
+     * Methode qui permet d'ouvrir le pdf de documentation
+     * @param event on mouse clicked sur buttonInfo
+     * @throws IOException 
+     */
+    public void infoEvent(MouseEvent event) throws IOException {
+        //Desktop.getDesktop().open(new File ("D:\\Doc\\NetBeansProjects\\IHMSANSBDD\\IHMSANSBDD\\IHMSANSBDD\\src\\projetbasededonnee\\ReadMeChercheur.pdf"));
+        InputStream pdfDansLArchive = getClass().getClassLoader().getResourceAsStream("projetbasededonnee/ReadMeLaborantin.pdf");
+        try {
+            File pdfCree = new File("ReadMeLaborantin.pdf");
+            // Extraction du PDF qui se situe dans l'archive
+            FileOutputStream fos = new FileOutputStream(pdfCree);
+            while (pdfDansLArchive.available() > 0) {
+                  fos.write(pdfDansLArchive.read());
+            }   // while (pdfInJar.available() > 0)
+            fos.close();
+            // Ouverture du PDF
+            Desktop.getDesktop().open(pdfCree);
+        }   // try
+        catch (IOException e) {
+            System.out.println("erreur : " + e);
+        }   // catch (IOException e)
     }
     
     /**
